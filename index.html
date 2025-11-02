@@ -480,7 +480,7 @@
             z-index: 1;
         }
 
-        /* Visualization Section - Side by Side Layout */
+        /* Visualization Section - Improved Layout */
         .visualization-section {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
@@ -507,7 +507,7 @@
 
         .visualization-container {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 2rem;
             margin-bottom: 2rem;
         }
@@ -616,16 +616,86 @@
             z-index: 1;
         }
 
-        /* Live Pseudocode */
-        .pseudocode-live {
+        /* Enhanced Pseudocode Section - Fixed Overflow */
+        .pseudocode-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .pseudocode-container {
             background: var(--bg-secondary);
             border-radius: var(--border-radius);
             padding: 1.5rem;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.875rem;
             line-height: 1.6;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pseudocode-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .pseudocode-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1rem;
+        }
+
+        .pseudocode-toggle {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .toggle-btn {
+            padding: 0.25rem 0.5rem;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .toggle-btn.active {
+            background: var(--accent-primary);
+            color: white;
+        }
+
+        .pseudocode-live {
+            flex: 1;
             overflow-y: auto;
-            max-height: 300px;
+            padding-right: 0.5rem;
+            position: relative;
+        }
+
+        /* Custom scrollbar */
+        .pseudocode-live::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .pseudocode-live::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+        }
+
+        .pseudocode-live::-webkit-scrollbar-thumb {
+            background: var(--accent-primary);
+            border-radius: 3px;
+        }
+
+        .pseudocode-live::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
         }
 
         .pseudocode-line {
@@ -669,6 +739,32 @@
             color: var(--accent-success);
         }
 
+        /* Step Explanation */
+        .step-explanation {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--accent-primary);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .step-explanation-title {
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .step-explanation-content {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+
+        /* Enhanced Variable Tracker */
         .variable-tracker {
             margin-top: 1rem;
             padding: 1rem;
@@ -677,10 +773,33 @@
             font-size: 0.875rem;
         }
 
+        .variable-header {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .variable-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+        }
+
         .variable-item {
             display: flex;
             justify-content: space-between;
-            padding: 0.25rem 0;
+            padding: 0.5rem;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .variable-item.highlight {
+            background: rgba(59, 130, 246, 0.1);
+            transform: scale(1.02);
         }
 
         .variable-name {
@@ -691,6 +810,64 @@
         .variable-value {
             color: var(--text-primary);
             font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Algorithm Story */
+        .algorithm-story {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .algorithm-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-tertiary);
+        }
+
+        .story-content {
+            padding-left: 1rem;
+            height: 300px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+
+        /* Custom scrollbar for story */
+        .story-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .story-content::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 3px;
+        }
+
+        .story-content::-webkit-scrollbar-thumb {
+            background: var(--accent-tertiary);
+            border-radius: 3px;
+        }
+
+        .story-content::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-secondary);
+        }
+
+        .story-paragraph {
+            margin-bottom: 0.5rem;
+        }
+
+        .story-highlight {
+            color: var(--accent-tertiary);
+            font-weight: 600;
         }
 
         /* Control Panel */
@@ -1063,7 +1240,7 @@
 
         /* Responsive Design */
         @media (max-width: 1024px) {
-            .visualization-container {
+            .pseudocode-section {
                 grid-template-columns: 1fr;
             }
         }
@@ -1104,6 +1281,10 @@
 
             .nav-list {
                 flex-wrap: wrap;
+            }
+            
+            .variable-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -1213,23 +1394,83 @@
                         <div class="window-overlay" id="windowOverlay"></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Live Pseudocode Panel -->
+            <!-- Enhanced Pseudocode Section - Fixed Layout -->
+            <div class="pseudocode-section">
+                <!-- Pseudocode Panel -->
                 <div class="visualization-panel">
-                    <h3 class="panel-title">Live Pseudocode</h3>
-                    <div class="pseudocode-live" id="pseudocodeLive"></div>
-                    <div class="variable-tracker" id="variableTracker">
-                        <div class="variable-item">
-                            <span class="variable-name">i:</span>
-                            <span class="variable-value" id="varI">0</span>
+                    <h3 class="panel-title">Algorithm Explorer</h3>
+                    <div class="pseudocode-container">
+                        <div class="pseudocode-header">
+                            <div class="pseudocode-title">Pseudocode</div>
+                            <div class="pseudocode-toggle">
+                                <button class="toggle-btn active" id="codeToggle">Code</button>
+                                <button class="toggle-btn" id="storyToggle">Story</button>
+                            </div>
                         </div>
-                        <div class="variable-item">
-                            <span class="variable-name">j:</span>
-                            <span class="variable-value" id="varJ">0</span>
+                        <div class="pseudocode-live" id="pseudocodeLive"></div>
+                        <div class="algorithm-story" id="algorithmStory" style="display: none;">
+                            <div class="story-content" id="storyContent">
+                                <p class="story-paragraph">Welcome to the <span class="story-highlight">String Algorithm Visualizer</span>! Let's explore how pattern matching works step by step.</p>
+                                <p class="story-paragraph">Click "Start" to begin the visualization and watch as the algorithm searches for your pattern in the text.</p>
+                            </div>
                         </div>
-                        <div class="variable-item">
-                            <span class="variable-name">matches:</span>
-                            <span class="variable-value" id="varMatches">[]</span>
+                    </div>
+                    
+                    <div class="step-explanation" id="stepExplanation" style="display: none;">
+                        <div class="step-explanation-title">
+                            <span>💡</span>
+                            <span>What's Happening</span>
+                        </div>
+                        <div class="step-explanation-content" id="stepExplanationContent">
+                            The algorithm is preparing to search for the pattern in the text.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Variable Tracker Panel -->
+                <div class="visualization-panel">
+                    <h3 class="panel-title">Variable Tracker</h3>
+                    <div class="variable-tracker">
+                        <div class="variable-header">
+                            <span>📊</span>
+                            <span>Current State</span>
+                        </div>
+                        <div class="variable-grid">
+                            <div class="variable-item" id="varIContainer">
+                                <span class="variable-name">i:</span>
+                                <span class="variable-value" id="varI">0</span>
+                            </div>
+                            <div class="variable-item" id="varJContainer">
+                                <span class="variable-name">j:</span>
+                                <span class="variable-value" id="varJ">0</span>
+                            </div>
+                            <div class="variable-item" id="varMatchesContainer">
+                                <span class="variable-name">matches:</span>
+                                <span class="variable-value" id="varMatches">[]</span>
+                            </div>
+                            <div class="variable-item" id="varComparisonsContainer">
+                                <span class="variable-name">comparisons:</span>
+                                <span class="variable-value" id="varComparisons">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="variable-tracker" style="margin-top: 1.5rem;">
+                        <div class="variable-header">
+                            <span>📈</span>
+                            <span>Performance Metrics</span>
+                        </div>
+                        <div class="variable-grid">
+                            <div class="variable-item">
+                                <span class="variable-name">efficiency:</span>
+                                <span class="variable-value" id="varEfficiency">0%</span>
+                            </div>
+                            <div class="variable-item">
+                                <span class="variable-name">time saved:</span>
+                                <span class="variable-value" id="varTimeSaved">0</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1452,6 +1693,26 @@
             });
         });
 
+        // Pseudocode/Story Toggle
+        const codeToggle = document.getElementById('codeToggle');
+        const storyToggle = document.getElementById('storyToggle');
+        const pseudocodeLive = document.getElementById('pseudocodeLive');
+        const algorithmStory = document.getElementById('algorithmStory');
+
+        codeToggle.addEventListener('click', () => {
+            codeToggle.classList.add('active');
+            storyToggle.classList.remove('active');
+            pseudocodeLive.style.display = 'block';
+            algorithmStory.style.display = 'none';
+        });
+
+        storyToggle.addEventListener('click', () => {
+            storyToggle.classList.add('active');
+            codeToggle.classList.remove('active');
+            pseudocodeLive.style.display = 'none';
+            algorithmStory.style.display = 'block';
+        });
+
         // Algorithm Selection
         const kmpCard = document.getElementById('kmpCard');
         const bmCard = document.getElementById('bmCard');
@@ -1486,10 +1747,19 @@
         const windowOverlay = document.getElementById('windowOverlay');
         const tableWrapper = document.getElementById('tableWrapper');
         const statusBar = document.getElementById('statusBar');
-        const pseudocodeLive = document.getElementById('pseudocodeLive');
+        const stepExplanation = document.getElementById('stepExplanation');
+        const stepExplanationContent = document.getElementById('stepExplanationContent');
+        const storyContent = document.getElementById('storyContent');
         const varI = document.getElementById('varI');
         const varJ = document.getElementById('varJ');
         const varMatches = document.getElementById('varMatches');
+        const varComparisons = document.getElementById('varComparisons');
+        const varEfficiency = document.getElementById('varEfficiency');
+        const varTimeSaved = document.getElementById('varTimeSaved');
+        const varIContainer = document.getElementById('varIContainer');
+        const varJContainer = document.getElementById('varJContainer');
+        const varMatchesContainer = document.getElementById('varMatchesContainer');
+        const varComparisonsContainer = document.getElementById('varComparisonsContainer');
 
         // Speed Control
         speedSlider.addEventListener('input', () => {
@@ -1504,48 +1774,190 @@
         let animationSpeed = 1000;
         let currentStep = 0;
         let matches = [];
+        let comparisons = 0;
         let animationTimeout;
+        let naiveComparisons = 0;
 
-        // Pseudocode templates
+        // Enhanced Pseudocode templates with explanations
         const kmpPseudocode = [
-            { type: 'function', text: '<span class="pseudocode-keyword">function</span> <span class="pseudocode-function">KMPSearch</span>(text, pattern):' },
-            { type: 'variable', text: '    n = length of text' },
-            { type: 'variable', text: '    m = length of pattern' },
-            { type: 'variable', text: '    lps = computeLPSArray(pattern)' },
-            { type: 'variable', text: '    i = 0  <span class="pseudocode-comment">// index for text</span>' },
-            { type: 'variable', text: '    j = 0  <span class="pseudocode-comment">// index for pattern</span>' },
-            { type: 'loop', text: '    <span class="pseudocode-keyword">while</span> i < n:' },
-            { type: 'condition', text: '        <span class="pseudocode-keyword">if</span> pattern[j] == text[i]:' },
-            { type: 'action', text: '            i = i + 1' },
-            { type: 'action', text: '            j = j + 1' },
-            { type: 'condition', text: '            <span class="pseudocode-keyword">if</span> j == m:' },
-            { type: 'action', text: '                print(<span class="pseudocode-string">"Pattern found at index "</span> + (i-j))' },
-            { type: 'action', text: '                j = lps[j-1]' },
-            { type: 'condition', text: '        <span class="pseudocode-keyword">else</span>:' },
-            { type: 'condition', text: '            <span class="pseudocode-keyword">if</span> j != 0:' },
-            { type: 'action', text: '                j = lps[j-1]' },
-            { type: 'condition', text: '            <span class="pseudocode-keyword">else</span>:' },
-            { type: 'action', text: '                i = i + 1' }
+            { 
+                type: 'function', 
+                text: '<span class="pseudocode-keyword">function</span> <span class="pseudocode-function">KMPSearch</span>(text, pattern):',
+                explanation: "We're starting the KMP algorithm to find the pattern in the text."
+            },
+            { 
+                type: 'variable', 
+                text: '    n = length of text',
+                explanation: "First, we need to know how long our text is."
+            },
+            { 
+                type: 'variable', 
+                text: '    m = length of pattern',
+                explanation: "And we also need to know how long our pattern is."
+            },
+            { 
+                type: 'variable', 
+                text: '    lps = computeLPSArray(pattern)',
+                explanation: "The magic of KMP starts here! We're creating a special table called LPS (Longest Prefix Suffix) that will help us skip unnecessary comparisons."
+            },
+            { 
+                type: 'variable', 
+                text: '    i = 0  <span class="pseudocode-comment">// index for text</span>',
+                explanation: "We'll start searching from the beginning of the text (index 0)."
+            },
+            { 
+                type: 'variable', 
+                text: '    j = 0  <span class="pseudocode-comment">// index for pattern</span>',
+                explanation: "And we'll start comparing from the beginning of the pattern (index 0)."
+            },
+            { 
+                type: 'loop', 
+                text: '    <span class="pseudocode-keyword">while</span> i < n:',
+                explanation: "We'll keep searching until we've checked all characters in the text."
+            },
+            { 
+                type: 'condition', 
+                text: '        <span class="pseudocode-keyword">if</span> pattern[j] == text[i]:',
+                explanation: "Now we're checking if the current characters match."
+            },
+            { 
+                type: 'action', 
+                text: '            i = i + 1',
+                explanation: "If they match, we move to the next character in the text."
+            },
+            { 
+                type: 'action', 
+                text: '            j = j + 1',
+                explanation: "And we also move to the next character in the pattern."
+            },
+            { 
+                type: 'condition', 
+                text: '            <span class="pseudocode-keyword">if</span> j == m:',
+                explanation: "If we've matched all characters in the pattern..."
+            },
+            { 
+                type: 'action', 
+                text: '                print(<span class="pseudocode-string">"Pattern found at index "</span> + (i-j))',
+                explanation: "Then we've found a match! Let's celebrate and record where we found it."
+            },
+            { 
+                type: 'action', 
+                text: '                j = lps[j-1]',
+                explanation: "Even after finding a match, we don't start over. We use our LPS table to continue searching efficiently."
+            },
+            { 
+                type: 'condition', 
+                text: '        <span class="pseudocode-keyword">else</span>:',
+                explanation: "If the characters don't match..."
+            },
+            { 
+                type: 'condition', 
+                text: '            <span class="pseudocode-keyword">if</span> j != 0:',
+                explanation: "And if we're not at the beginning of the pattern..."
+            },
+            { 
+                type: 'action', 
+                text: '                j = lps[j-1]',
+                explanation: "We don't go back to the start! We use our LPS table to jump to the best position in the pattern."
+            },
+            { 
+                type: 'condition', 
+                text: '            <span class="pseudocode-keyword">else</span>:',
+                explanation: "If we're already at the beginning of the pattern..."
+            },
+            { 
+                type: 'action', 
+                text: '                i = i + 1',
+                explanation: "Then we just move to the next character in the text and try again."
+            }
         ];
 
         const bmPseudocode = [
-            { type: 'function', text: '<span class="pseudocode-keyword">function</span> <span class="pseudocode-function">boyerMooreSearch</span>(text, pattern):' },
-            { type: 'variable', text: '    n = length of text' },
-            { type: 'variable', text: '    m = length of pattern' },
-            { type: 'variable', text: '    badChar = computeBadCharTable(pattern)' },
-            { type: 'variable', text: '    shift = 0' },
-            { type: 'loop', text: '    <span class="pseudocode-keyword">while</span> shift <= (n - m):' },
-            { type: 'variable', text: '        j = m - 1' },
-            { type: 'loop', text: '        <span class="pseudocode-keyword">while</span> j >= 0 and pattern[j] == text[shift + j]:' },
-            { type: 'action', text: '            j = j - 1' },
-            { type: 'condition', text: '        <span class="pseudocode-keyword">if</span> j < 0:' },
-            { type: 'action', text: '            print(<span class="pseudocode-string">"Pattern found at index "</span> + shift)' },
-            { type: 'condition', text: '            <span class="pseudocode-keyword">if</span> shift + m < n:' },
-            { type: 'action', text: '                shift = shift + m - badChar[ASCII(text[shift + m])]' },
-            { type: 'condition', text: '            <span class="pseudocode-keyword">else</span>:' },
-            { type: 'action', text: '                shift = shift + 1' },
-            { type: 'condition', text: '        <span class="pseudocode-keyword">else</span>:' },
-            { type: 'action', text: '            shift = shift + max(1, j - badChar[ASCII(text[shift + j])])' }
+            { 
+                type: 'function', 
+                text: '<span class="pseudocode-keyword">function</span> <span class="pseudocode-function">boyerMooreSearch</span>(text, pattern):',
+                explanation: "We're starting the Boyer-Moore algorithm, which works in a clever way by comparing from right to left!"
+            },
+            { 
+                type: 'variable', 
+                text: '    n = length of text',
+                explanation: "First, we need to know how long our text is."
+            },
+            { 
+                type: 'variable', 
+                text: '    m = length of pattern',
+                explanation: "And we also need to know how long our pattern is."
+            },
+            { 
+                type: 'variable', 
+                text: '    badChar = computeBadCharTable(pattern)',
+                explanation: "The Boyer-Moore magic starts here! We're creating a table that tells us where each character appears in the pattern."
+            },
+            { 
+                type: 'variable', 
+                text: '    shift = 0',
+                explanation: "We'll use this to keep track of where the pattern is positioned in the text."
+            },
+            { 
+                type: 'loop', 
+                text: '    <span class="pseudocode-keyword">while</span> shift <= (n - m):',
+                explanation: "We'll keep searching until we've checked all possible positions for the pattern."
+            },
+            { 
+                type: 'variable', 
+                text: '        j = m - 1',
+                explanation: "Here's the clever part! We start comparing from the END of the pattern, not the beginning!"
+            },
+            { 
+                type: 'loop', 
+                text: '        <span class="pseudocode-keyword">while</span> j >= 0 and pattern[j] == text[shift + j]:',
+                explanation: "We'll keep comparing characters from right to left as long as they match."
+            },
+            { 
+                type: 'action', 
+                text: '            j = j - 1',
+                explanation: "If they match, we move one position to the left in the pattern."
+            },
+            { 
+                type: 'condition', 
+                text: '        <span class="pseudocode-keyword">if</span> j < 0:',
+                explanation: "If we've gone past the beginning of the pattern (j < 0), it means all characters matched!"
+            },
+            { 
+                type: 'action', 
+                text: '            print(<span class="pseudocode-string">"Pattern found at index "</span> + shift)',
+                explanation: "Hooray! We found a match at the current shift position."
+            },
+            { 
+                type: 'condition', 
+                text: '            <span class="pseudocode-keyword">if</span> shift + m < n:',
+                explanation: "If there's still text left after our pattern..."
+            },
+            { 
+                type: 'action', 
+                text: '                shift = shift + m - badChar[ASCII(text[shift + m])]',
+                explanation: "We use our bad character table to make a big jump forward in the text!"
+            },
+            { 
+                type: 'condition', 
+                text: '            <span class="pseudocode-keyword">else</span>:',
+                explanation: "If we're at the end of the text..."
+            },
+            { 
+                type: 'action', 
+                text: '                shift = shift + 1',
+                explanation: "We just move one position forward."
+            },
+            { 
+                type: 'condition', 
+                text: '        <span class="pseudocode-keyword">else</span>:',
+                explanation: "If we found a mismatch..."
+            },
+            { 
+                type: 'action', 
+                text: '            shift = shift + max(1, j - badChar[ASCII(text[shift + j])])',
+                explanation: "This is where Boyer-Moore shines! We make a smart jump based on where the mismatching character appears in our pattern."
+            }
         ];
 
         // Initialize pseudocode display
@@ -1560,6 +1972,9 @@
                 lineDiv.innerHTML = line.text;
                 pseudocodeLive.appendChild(lineDiv);
             });
+            
+            // Initialize story content
+            updateStoryContent();
         }
 
         // Update pseudocode highlighting
@@ -1575,13 +1990,57 @@
                     line.classList.remove('active', 'executed');
                 }
             });
+            
+            // Update step explanation
+            const pseudocode = currentAlgorithm === 'kmp' ? kmpPseudocode : bmPseudocode;
+            if (lineIndex >= 0 && lineIndex < pseudocode.length) {
+                stepExplanation.style.display = 'block';
+                stepExplanationContent.textContent = pseudocode[lineIndex].explanation;
+            }
         }
 
-        // Update variable tracker
-        function updateVariables(i, j, matches) {
+        // Update story content
+        function updateStoryContent() {
+            if (currentAlgorithm === 'kmp') {
+                storyContent.innerHTML = `
+                    <p class="story-paragraph">Welcome to the <span class="story-highlight">KMP Algorithm</span> adventure! Imagine you're trying to find a specific word in a book, but you don't want to start over from the beginning every time you hit a dead end.</p>
+                    <p class="story-paragraph">The KMP algorithm is like a smart reader who remembers where they've seen parts of the word before. It creates a special map called the <span class="story-highlight">LPS table</span> that helps it jump ahead instead of starting over.</p>
+                    <p class="story-paragraph">Watch as the algorithm compares characters, and when it finds a mismatch, it uses its LPS table to know exactly where to continue from, saving precious time!</p>
+                `;
+            } else {
+                storyContent.innerHTML = `
+                    <p class="story-paragraph">Welcome to the <span class="story-highlight">Boyer-Moore Algorithm</span> adventure! This algorithm is like a detective who works backwards to solve a mystery faster.</p>
+                    <p class="story-paragraph">Instead of starting from the beginning, Boyer-Moore compares characters from the END of the pattern. It's like checking if the last letter of a word matches before looking at the first!</p>
+                    <p class="story-paragraph">When it finds a mismatch, it uses a clever trick called the <span class="story-highlight">bad character rule</span> to jump ahead in the text, often skipping many characters at once. This makes it super fast for many real-world searches!</p>
+                `;
+            }
+        }
+
+        // Update variable tracker with highlighting
+        function updateVariables(i, j, matches, comparisons, highlightVar = null) {
             varI.textContent = i;
             varJ.textContent = j;
             varMatches.textContent = `[${matches.join(', ')}]`;
+            varComparisons.textContent = comparisons;
+            
+            // Calculate efficiency metrics
+            const efficiency = naiveComparisons > 0 ? Math.round((1 - comparisons/naiveComparisons) * 100) : 0;
+            const timeSaved = naiveComparisons - comparisons;
+            
+            varEfficiency.textContent = `${efficiency}%`;
+            varTimeSaved.textContent = timeSaved;
+            
+            // Remove all highlights
+            varIContainer.classList.remove('highlight');
+            varJContainer.classList.remove('highlight');
+            varMatchesContainer.classList.remove('highlight');
+            varComparisonsContainer.classList.remove('highlight');
+            
+            // Add highlight to the changed variable
+            if (highlightVar === 'i') varIContainer.classList.add('highlight');
+            if (highlightVar === 'j') varJContainer.classList.add('highlight');
+            if (highlightVar === 'matches') varMatchesContainer.classList.add('highlight');
+            if (highlightVar === 'comparisons') varComparisonsContainer.classList.add('highlight');
         }
 
         // KMP Algorithm Implementation
@@ -1658,10 +2117,28 @@
             let i = 0; // index for text
             let j = 0; // index for pattern
             matches = [];
+            comparisons = 0;
+            
+            // Calculate naive comparisons for efficiency metrics
+            naiveComparisons = text.length * pattern.length;
             
             const steps = [];
             
+            steps.push({
+                textIndex: -1,
+                patternIndex: -1,
+                patternPosition: 0,
+                i: i,
+                j: j,
+                matches: [...matches],
+                comparisons: comparisons,
+                pseudoLine: 0,
+                explanation: "Starting the KMP algorithm to find the pattern in the text."
+            });
+            
             while (i < text.length) {
+                comparisons++;
+                
                 steps.push({
                     textIndex: i,
                     patternIndex: j,
@@ -1671,14 +2148,28 @@
                     i: i,
                     j: j,
                     matches: [...matches],
-                    pseudoLine: j === pattern.length - 1 && text[i] === pattern[j] ? 10 : 
-                               text[i] === pattern[j] ? 7 : 
-                               j !== 0 ? 12 : 14
+                    comparisons: comparisons,
+                    pseudoLine: 7,
+                    explanation: `Comparing text[${i}]='${text[i]}' with pattern[${j}]='${pattern[j]}'`
                 });
                 
                 if (pattern[j] === text[i]) {
                     i++;
                     j++;
+                    
+                    steps.push({
+                        textIndex: i - 1,
+                        patternIndex: j - 1,
+                        patternPosition: i - j,
+                        isMatch: true,
+                        i: i,
+                        j: j,
+                        matches: [...matches],
+                        comparisons: comparisons,
+                        pseudoLine: 8,
+                        explanation: "Characters match! Moving to the next characters in both text and pattern.",
+                        highlightVar: 'i'
+                    });
                     
                     if (j === pattern.length) {
                         matches.push(i - j);
@@ -1692,9 +2183,25 @@
                             i: i,
                             j: j,
                             matches: [...matches],
-                            pseudoLine: 10
+                            comparisons: comparisons,
+                            pseudoLine: 10,
+                            explanation: `Pattern found at position ${i - j}! Recording this match.`,
+                            highlightVar: 'matches'
                         });
                         j = lps[j - 1];
+                        
+                        steps.push({
+                            textIndex: i - 1,
+                            patternIndex: j,
+                            patternPosition: i - j,
+                            i: i,
+                            j: j,
+                            matches: [...matches],
+                            comparisons: comparisons,
+                            pseudoLine: 12,
+                            explanation: `Using LPS table to set pattern index to ${j} instead of starting over.`,
+                            highlightVar: 'j'
+                        });
                     }
                 } else {
                     if (j !== 0) {
@@ -1707,9 +2214,25 @@
                             i: i,
                             j: j,
                             matches: [...matches],
-                            pseudoLine: 12
+                            comparisons: comparisons,
+                            pseudoLine: 13,
+                            explanation: `Mismatch! But we're not at the beginning of the pattern, so we can use the LPS table.`,
+                            highlightVar: 'j'
                         });
                         j = lps[j - 1];
+                        
+                        steps.push({
+                            textIndex: i,
+                            patternIndex: j,
+                            patternPosition: i - j,
+                            i: i,
+                            j: j,
+                            matches: [...matches],
+                            comparisons: comparisons,
+                            pseudoLine: 14,
+                            explanation: `Using LPS table to set pattern index to ${j} instead of starting over.`,
+                            highlightVar: 'j'
+                        });
                     } else {
                         steps.push({
                             textIndex: i,
@@ -1720,7 +2243,10 @@
                             i: i,
                             j: j,
                             matches: [...matches],
-                            pseudoLine: 14
+                            comparisons: comparisons,
+                            pseudoLine: 16,
+                            explanation: `Mismatch at the beginning of the pattern. Moving to the next character in the text.`,
+                            highlightVar: 'i'
                         });
                         i++;
                     }
@@ -1782,59 +2308,113 @@
             
             let n = text.length;
             let m = pattern.length;
-            let i = 0; // index for text
+            let shift = 0; // index for text
             matches = [];
+            comparisons = 0;
+            
+            // Calculate naive comparisons for efficiency metrics
+            naiveComparisons = text.length * pattern.length;
             
             const steps = [];
             
-            while (i <= n - m) {
+            steps.push({
+                textIndex: -1,
+                patternIndex: -1,
+                patternPosition: 0,
+                shift: shift,
+                matches: [...matches],
+                comparisons: comparisons,
+                pseudoLine: 0,
+                explanation: "Starting the Boyer-Moore algorithm, which compares from right to left!"
+            });
+            
+            while (shift <= n - m) {
                 let j = m - 1; // index for pattern (starting from the end)
                 
-                while (j >= 0 && pattern[j] === text[i + j]) {
+                steps.push({
+                    textIndex: shift + j,
+                    patternIndex: j,
+                    patternPosition: shift,
+                    shift: shift,
+                    matches: [...matches],
+                    comparisons: comparisons,
+                    pseudoLine: 6,
+                    explanation: `Positioning pattern at text index ${shift} and starting comparison from the end of the pattern (index ${j}).`,
+                    highlightVar: 'j'
+                });
+                
+                while (j >= 0 && pattern[j] === text[shift + j]) {
+                    comparisons++;
+                    
                     steps.push({
-                        textIndex: i + j,
+                        textIndex: shift + j,
                         patternIndex: j,
-                        patternPosition: i,
+                        patternPosition: shift,
                         isMatch: true,
                         direction: 'backward',
-                        i: i,
-                        j: j,
+                        shift: shift,
                         matches: [...matches],
-                        pseudoLine: 6
+                        comparisons: comparisons,
+                        pseudoLine: 7,
+                        explanation: `Comparing text[${shift + j}]='${text[shift + j]}' with pattern[${j}]='${pattern[j]}' - they match! Moving left.`
                     });
                     j--;
                 }
                 
                 if (j < 0) {
-                    matches.push(i);
+                    matches.push(shift);
                     steps.push({
-                        textIndex: i,
+                        textIndex: shift,
                         patternIndex: 0,
-                        patternPosition: i,
+                        patternPosition: shift,
                         found: true,
-                        i: i,
-                        j: j,
+                        shift: shift,
                         matches: [...matches],
-                        pseudoLine: 8
+                        comparisons: comparisons,
+                        pseudoLine: 9,
+                        explanation: `All characters matched! Pattern found at position ${shift}.`,
+                        highlightVar: 'matches'
                     });
                     
                     // Shift pattern based on bad character rule
-                    i += (i + m < n) ? m - badChar[text[i + m]] || 1 : 1;
-                } else {
+                    const nextShift = (shift + m < n) ? shift + m - (badChar[text[shift + m]] !== undefined ? badChar[text[shift + m]] + 1 : 1) : shift + 1;
+                    
                     steps.push({
-                        textIndex: i + j,
-                        patternIndex: j,
-                        patternPosition: i,
-                        mismatch: true,
-                        badCharShift: badChar[text[i + j]] !== undefined ? j - badChar[text[i + j]] : j + 1,
-                        i: i,
-                        j: j,
+                        textIndex: shift,
+                        patternIndex: -1,
+                        patternPosition: shift,
+                        shift: shift,
+                        nextShift: nextShift,
                         matches: [...matches],
-                        pseudoLine: 14
+                        comparisons: comparisons,
+                        pseudoLine: 11,
+                        explanation: `Using bad character rule to shift pattern from position ${shift} to ${nextShift}.`,
+                        highlightVar: 'i'
                     });
                     
-                    // Shift pattern based on bad character rule
-                    i += badChar[text[i + j]] !== undefined ? Math.max(1, j - badChar[text[i + j]]) : j + 1;
+                    shift = nextShift;
+                } else {
+                    comparisons++;
+                    
+                    const badCharShift = badChar[text[shift + j]] !== undefined ? j - badChar[text[shift + j]] : j + 1;
+                    const nextShift = shift + Math.max(1, badCharShift);
+                    
+                    steps.push({
+                        textIndex: shift + j,
+                        patternIndex: j,
+                        patternPosition: shift,
+                        mismatch: true,
+                        badCharShift: badCharShift,
+                        shift: shift,
+                        nextShift: nextShift,
+                        matches: [...matches],
+                        comparisons: comparisons,
+                        pseudoLine: 14,
+                        explanation: `Mismatch at text[${shift + j}]='${text[shift + j]}' and pattern[${j}]='${pattern[j]}'. Using bad character rule to shift by ${badCharShift} positions.`,
+                        highlightVar: 'i'
+                    });
+                    
+                    shift = nextShift;
                 }
             }
             
@@ -1861,6 +2441,8 @@
             patternRow.innerHTML = '';
             statusBar.innerHTML = '';
             matches = [];
+            comparisons = 0;
+            naiveComparisons = 0;
             
             // Initialize pseudocode
             initializePseudocode();
@@ -1896,7 +2478,10 @@
             }
             
             // Reset variables
-            updateVariables(0, 0, []);
+            updateVariables(0, 0, [], 0);
+            
+            // Hide step explanation initially
+            stepExplanation.style.display = 'none';
             
             return true;
         }
@@ -1918,11 +2503,10 @@
             }
             
             // Update window position
-            if (step.patternPosition !== undefined) {
-                const windowWidth = pattern.length * 49; // 45px width + 4px gap
-                windowOverlay.style.width = `${windowWidth}px`;
-                windowOverlay.style.left = `${step.patternPosition * 49}px`;
-            }
+            const patternPosition = step.patternPosition !== undefined ? step.patternPosition : (step.shift !== undefined ? step.shift : 0);
+            const windowWidth = pattern.length * 49; // 45px width + 4px gap
+            windowOverlay.style.width = `${windowWidth}px`;
+            windowOverlay.style.left = `${patternPosition * 49}px`;
             
             // Handle match/mismatch
             if (step.isMatch) {
@@ -1952,9 +2536,18 @@
                 updatePseudocodeHighlight(step.pseudoLine);
             }
             
-            // Update variables
-            if (step.i !== undefined && step.j !== undefined && step.matches !== undefined) {
-                updateVariables(step.i, step.j, step.matches);
+            // Update variables with highlighting
+            const i = step.i !== undefined ? step.i : (step.shift !== undefined ? step.shift : 0);
+            const j = step.j !== undefined ? step.j : 0;
+            updateVariables(i, j, step.matches || [], step.comparisons || 0, step.highlightVar);
+            
+            // Update story content if in story mode
+            if (algorithmStory.style.display !== 'none' && step.explanation) {
+                const storyParagraph = document.createElement('p');
+                storyParagraph.className = 'story-paragraph';
+                storyParagraph.innerHTML = step.explanation;
+                storyContent.appendChild(storyParagraph);
+                storyContent.scrollTop = storyContent.scrollHeight;
             }
             
             // Show status message
@@ -1994,6 +2587,11 @@
             isPaused = false;
             startBtn.disabled = true;
             haltBtn.disabled = false;
+            
+            // Reset story content if in story mode
+            if (algorithmStory.style.display !== 'none') {
+                updateStoryContent();
+            }
             
             let steps;
             if (currentAlgorithm === 'kmp') {
@@ -2081,6 +2679,8 @@
             isPaused = false;
             currentStep = 0;
             matches = [];
+            comparisons = 0;
+            naiveComparisons = 0;
             
             clearTimeout(animationTimeout);
             
@@ -2093,11 +2693,15 @@
             tableWrapper.innerHTML = '';
             statusBar.innerHTML = '';
             pseudocodeLive.innerHTML = '';
+            stepExplanation.style.display = 'none';
             
             windowOverlay.style.width = '0px';
             windowOverlay.style.left = '0px';
             
-            updateVariables(0, 0, []);
+            updateVariables(0, 0, [], 0);
+            
+            // Reset story content
+            updateStoryContent();
         }
 
         // Event Listeners
