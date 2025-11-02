@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Algorithm Visualizer Pro</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+        
+        :root {
+            /* Professional color scheme */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #f1f5f9;
+            --bg-tertiary: #e2e8f0;
+            --bg-glass: rgba(255, 255, 255, 0.7);
+            --bg-glass-hover: rgba(255, 255, 255, 0.9);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-tertiary: #64748b;
+            --accent-primary: #3b82f6;
+            --accent-secondary: #6366f1;
+            --accent-tertiary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-error: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #6366f1 100%);
+            --gradient-secondary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-tertiary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%);
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+            --shadow-glow-purple: 0 0 20px rgba(99, 102, 241, 0.3);
+            --shadow-glow-pink: 0 0 20px rgba(139, 92, 246, 0.3);
+            --border-radius: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-xl: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --bg-glass: rgba(30, 41, 59, 0.7);
+            --bg-glass-hover: rgba(30, 41, 59, 0.9);
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        /* Advanced Background */
+        .bg-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .bg-gradient {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+            animation: bgRotate 30s linear infinite;
+        }
+
+        @keyframes bgRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .bg-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: bgMove 20s linear infinite;
+        }
+
+        @keyframes bgMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .floating-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.15;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .orb1 {
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-primary);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb2 {
+            width: 200px;
+            height: 200px;
+            background: var(--gradient-secondary);
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .orb3 {
+            width: 250px;
+            height: 250px;
+            background: var(--gradient-tertiary);
+            bottom: 10%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 100;
+            padding: 1.5rem 0;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: logoShine 3s infinite;
+        }
+
+        @keyframes logoShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1.25rem;
+        }
+
+        .theme-toggle:hover {
+            background: var(--bg-glass-hover);
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Navigation Bar */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 90;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .nav-list {
+            display: flex;
+            list-style: none;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 1rem 1.5rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            text-decoration: none;
+            transition: var(--transition);
+            border-radius: var(--border-radius);
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--accent-primary);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 1.5rem;
+            right: 1.5rem;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section */
+        section {
+            margin-bottom: 2rem;
+            scroll-margin-top: 80px;
+        }
+
+        /* Input Section */
+        .input-section {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius-xl);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            color: var(--text-primary);
+            transition: var(--transition);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-tertiary);
+            font-size: 1.25rem;
+        }
+
+        /* Algorithm Selector */
+        .algorithm-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .algo-card {
+            padding: 1.5rem;
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            border-radius: var(--border-radius-lg);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .algo-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .algo-card.active {
+            border-color: var(--accent-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .algo-card.active::before {
+            opacity: 0.1;
+        }
+
+        .algo-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .algo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .algo-name {
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .algo-description {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Visualization Section - Side by Side Layout */
+        .visualization-section {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius-xl);
+            padding: 2.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .visualization-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .visualization-panel {
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .visualization-canvas {
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            min-height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .string-row {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .char-cell {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border: 2px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius);
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .char-index {
+            position: absolute;
+            top: -8px;
+            font-size: 0.625rem;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+
+        .char-cell.comparing {
+            animation: comparePulse 1s infinite;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        @keyframes comparePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .char-cell.match {
+            background: var(--gradient-success);
+            color: white;
+            transform: scale(1.1);
+            animation: matchBounce 0.5s ease-out;
+        }
+
+        @keyframes matchBounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1.1); }
+        }
+
+        .char-cell.mismatch {
+            background: var(--gradient-secondary);
+            color: white;
+            animation: mismatchShake 0.5s ease-out;
+        }
+
+        @keyframes mismatchShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .window-overlay {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            border: 3px solid var(--accent-primary);
+            border-radius: var(--border-radius);
+            background: rgba(59, 130, 246, 0.05);
+            pointer-events: none;
+            transition: var(--transition);
+            box-shadow: var(--shadow-glow);
+            z-index: 1;
+        }
+
+        /* Live Pseudocode */
+        .pseudocode-live {
+            background: var(--bg-secondary);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .pseudocode-line {
+            padding: 0.25rem 0.5rem;
+            margin: 0.125rem 0;
+            border-radius: 4px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .pseudocode-line.active {
+            background: rgba(59, 130, 246, 0.1);
+            border-left: 3px solid var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .pseudocode-line.executed {
+            opacity: 0.6;
+        }
+
+        .pseudocode-keyword {
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+
+        .pseudocode-comment {
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+
+        .pseudocode-function {
+            color: var(--accent-secondary);
+            font-weight: 600;
+        }
+
+        .pseudocode-variable {
+            color: var(--accent-tertiary);
+        }
+
+        .pseudocode-string {
+            color: var(--accent-success);
+        }
+
+        .variable-tracker {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-radius: var(--border-radius);
+            font-size: 0.875rem;
+        }
+
+        .variable-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.25rem 0;
+        }
+
+        .variable-name {
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .variable-value {
+            color: var(--text-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.875rem 1.75rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+
+        .btn:hover::before {
+            transform: translateX(100%);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 2px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--gradient-secondary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: auto;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+        }
+
+        .speed-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .speed-slider {
+            width: 120px;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(148, 163, 184, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .speed-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .speed-value {
+            font-size: 0.875rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            min-width: 50px;
+        }
+
+        /* Status Bar */
+        .status-bar {
+            margin-top: 1.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .status-icon {
+            font-size: 1.25rem;
+        }
+
+        .status-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .status-bar.success {
+            border-left-color: var(--accent-success);
+        }
+
+        .status-bar.error {
+            border-left-color: var(--accent-error);
+        }
+
+        .status-bar.info {
+            border-left-color: var(--accent-primary);
+        }
+
+        /* Table Section */
+        .table-section {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius-xl);
+            padding: 2.5rem;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-top: 1.5rem;
+        }
+
+        .algo-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+
+        .algo-table th {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .algo-table th:first-child {
+            border-top-left-radius: var(--border-radius);
+        }
+
+        .algo-table th:last-child {
+            border-top-right-radius: var(--border-radius);
+        }
+
+        .algo-table td {
+            padding: 1rem;
+            text-align: center;
+            background: var(--bg-tertiary);
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        /* Info Section */
+        .info-section {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius-xl);
+            padding: 2.5rem;
+        }
+
+        .tab-navigation {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            color: var(--text-primary);
+        }
+
+        .tab-btn.active::after {
+            transform: scaleX(1);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius-lg);
+            padding: 1.5rem;
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .info-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.25rem;
+        }
+
+        .info-card-title {
+            font-weight: 700;
+            font-size: 1.125rem;
+        }
+
+        .info-card-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .complexity-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .complexity-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .complexity-badge {
+            padding: 0.25rem 0.75rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .rule-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .rule-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .rule-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .visualization-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .input-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .algorithm-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .control-panel {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .speed-control {
+                margin-left: 0;
+                justify-content: space-between;
+            }
+
+            .char-cell {
+                width: 40px;
+                height: 40px;
+                font-size: 0.875rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-list {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-container">
+        <div class="bg-gradient"></div>
+        <div class="bg-grid"></div>
+        <div class="floating-orbs">
+            <div class="orb orb1"></div>
+            <div class="orb orb2"></div>
+            <div class="orb orb3"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-section">
+                <div class="logo">SA</div>
+                <div class="logo-text">
+                    <div class="logo-title">String Algorithm Visualizer</div>
+                    <div class="logo-subtitle">Advanced Pattern Matching Analysis</div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="themeToggle">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#input" class="nav-link active">Input</a></li>
+                <li class="nav-item"><a href="#visualization" class="nav-link">Visualization</a></li>
+                <li class="nav-item"><a href="#analysis" class="nav-link">Analysis</a></li>
+                <li class="nav-item"><a href="#documentation" class="nav-link">Documentation</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section id="input" class="input-section">
+            <div class="input-grid">
+                <div class="input-group">
+                    <label class="input-label" for="textInput">Text String</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="textInput" class="input-field" placeholder="Enter text to search in..." value="ABABDABACDABABCABAB">
+                        <span class="input-icon">📝</span>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="patternInput">Pattern String</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="patternInput" class="input-field" placeholder="Enter pattern to find..." value="ABABCABAB">
+                        <span class="input-icon">🔍</span>
+                    </div>
+                </div>
+            </div>
+            <div class="algorithm-selector">
+                <div class="algo-card active" id="kmpCard">
+                    <div class="algo-header">
+                        <div class="algo-icon">KMP</div>
+                        <div class="algo-name">Knuth-Morris-Pratt</div>
+                    </div>
+                    <div class="algo-description">Efficient pattern matching using LPS array preprocessing</div>
+                </div>
+                <div class="algo-card" id="bmCard">
+                    <div class="algo-header">
+                        <div class="algo-icon">BM</div>
+                        <div class="algo-name">Boyer-Moore</div>
+                    </div>
+                    <div class="algo-description">Fast matching using bad character heuristic</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="visualization" class="visualization-section">
+            <div class="section-header">
+                <h2 class="section-title">Live Visualization</h2>
+            </div>
+            
+            <div class="visualization-container">
+                <!-- Main Visualizer Panel -->
+                <div class="visualization-panel">
+                    <h3 class="panel-title">String Matching</h3>
+                    <div class="visualization-canvas">
+                        <div class="string-row" id="textRow"></div>
+                        <div class="string-row" id="patternRow"></div>
+                        <div class="window-overlay" id="windowOverlay"></div>
+                    </div>
+                </div>
+
+                <!-- Live Pseudocode Panel -->
+                <div class="visualization-panel">
+                    <h3 class="panel-title">Live Pseudocode</h3>
+                    <div class="pseudocode-live" id="pseudocodeLive"></div>
+                    <div class="variable-tracker" id="variableTracker">
+                        <div class="variable-item">
+                            <span class="variable-name">i:</span>
+                            <span class="variable-value" id="varI">0</span>
+                        </div>
+                        <div class="variable-item">
+                            <span class="variable-name">j:</span>
+                            <span class="variable-value" id="varJ">0</span>
+                        </div>
+                        <div class="variable-item">
+                            <span class="variable-name">matches:</span>
+                            <span class="variable-value" id="varMatches">[]</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button class="btn btn-primary" id="startBtn">
+                    <span>▶</span>
+                    <span>Start</span>
+                </button>
+                <button class="btn btn-danger" id="haltBtn" disabled>
+                    <span>⏸</span>
+                    <span>Halt</span>
+                </button>
+                <button class="btn btn-secondary" id="resetBtn">
+                    <span>↺</span>
+                    <span>Reset</span>
+                </button>
+                <div class="speed-control">
+                    <span class="speed-label">Speed</span>
+                    <input type="range" id="speedSlider" class="speed-slider" min="100" max="2000" value="1000">
+                    <span class="speed-value" id="speedValue">1000ms</span>
+                </div>
+            </div>
+            <div id="statusBar"></div>
+        </section>
+
+        <section id="analysis" class="table-section">
+            <div class="section-header">
+                <h2 class="section-title">Algorithm Analysis Table</h2>
+            </div>
+            <div class="table-wrapper" id="tableWrapper"></div>
+        </section>
+
+        <section id="documentation" class="info-section">
+            <div class="section-header">
+                <h2 class="section-title">Algorithm Documentation</h2>
+            </div>
+            <div class="tab-navigation">
+                <button class="tab-btn active" data-tab="complexity">Complexity Analysis</button>
+                <button class="tab-btn" data-tab="rules">Algorithm Rules</button>
+            </div>
+            <div class="tab-content active" id="complexity">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-card-icon">⚡</div>
+                            <div class="info-card-title">KMP Algorithm</div>
+                        </div>
+                        <div class="info-card-content">
+                            <ul class="complexity-list">
+                                <li class="complexity-item">
+                                    <span class="complexity-badge">Preprocessing</span>
+                                    <span>O(m) time complexity</span>
+                                </li>
+                                <li class="complexity-item">
+                                    <span class="complexity-badge">Searching</span>
+                                    <span>O(n) time complexity</span>
+                                </li>
+                                <li class="complexity-item">
+                                    <span class="complexity-badge">Total</span>
+                                    <span>O(n + m) overall</span>
+                                </li>
+                                <li class="complexity-item">
+                                    <span class="complexity-badge">Space</span>
+                                    <span>O(m) auxiliary space</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-card-icon">🚀</div>
+                            <div class="info-card-title">Boyer-Moore Algorithm</div>
+                        </div>
+                        <div class="info-card-content">
+                            <ul class="complexity-list">
+                                <li class="complexity-item">
+                                    <span class="complexity-badge">Preprocessing</span>
+                                    <span>O(m + σ) time</span>
+                                </li>
+                                <li class="complexity-item">
+                                    <span class="complexity-badge">Best Case</span>
+                                    <span>O(n/m) comparisons</span>
+                                </li>
+                                <li class="complexity-item">
+                                    <span class="complexity-badge">Worst Case</span>
+                                    <span>O(nm) comparisons</span>
+                                </li>
+                                <li class="complexity-item">
+                                    <span class="complexity-badge">Average</span>
+                                    <span>O(n) for random patterns</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="rules">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-card-icon">📋</div>
+                            <div class="info-card-title">KMP Algorithm Rules</div>
+                        </div>
+                        <div class="info-card-content">
+                            <ul class="rule-list">
+                                <li class="rule-item">Preprocess pattern to create LPS (Longest Prefix Suffix) table</li>
+                                <li class="rule-item">LPS[i] stores length of longest proper prefix which is also suffix for pattern[0..i]</li>
+                                <li class="rule-item">On mismatch, use LPS table to skip unnecessary comparisons</li>
+                                <li class="rule-item">If pattern[j] matches text[i], increment both indices</li>
+                                <li class="rule-item">If mismatch and j > 0, set j = LPS[j-1]</li>
+                                <li class="rule-item">If mismatch and j = 0, increment text index only</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <div class="info-card-icon">📋</div>
+                            <div class="info-card-title">Boyer-Moore Algorithm Rules</div>
+                        </div>
+                        <div class="info-card-content">
+                            <ul class="rule-list">
+                                <li class="rule-item">Preprocess pattern to create bad character table</li>
+                                <li class="rule-item">Bad character table stores last occurrence of each character</li>
+                                <li class="rule-item">Start matching from the end of the pattern (right to left)</li>
+                                <li class="rule-item">On mismatch, shift pattern based on bad character rule</li>
+                                <li class="rule-item">Shift = max(1, j - lastOccurrence[text[i]])</li>
+                                <li class="rule-item">If all characters match, pattern found at position i - m + 1</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Theme Management
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                htmlElement.removeAttribute('data-theme');
+                themeIcon.textContent = '🌙';
+                localStorage.setItem('theme', 'light');
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeIcon.textContent = '☀️';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            themeIcon.textContent = '☀️';
+        }
+
+        // Navigation Management
+        const navLinks = document.querySelectorAll('.nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+                
+                const targetId = link.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Update active nav link on scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 100) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Tab Management
+        const tabButtons = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabName = button.getAttribute('data-tab');
+                
+                const parentSection = button.closest('section');
+                const sectionTabs = parentSection.querySelectorAll('.tab-btn');
+                const sectionContents = parentSection.querySelectorAll('.tab-content');
+                
+                sectionTabs.forEach(btn => btn.classList.remove('active'));
+                sectionContents.forEach(content => content.classList.remove('active'));
+                
+                button.classList.add('active');
+                parentSection.querySelector(`#${tabName}`).classList.add('active');
+            });
+        });
+
+        // Algorithm Selection
+        const kmpCard = document.getElementById('kmpCard');
+        const bmCard = document.getElementById('bmCard');
+        let currentAlgorithm = 'kmp';
+
+        kmpCard.addEventListener('click', () => {
+            currentAlgorithm = 'kmp';
+            kmpCard.classList.add('active');
+            bmCard.classList.remove('active');
+            resetVisualization();
+        });
+
+        bmCard.addEventListener('click', () => {
+            currentAlgorithm = 'boyer-moore';
+            bmCard.classList.add('active');
+            kmpCard.classList.remove('active');
+            resetVisualization();
+        });
+
+        // Input Elements
+        const textInput = document.getElementById('textInput');
+        const patternInput = document.getElementById('patternInput');
+        const startBtn = document.getElementById('startBtn');
+        const haltBtn = document.getElementById('haltBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const speedSlider = document.getElementById('speedSlider');
+        const speedValue = document.getElementById('speedValue');
+
+        // Display Elements
+        const textRow = document.getElementById('textRow');
+        const patternRow = document.getElementById('patternRow');
+        const windowOverlay = document.getElementById('windowOverlay');
+        const tableWrapper = document.getElementById('tableWrapper');
+        const statusBar = document.getElementById('statusBar');
+        const pseudocodeLive = document.getElementById('pseudocodeLive');
+        const varI = document.getElementById('varI');
+        const varJ = document.getElementById('varJ');
+        const varMatches = document.getElementById('varMatches');
+
+        // Speed Control
+        speedSlider.addEventListener('input', () => {
+            speedValue.textContent = `${speedSlider.value}ms`;
+        });
+
+        // Visualization State
+        let text = '';
+        let pattern = '';
+        let isRunning = false;
+        let isPaused = false;
+        let animationSpeed = 1000;
+        let currentStep = 0;
+        let matches = [];
+        let animationTimeout;
+
+        // Pseudocode templates
+        const kmpPseudocode = [
+            { type: 'function', text: '<span class="pseudocode-keyword">function</span> <span class="pseudocode-function">KMPSearch</span>(text, pattern):' },
+            { type: 'variable', text: '    n = length of text' },
+            { type: 'variable', text: '    m = length of pattern' },
+            { type: 'variable', text: '    lps = computeLPSArray(pattern)' },
+            { type: 'variable', text: '    i = 0  <span class="pseudocode-comment">// index for text</span>' },
+            { type: 'variable', text: '    j = 0  <span class="pseudocode-comment">// index for pattern</span>' },
+            { type: 'loop', text: '    <span class="pseudocode-keyword">while</span> i < n:' },
+            { type: 'condition', text: '        <span class="pseudocode-keyword">if</span> pattern[j] == text[i]:' },
+            { type: 'action', text: '            i = i + 1' },
+            { type: 'action', text: '            j = j + 1' },
+            { type: 'condition', text: '            <span class="pseudocode-keyword">if</span> j == m:' },
+            { type: 'action', text: '                print(<span class="pseudocode-string">"Pattern found at index "</span> + (i-j))' },
+            { type: 'action', text: '                j = lps[j-1]' },
+            { type: 'condition', text: '        <span class="pseudocode-keyword">else</span>:' },
+            { type: 'condition', text: '            <span class="pseudocode-keyword">if</span> j != 0:' },
+            { type: 'action', text: '                j = lps[j-1]' },
+            { type: 'condition', text: '            <span class="pseudocode-keyword">else</span>:' },
+            { type: 'action', text: '                i = i + 1' }
+        ];
+
+        const bmPseudocode = [
+            { type: 'function', text: '<span class="pseudocode-keyword">function</span> <span class="pseudocode-function">boyerMooreSearch</span>(text, pattern):' },
+            { type: 'variable', text: '    n = length of text' },
+            { type: 'variable', text: '    m = length of pattern' },
+            { type: 'variable', text: '    badChar = computeBadCharTable(pattern)' },
+            { type: 'variable', text: '    shift = 0' },
+            { type: 'loop', text: '    <span class="pseudocode-keyword">while</span> shift <= (n - m):' },
+            { type: 'variable', text: '        j = m - 1' },
+            { type: 'loop', text: '        <span class="pseudocode-keyword">while</span> j >= 0 and pattern[j] == text[shift + j]:' },
+            { type: 'action', text: '            j = j - 1' },
+            { type: 'condition', text: '        <span class="pseudocode-keyword">if</span> j < 0:' },
+            { type: 'action', text: '            print(<span class="pseudocode-string">"Pattern found at index "</span> + shift)' },
+            { type: 'condition', text: '            <span class="pseudocode-keyword">if</span> shift + m < n:' },
+            { type: 'action', text: '                shift = shift + m - badChar[ASCII(text[shift + m])]' },
+            { type: 'condition', text: '            <span class="pseudocode-keyword">else</span>:' },
+            { type: 'action', text: '                shift = shift + 1' },
+            { type: 'condition', text: '        <span class="pseudocode-keyword">else</span>:' },
+            { type: 'action', text: '            shift = shift + max(1, j - badChar[ASCII(text[shift + j])])' }
+        ];
+
+        // Initialize pseudocode display
+        function initializePseudocode() {
+            const pseudocode = currentAlgorithm === 'kmp' ? kmpPseudocode : bmPseudocode;
+            pseudocodeLive.innerHTML = '';
+            
+            pseudocode.forEach((line, index) => {
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'pseudocode-line';
+                lineDiv.id = `pseudo-line-${index}`;
+                lineDiv.innerHTML = line.text;
+                pseudocodeLive.appendChild(lineDiv);
+            });
+        }
+
+        // Update pseudocode highlighting
+        function updatePseudocodeHighlight(lineIndex) {
+            document.querySelectorAll('.pseudocode-line').forEach((line, index) => {
+                if (index < lineIndex) {
+                    line.classList.add('executed');
+                    line.classList.remove('active');
+                } else if (index === lineIndex) {
+                    line.classList.add('active');
+                    line.classList.remove('executed');
+                } else {
+                    line.classList.remove('active', 'executed');
+                }
+            });
+        }
+
+        // Update variable tracker
+        function updateVariables(i, j, matches) {
+            varI.textContent = i;
+            varJ.textContent = j;
+            varMatches.textContent = `[${matches.join(', ')}]`;
+        }
+
+        // KMP Algorithm Implementation
+        function computeLPSArray() {
+            const lps = new Array(pattern.length).fill(0);
+            let len = 0;
+            let i = 1;
+            
+            while (i < pattern.length) {
+                if (pattern[i] === pattern[len]) {
+                    len++;
+                    lps[i] = len;
+                    i++;
+                } else {
+                    if (len !== 0) {
+                        len = lps[len - 1];
+                    } else {
+                        lps[i] = 0;
+                        i++;
+                    }
+                }
+            }
+            
+            return lps;
+        }
+
+        function displayLPSTable(lps) {
+            let tableHTML = `
+                <table class="algo-table">
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+            `;
+            
+            for (let i = 0; i < pattern.length; i++) {
+                tableHTML += `<th>${i}</th>`;
+            }
+            
+            tableHTML += `
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pattern</strong></td>
+            `;
+            
+            for (let i = 0; i < pattern.length; i++) {
+                tableHTML += `<td>${pattern[i]}</td>`;
+            }
+            
+            tableHTML += `
+                        </tr>
+                        <tr>
+                            <td><strong>LPS</strong></td>
+            `;
+            
+            for (let i = 0; i < lps.length; i++) {
+                tableHTML += `<td>${lps[i]}</td>`;
+            }
+            
+            tableHTML += `
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            
+            tableWrapper.innerHTML = tableHTML;
+        }
+
+        function KMPSearch() {
+            const lps = computeLPSArray();
+            displayLPSTable(lps);
+            
+            let i = 0; // index for text
+            let j = 0; // index for pattern
+            matches = [];
+            
+            const steps = [];
+            
+            while (i < text.length) {
+                steps.push({
+                    textIndex: i,
+                    patternIndex: j,
+                    patternPosition: i - j,
+                    matched: j === pattern.length - 1 && text[i] === pattern[j],
+                    isMatch: text[i] === pattern[j],
+                    i: i,
+                    j: j,
+                    matches: [...matches],
+                    pseudoLine: j === pattern.length - 1 && text[i] === pattern[j] ? 10 : 
+                               text[i] === pattern[j] ? 7 : 
+                               j !== 0 ? 12 : 14
+                });
+                
+                if (pattern[j] === text[i]) {
+                    i++;
+                    j++;
+                    
+                    if (j === pattern.length) {
+                        matches.push(i - j);
+                        steps.push({
+                            textIndex: i - 1,
+                            patternIndex: j - 1,
+                            patternPosition: i - j,
+                            matched: true,
+                            isMatch: true,
+                            found: true,
+                            i: i,
+                            j: j,
+                            matches: [...matches],
+                            pseudoLine: 10
+                        });
+                        j = lps[j - 1];
+                    }
+                } else {
+                    if (j !== 0) {
+                        steps.push({
+                            textIndex: i,
+                            patternIndex: j,
+                            patternPosition: i - j,
+                            mismatch: true,
+                            nextPatternIndex: lps[j - 1],
+                            i: i,
+                            j: j,
+                            matches: [...matches],
+                            pseudoLine: 12
+                        });
+                        j = lps[j - 1];
+                    } else {
+                        steps.push({
+                            textIndex: i,
+                            patternIndex: j,
+                            patternPosition: i - j,
+                            mismatch: true,
+                            nextPatternIndex: 0,
+                            i: i,
+                            j: j,
+                            matches: [...matches],
+                            pseudoLine: 14
+                        });
+                        i++;
+                    }
+                }
+            }
+            
+            return steps;
+        }
+
+        // Boyer-Moore Algorithm Implementation
+        function computeBadCharacterTable() {
+            const badChar = {};
+            
+            for (let i = 0; i < pattern.length; i++) {
+                badChar[pattern[i]] = i;
+            }
+            
+            return badChar;
+        }
+
+        function displayBadCharacterTable(badChar) {
+            const chars = Object.keys(badChar).sort();
+            
+            let tableHTML = `
+                <table class="algo-table">
+                    <thead>
+                        <tr>
+                            <th>Character</th>
+            `;
+            
+            for (const char of chars) {
+                tableHTML += `<th>${char}</th>`;
+            }
+            
+            tableHTML += `
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Last Position</strong></td>
+            `;
+            
+            for (const char of chars) {
+                tableHTML += `<td>${badChar[char]}</td>`;
+            }
+            
+            tableHTML += `
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            
+            tableWrapper.innerHTML = tableHTML;
+        }
+
+        function boyerMooreSearch() {
+            const badChar = computeBadCharacterTable();
+            displayBadCharacterTable(badChar);
+            
+            let n = text.length;
+            let m = pattern.length;
+            let i = 0; // index for text
+            matches = [];
+            
+            const steps = [];
+            
+            while (i <= n - m) {
+                let j = m - 1; // index for pattern (starting from the end)
+                
+                while (j >= 0 && pattern[j] === text[i + j]) {
+                    steps.push({
+                        textIndex: i + j,
+                        patternIndex: j,
+                        patternPosition: i,
+                        isMatch: true,
+                        direction: 'backward',
+                        i: i,
+                        j: j,
+                        matches: [...matches],
+                        pseudoLine: 6
+                    });
+                    j--;
+                }
+                
+                if (j < 0) {
+                    matches.push(i);
+                    steps.push({
+                        textIndex: i,
+                        patternIndex: 0,
+                        patternPosition: i,
+                        found: true,
+                        i: i,
+                        j: j,
+                        matches: [...matches],
+                        pseudoLine: 8
+                    });
+                    
+                    // Shift pattern based on bad character rule
+                    i += (i + m < n) ? m - badChar[text[i + m]] || 1 : 1;
+                } else {
+                    steps.push({
+                        textIndex: i + j,
+                        patternIndex: j,
+                        patternPosition: i,
+                        mismatch: true,
+                        badCharShift: badChar[text[i + j]] !== undefined ? j - badChar[text[i + j]] : j + 1,
+                        i: i,
+                        j: j,
+                        matches: [...matches],
+                        pseudoLine: 14
+                    });
+                    
+                    // Shift pattern based on bad character rule
+                    i += badChar[text[i + j]] !== undefined ? Math.max(1, j - badChar[text[i + j]]) : j + 1;
+                }
+            }
+            
+            return steps;
+        }
+
+        // Visualization Functions
+        function initializeVisualization() {
+            text = textInput.value;
+            pattern = patternInput.value;
+            
+            if (!text || !pattern) {
+                showStatus('Please enter both text and pattern', 'error');
+                return false;
+            }
+            
+            if (pattern.length > text.length) {
+                showStatus('Pattern cannot be longer than text', 'error');
+                return false;
+            }
+            
+            // Clear displays
+            textRow.innerHTML = '';
+            patternRow.innerHTML = '';
+            statusBar.innerHTML = '';
+            matches = [];
+            
+            // Initialize pseudocode
+            initializePseudocode();
+            
+            // Create text display
+            for (let i = 0; i < text.length; i++) {
+                const charCell = document.createElement('div');
+                charCell.className = 'char-cell';
+                charCell.textContent = text[i];
+                charCell.id = `text-${i}`;
+                
+                const indexSpan = document.createElement('span');
+                indexSpan.className = 'char-index';
+                indexSpan.textContent = i;
+                charCell.appendChild(indexSpan);
+                
+                textRow.appendChild(charCell);
+            }
+            
+            // Create pattern display
+            for (let i = 0; i < pattern.length; i++) {
+                const charCell = document.createElement('div');
+                charCell.className = 'char-cell';
+                charCell.textContent = pattern[i];
+                charCell.id = `pattern-${i}`;
+                
+                const indexSpan = document.createElement('span');
+                indexSpan.className = 'char-index';
+                indexSpan.textContent = i;
+                charCell.appendChild(indexSpan);
+                
+                patternRow.appendChild(charCell);
+            }
+            
+            // Reset variables
+            updateVariables(0, 0, []);
+            
+            return true;
+        }
+
+        function visualizeStep(step) {
+            // Clear previous highlights
+            document.querySelectorAll('.char-cell').forEach(cell => {
+                cell.classList.remove('comparing', 'match', 'mismatch');
+            });
+            
+            // Highlight current text character
+            if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
+                document.getElementById(`text-${step.textIndex}`).classList.add('comparing');
+            }
+            
+            // Highlight current pattern character
+            if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
+                document.getElementById(`pattern-${step.patternIndex}`).classList.add('comparing');
+            }
+            
+            // Update window position
+            if (step.patternPosition !== undefined) {
+                const windowWidth = pattern.length * 49; // 45px width + 4px gap
+                windowOverlay.style.width = `${windowWidth}px`;
+                windowOverlay.style.left = `${step.patternPosition * 49}px`;
+            }
+            
+            // Handle match/mismatch
+            if (step.isMatch) {
+                if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
+                    document.getElementById(`text-${step.textIndex}`).classList.remove('comparing');
+                    document.getElementById(`text-${step.textIndex}`).classList.add('match');
+                }
+                if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
+                    document.getElementById(`pattern-${step.patternIndex}`).classList.remove('comparing');
+                    document.getElementById(`pattern-${step.patternIndex}`).classList.add('match');
+                }
+            }
+            
+            if (step.mismatch) {
+                if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
+                    document.getElementById(`text-${step.textIndex}`).classList.remove('comparing');
+                    document.getElementById(`text-${step.textIndex}`).classList.add('mismatch');
+                }
+                if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
+                    document.getElementById(`pattern-${step.patternIndex}`).classList.remove('comparing');
+                    document.getElementById(`pattern-${step.patternIndex}`).classList.add('mismatch');
+                }
+            }
+            
+            // Update pseudocode highlighting
+            if (step.pseudoLine !== undefined) {
+                updatePseudocodeHighlight(step.pseudoLine);
+            }
+            
+            // Update variables
+            if (step.i !== undefined && step.j !== undefined && step.matches !== undefined) {
+                updateVariables(step.i, step.j, step.matches);
+            }
+            
+            // Show status message
+            if (step.found) {
+                showStatus(`✅ Pattern found at position ${step.patternPosition}`, 'success');
+            } else if (step.mismatch) {
+                if (currentAlgorithm === 'kmp') {
+                    showStatus(`❌ Mismatch! Pattern index will be set to ${step.nextPatternIndex}`, 'error');
+                } else {
+                    showStatus(`❌ Mismatch! Pattern will shift by ${step.badCharShift} positions`, 'error');
+                }
+            } else if (step.isMatch) {
+                showStatus(`✓ Characters match!`, 'info');
+            }
+        }
+
+        function showStatus(message, type) {
+            const iconMap = {
+                success: '✅',
+                error: '❌',
+                info: 'ℹ️'
+            };
+            
+            statusBar.className = `status-bar ${type}`;
+            statusBar.innerHTML = `
+                <span class="status-icon">${iconMap[type]}</span>
+                <span class="status-text">${message}</span>
+            `;
+        }
+
+        function startVisualization() {
+            if (!initializeVisualization()) {
+                return;
+            }
+            
+            isRunning = true;
+            isPaused = false;
+            startBtn.disabled = true;
+            haltBtn.disabled = false;
+            
+            let steps;
+            if (currentAlgorithm === 'kmp') {
+                steps = KMPSearch();
+            } else {
+                steps = boyerMooreSearch();
+            }
+            
+            currentStep = 0;
+            
+            function runNextStep() {
+                if (!isRunning || isPaused || currentStep >= steps.length) {
+                    if (currentStep >= steps.length) {
+                        isRunning = false;
+                        startBtn.disabled = false;
+                        haltBtn.disabled = true;
+                        
+                        if (matches.length > 0) {
+                            showStatus(`🎉 Pattern found at positions: ${matches.join(', ')}`, 'success');
+                        } else {
+                            showStatus('😔 Pattern not found in the text', 'error');
+                        }
+                    }
+                    return;
+                }
+                
+                visualizeStep(steps[currentStep]);
+                currentStep++;
+                
+                animationTimeout = setTimeout(runNextStep, animationSpeed);
+            }
+            
+            runNextStep();
+        }
+
+        function haltVisualization() {
+            if (!isRunning) return;
+            
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                clearTimeout(animationTimeout);
+                haltBtn.innerHTML = '<span>▶</span><span>Resume</span>';
+                showStatus('⏸ Visualization paused', 'info');
+            } else {
+                haltBtn.innerHTML = '<span>⏸</span><span>Halt</span>';
+                
+                // Continue from where we left off
+                let steps;
+                if (currentAlgorithm === 'kmp') {
+                    steps = KMPSearch();
+                } else {
+                    steps = boyerMooreSearch();
+                }
+                
+                function runNextStep() {
+                    if (!isRunning || isPaused || currentStep >= steps.length) {
+                        if (currentStep >= steps.length) {
+                            isRunning = false;
+                            startBtn.disabled = false;
+                            haltBtn.disabled = true;
+                            
+                            if (matches.length > 0) {
+                                showStatus(`🎉 Pattern found at positions: ${matches.join(', ')}`, 'success');
+                            } else {
+                                showStatus('😔 Pattern not found in the text', 'error');
+                            }
+                        }
+                        return;
+                    }
+                    
+                    visualizeStep(steps[currentStep]);
+                    currentStep++;
+                    
+                    animationTimeout = setTimeout(runNextStep, animationSpeed);
+                }
+                
+                runNextStep();
+                showStatus('▶ Visualization resumed', 'info');
+            }
+        }
+
+        function resetVisualization() {
+            isRunning = false;
+            isPaused = false;
+            currentStep = 0;
+            matches = [];
+            
+            clearTimeout(animationTimeout);
+            
+            startBtn.disabled = false;
+            haltBtn.disabled = true;
+            haltBtn.innerHTML = '<span>⏸</span><span>Halt</span>';
+            
+            textRow.innerHTML = '';
+            patternRow.innerHTML = '';
+            tableWrapper.innerHTML = '';
+            statusBar.innerHTML = '';
+            pseudocodeLive.innerHTML = '';
+            
+            windowOverlay.style.width = '0px';
+            windowOverlay.style.left = '0px';
+            
+            updateVariables(0, 0, []);
+        }
+
+        // Event Listeners
+        startBtn.addEventListener('click', startVisualization);
+        haltBtn.addEventListener('click', haltVisualization);
+        resetBtn.addEventListener('click', resetVisualization);
+
+        // Update animation speed
+        speedSlider.addEventListener('input', () => {
+            animationSpeed = parseInt(speedSlider.value);
+        });
+
+        // Initialize with default values
+        initializeVisualization();
+    </script>
+</body>
+</html>
