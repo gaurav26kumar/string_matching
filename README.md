@@ -32,8 +32,8 @@ It preprocesses the pattern to create an *LPS (Longest Prefix Suffix)* array tha
 1. Clone the repository:
 
    bash
-   git clone https://github.com/gaurav26kumar/KMP_Algorithm_Visualizer.git
-   cd KMP_Algorithm_Visualizer
+git clone [https://github.com/gaurav26kumar/KMP_Algorithm_Visualizer.git
+   cd KMP_Algorithm_Visualizer](https://github.com/gaurav26kumar/string_matching.git)
    
 
 2. Open the file:
