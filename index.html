@@ -71,9 +71,22 @@
             line-height: 1.6;
             overflow-x: hidden;
             transition: var(--transition);
+            /* Performance optimizations */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeSpeed;
         }
 
-        /* Advanced Background */
+        /* Performance: Reduce animations on mobile */
+        @media (max-width: 768px) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Advanced Background - Optimized */
         .bg-container {
             position: fixed;
             top: 0;
@@ -82,6 +95,14 @@
             height: 100%;
             z-index: -1;
             overflow: hidden;
+            /* Performance: Hide on mobile */
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .bg-container {
+                display: none;
+            }
         }
 
         .bg-gradient {
@@ -93,7 +114,14 @@
             background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
                         radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
                         radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
-            animation: bgRotate 30s linear infinite;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (min-width: 769px) {
+            .bg-gradient {
+                animation: bgRotate 30s linear infinite;
+            }
         }
 
         @keyframes bgRotate {
@@ -109,7 +137,14 @@
                 linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
             background-size: 50px 50px;
-            animation: bgMove 20s linear infinite;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (min-width: 769px) {
+            .bg-grid {
+                animation: bgMove 20s linear infinite;
+            }
         }
 
         @keyframes bgMove {
@@ -128,7 +163,14 @@
             border-radius: 50%;
             filter: blur(40px);
             opacity: 0.15;
-            animation: float 20s infinite ease-in-out;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (min-width: 769px) {
+            .orb {
+                animation: float 20s infinite ease-in-out;
+            }
         }
 
         .orb1 {
@@ -164,7 +206,7 @@
             66% { transform: translate(-20px, 20px) scale(0.9); }
         }
 
-        /* Header */
+        /* Header - Optimized */
         header {
             position: relative;
             z-index: 100;
@@ -172,6 +214,8 @@
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
         .header-content {
@@ -203,17 +247,21 @@
             box-shadow: var(--shadow-md);
             position: relative;
             overflow: hidden;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
-        .logo::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: logoShine 3s infinite;
+        @media (min-width: 769px) {
+            .logo::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+                animation: logoShine 3s infinite;
+            }
         }
 
         @keyframes logoShine {
@@ -261,15 +309,16 @@
             cursor: pointer;
             transition: var(--transition);
             font-size: 1.25rem;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
         .theme-toggle:hover {
             background: var(--bg-glass-hover);
             transform: scale(1.05);
-            box-shadow: var(--shadow-md);
         }
 
-        /* Navigation Bar */
+        /* Navigation Bar - Optimized */
         nav {
             position: sticky;
             top: 0;
@@ -277,6 +326,8 @@
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
         .nav-container {
@@ -303,6 +354,8 @@
             text-decoration: none;
             transition: var(--transition);
             border-radius: var(--border-radius);
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
         .nav-link:hover, .nav-link.active {
@@ -321,11 +374,13 @@
             border-radius: 3px 3px 0 0;
         }
 
-        /* Main Container */
+        /* Main Container - Optimized */
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 2rem;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
         /* Section */
@@ -334,7 +389,7 @@
             scroll-margin-top: 80px;
         }
 
-        /* Input Section */
+        /* Input Section - Mobile Optimized */
         .input-section {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
@@ -343,6 +398,14 @@
             padding: 2.5rem;
             position: relative;
             overflow: hidden;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .input-section {
+                padding: 1.5rem;
+            }
         }
 
         .input-section::before {
@@ -362,6 +425,14 @@
             margin-bottom: 2rem;
         }
 
+        @media (max-width: 768px) {
+            .input-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
         .input-group {
             position: relative;
         }
@@ -376,12 +447,21 @@
             letter-spacing: 0.05em;
         }
 
+        @media (max-width: 768px) {
+            .input-label {
+                font-size: 0.75rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+
         .input-wrapper {
             position: relative;
+            display: flex;
+            gap: 0.5rem;
         }
 
         .input-field {
-            width: 100%;
+            flex: 1;
             padding: 1rem 1.25rem;
             background: var(--bg-tertiary);
             border: 2px solid transparent;
@@ -390,6 +470,15 @@
             color: var(--text-primary);
             transition: var(--transition);
             font-family: 'JetBrains Mono', monospace;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .input-field {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
         }
 
         .input-field:focus {
@@ -405,13 +494,62 @@
             transform: translateY(-50%);
             color: var(--text-tertiary);
             font-size: 1.25rem;
+            pointer-events: none;
         }
 
-        /* Algorithm Selector */
+        @media (max-width: 768px) {
+            .input-icon {
+                right: 0.75rem;
+                font-size: 1rem;
+            }
+        }
+
+        .generate-btn {
+            padding: 0.875rem 1.25rem;
+            background: var(--gradient-tertiary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            white-space: nowrap;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .generate-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Algorithm Selector - Mobile Optimized */
         .algorithm-selector {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .algorithm-selector {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
         }
 
         .algo-card {
@@ -423,6 +561,14 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .algo-card {
+                padding: 1rem;
+            }
         }
 
         .algo-card::before {
@@ -468,9 +614,22 @@
             color: white;
         }
 
+        @media (max-width: 768px) {
+            .algo-icon {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
         .algo-name {
             font-weight: 700;
             font-size: 1.125rem;
+        }
+
+        @media (max-width: 768px) {
+            .algo-name {
+                font-size: 1rem;
+            }
         }
 
         .algo-description {
@@ -480,13 +639,27 @@
             z-index: 1;
         }
 
-        /* Visualization Section - Improved Layout */
+        @media (max-width: 768px) {
+            .algo-description {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Visualization Section - Mobile Optimized */
         .visualization-section {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: var(--border-radius-xl);
             padding: 2.5rem;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .visualization-section {
+                padding: 1.5rem;
+            }
         }
 
         .section-header {
@@ -494,6 +667,15 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
         }
 
         .section-title {
@@ -505,6 +687,12 @@
             background-clip: text;
         }
 
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+
         .visualization-container {
             display: grid;
             grid-template-columns: 1fr;
@@ -512,10 +700,23 @@
             margin-bottom: 2rem;
         }
 
+        @media (max-width: 768px) {
+            .visualization-container {
+                gap: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+        }
+
         .visualization-panel {
             background: var(--bg-tertiary);
             border-radius: var(--border-radius-lg);
             padding: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .visualization-panel {
+                padding: 1rem;
+            }
         }
 
         .panel-title {
@@ -525,13 +726,28 @@
             color: var(--text-primary);
         }
 
+        @media (max-width: 768px) {
+            .panel-title {
+                font-size: 1rem;
+                margin-bottom: 0.75rem;
+            }
+        }
+
         .visualization-canvas {
             background: var(--bg-secondary);
             border-radius: var(--border-radius);
             padding: 1.5rem;
             min-height: 200px;
             position: relative;
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .visualization-canvas {
+                padding: 1rem;
+                min-height: 150px;
+            }
         }
 
         .string-row {
@@ -540,6 +756,15 @@
             margin-bottom: 1rem;
             position: relative;
             z-index: 2;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .string-row {
+                gap: 0.25rem;
+                margin-bottom: 0.75rem;
+            }
         }
 
         .char-cell {
@@ -557,6 +782,16 @@
             font-family: 'JetBrains Mono', monospace;
             position: relative;
             transition: var(--transition);
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .char-cell {
+                width: 35px;
+                height: 35px;
+                font-size: 0.875rem;
+            }
         }
 
         .char-index {
@@ -565,6 +800,13 @@
             font-size: 0.625rem;
             color: var(--text-tertiary);
             font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .char-index {
+                font-size: 0.5rem;
+                top: -6px;
+            }
         }
 
         .char-cell.comparing {
@@ -614,14 +856,23 @@
             transition: var(--transition);
             box-shadow: var(--shadow-glow);
             z-index: 1;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
 
-        /* Enhanced Pseudocode Section - Fixed Overflow */
+        /* Enhanced Pseudocode Section - Mobile Optimized */
         .pseudocode-section {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
             margin-top: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .pseudocode-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
         }
 
         .pseudocode-container {
@@ -634,6 +885,14 @@
             height: 400px;
             display: flex;
             flex-direction: column;
+        }
+
+        @media (max-width: 768px) {
+            .pseudocode-container {
+                padding: 1rem;
+                font-size: 0.75rem;
+                height: 300px;
+            }
         }
 
         .pseudocode-header {
@@ -649,6 +908,12 @@
             font-weight: 600;
             color: var(--text-primary);
             font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .pseudocode-title {
+                font-size: 0.875rem;
+            }
         }
 
         .pseudocode-toggle {
@@ -667,6 +932,13 @@
             transition: var(--transition);
         }
 
+        @media (max-width: 768px) {
+            .toggle-btn {
+                font-size: 0.625rem;
+                padding: 0.2rem 0.4rem;
+            }
+        }
+
         .toggle-btn.active {
             background: var(--accent-primary);
             color: white;
@@ -679,7 +951,7 @@
             position: relative;
         }
 
-        /* Custom scrollbar */
+        /* Custom scrollbar - Optimized */
         .pseudocode-live::-webkit-scrollbar {
             width: 6px;
         }
@@ -704,6 +976,13 @@
             border-radius: 4px;
             transition: var(--transition);
             position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .pseudocode-line {
+                padding: 0.2rem 0.4rem;
+                margin: 0.1rem 0;
+            }
         }
 
         .pseudocode-line.active {
@@ -739,7 +1018,7 @@
             color: var(--accent-success);
         }
 
-        /* Step Explanation */
+        /* Step Explanation - Mobile Optimized */
         .step-explanation {
             margin-top: 1rem;
             padding: 1rem;
@@ -747,6 +1026,18 @@
             border-radius: var(--border-radius);
             border-left: 4px solid var(--accent-primary);
             animation: slideIn 0.3s ease-out;
+        }
+
+        @media (max-width: 768px) {
+            .step-explanation {
+                padding: 0.75rem;
+                margin-top: 0.75rem;
+            }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .step-explanation-title {
@@ -758,19 +1049,39 @@
             gap: 0.5rem;
         }
 
+        @media (max-width: 768px) {
+            .step-explanation-title {
+                font-size: 0.875rem;
+                margin-bottom: 0.375rem;
+            }
+        }
+
         .step-explanation-content {
             color: var(--text-secondary);
             font-size: 0.875rem;
             line-height: 1.5;
         }
 
-        /* Enhanced Variable Tracker */
+        @media (max-width: 768px) {
+            .step-explanation-content {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Enhanced Variable Tracker - Mobile Optimized */
         .variable-tracker {
             margin-top: 1rem;
             padding: 1rem;
             background: var(--bg-primary);
             border-radius: var(--border-radius);
             font-size: 0.875rem;
+        }
+
+        @media (max-width: 768px) {
+            .variable-tracker {
+                padding: 0.75rem;
+                font-size: 0.75rem;
+            }
         }
 
         .variable-header {
@@ -782,10 +1093,24 @@
             gap: 0.5rem;
         }
 
+        @media (max-width: 768px) {
+            .variable-header {
+                font-size: 0.875rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+
         .variable-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .variable-grid {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
         }
 
         .variable-item {
@@ -795,6 +1120,12 @@
             background: var(--bg-secondary);
             border-radius: 4px;
             transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .variable-item {
+                padding: 0.375rem 0.5rem;
+            }
         }
 
         .variable-item.highlight {
@@ -812,7 +1143,7 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        /* Algorithm Story */
+        /* Algorithm Story - Mobile Optimized */
         .algorithm-story {
             margin-top: 1rem;
             padding: 1rem;
@@ -823,6 +1154,13 @@
             color: var(--text-secondary);
             position: relative;
             overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .algorithm-story {
+                padding: 0.75rem;
+                font-size: 0.75rem;
+            }
         }
 
         .algorithm-story::before {
@@ -842,7 +1180,14 @@
             padding-right: 0.5rem;
         }
 
-        /* Custom scrollbar for story */
+        @media (max-width: 768px) {
+            .story-content {
+                padding-left: 0.75rem;
+                height: 200px;
+            }
+        }
+
+        /* Custom scrollbar for story - Optimized */
         .story-content::-webkit-scrollbar {
             width: 6px;
         }
@@ -870,12 +1215,18 @@
             font-weight: 600;
         }
 
-        /* Control Panel */
+        /* Control Panel - Mobile Optimized */
         .control-panel {
             display: flex;
             gap: 1rem;
             align-items: center;
             flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .control-panel {
+                gap: 0.75rem;
+            }
         }
 
         .btn {
@@ -891,6 +1242,17 @@
             gap: 0.5rem;
             position: relative;
             overflow: hidden;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+        }
+
+        @media (max-width: 768px) {
+            .btn {
+                padding: 0.75rem 1.25rem;
+                font-size: 0.75rem;
+                flex: 1;
+                justify-content: center;
+            }
         }
 
         .btn::before {
@@ -958,10 +1320,25 @@
             border-radius: var(--border-radius);
         }
 
+        @media (max-width: 768px) {
+            .speed-control {
+                margin-left: 0;
+                width: 100%;
+                justify-content: space-between;
+                padding: 0.5rem 0.75rem;
+            }
+        }
+
         .speed-label {
             font-size: 0.875rem;
             color: var(--text-secondary);
             font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .speed-label {
+                font-size: 0.75rem;
+            }
         }
 
         .speed-slider {
@@ -973,6 +1350,12 @@
             -webkit-appearance: none;
         }
 
+        @media (max-width: 768px) {
+            .speed-slider {
+                width: 80px;
+            }
+        }
+
         .speed-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 18px;
@@ -981,6 +1364,13 @@
             background: var(--accent-primary);
             cursor: pointer;
             transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .speed-slider::-webkit-slider-thumb {
+                width: 16px;
+                height: 16px;
+            }
         }
 
         .speed-slider::-webkit-slider-thumb:hover {
@@ -995,7 +1385,14 @@
             min-width: 50px;
         }
 
-        /* Status Bar */
+        @media (max-width: 768px) {
+            .speed-value {
+                font-size: 0.75rem;
+                min-width: 40px;
+            }
+        }
+
+        /* Status Bar - Mobile Optimized */
         .status-bar {
             margin-top: 1.5rem;
             padding: 1rem 1.5rem;
@@ -1008,18 +1405,33 @@
             animation: slideIn 0.3s ease-out;
         }
 
-        @keyframes slideIn {
-            from { transform: translateY(-10px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @media (max-width: 768px) {
+            .status-bar {
+                padding: 0.75rem 1rem;
+                margin-top: 1rem;
+                gap: 0.75rem;
+            }
         }
 
         .status-icon {
             font-size: 1.25rem;
         }
 
+        @media (max-width: 768px) {
+            .status-icon {
+                font-size: 1rem;
+            }
+        }
+
         .status-text {
             flex: 1;
             font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .status-text {
+                font-size: 0.875rem;
+            }
         }
 
         .status-bar.success {
@@ -1034,7 +1446,7 @@
             border-left-color: var(--accent-primary);
         }
 
-        /* Table Section */
+        /* Table Section - Mobile Optimized */
         .table-section {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
@@ -1043,9 +1455,21 @@
             padding: 2.5rem;
         }
 
+        @media (max-width: 768px) {
+            .table-section {
+                padding: 1.5rem;
+            }
+        }
+
         .table-wrapper {
             overflow-x: auto;
             margin-top: 1.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .table-wrapper {
+                margin-top: 1rem;
+            }
         }
 
         .algo-table {
@@ -1065,6 +1489,13 @@
             letter-spacing: 0.05em;
         }
 
+        @media (max-width: 768px) {
+            .algo-table th {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.75rem;
+            }
+        }
+
         .algo-table th:first-child {
             border-top-left-radius: var(--border-radius);
         }
@@ -1082,7 +1513,14 @@
             font-weight: 600;
         }
 
-        /* Info Section */
+        @media (max-width: 768px) {
+            .algo-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* Info Section - Mobile Optimized */
         .info-section {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
@@ -1091,11 +1529,24 @@
             padding: 2.5rem;
         }
 
+        @media (max-width: 768px) {
+            .info-section {
+                padding: 1.5rem;
+            }
+        }
+
         .tab-navigation {
             display: flex;
             gap: 0.5rem;
             margin-bottom: 2rem;
             border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .tab-navigation {
+                margin-bottom: 1.5rem;
+                gap: 0.25rem;
+            }
         }
 
         .tab-btn {
@@ -1107,6 +1558,13 @@
             cursor: pointer;
             position: relative;
             transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .tab-btn {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+            }
         }
 
         .tab-btn::after {
@@ -1149,12 +1607,25 @@
             gap: 1.5rem;
         }
 
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
         .info-card {
             background: var(--bg-tertiary);
             border-radius: var(--border-radius-lg);
             padding: 1.5rem;
             border: 1px solid rgba(148, 163, 184, 0.1);
             transition: var(--transition);
+        }
+
+        @media (max-width: 768px) {
+            .info-card {
+                padding: 1rem;
+            }
         }
 
         .info-card:hover {
@@ -1169,6 +1640,13 @@
             margin-bottom: 1rem;
         }
 
+        @media (max-width: 768px) {
+            .info-card-header {
+                gap: 0.75rem;
+                margin-bottom: 0.75rem;
+            }
+        }
+
         .info-card-icon {
             width: 40px;
             height: 40px;
@@ -1181,9 +1659,23 @@
             font-size: 1.25rem;
         }
 
+        @media (max-width: 768px) {
+            .info-card-icon {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+
         .info-card-title {
             font-weight: 700;
             font-size: 1.125rem;
+        }
+
+        @media (max-width: 768px) {
+            .info-card-title {
+                font-size: 1rem;
+            }
         }
 
         .info-card-content {
@@ -1191,9 +1683,21 @@
             line-height: 1.6;
         }
 
+        @media (max-width: 768px) {
+            .info-card-content {
+                font-size: 0.875rem;
+            }
+        }
+
         .complexity-list {
             list-style: none;
             margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .complexity-list {
+                margin-top: 0.75rem;
+            }
         }
 
         .complexity-item {
@@ -1201,6 +1705,13 @@
             align-items: center;
             gap: 0.75rem;
             margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .complexity-item {
+                gap: 0.5rem;
+                margin-bottom: 0.375rem;
+            }
         }
 
         .complexity-badge {
@@ -1214,9 +1725,22 @@
             letter-spacing: 0.05em;
         }
 
+        @media (max-width: 768px) {
+            .complexity-badge {
+                padding: 0.2rem 0.5rem;
+                font-size: 0.625rem;
+            }
+        }
+
         .rule-list {
             list-style: none;
             margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .rule-list {
+                margin-top: 0.75rem;
+            }
         }
 
         .rule-item {
@@ -1225,6 +1749,14 @@
             margin-bottom: 1rem;
             padding-left: 1rem;
             position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .rule-item {
+                gap: 0.75rem;
+                margin-bottom: 0.75rem;
+                padding-left: 0.75rem;
+            }
         }
 
         .rule-item::before {
@@ -1238,57 +1770,7 @@
             border-radius: 50%;
         }
 
-        /* Responsive Design */
-        @media (max-width: 1024px) {
-            .pseudocode-section {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-
-            .input-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .algorithm-selector {
-                grid-template-columns: 1fr;
-            }
-
-            .control-panel {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .speed-control {
-                margin-left: 0;
-                justify-content: space-between;
-            }
-
-            .char-cell {
-                width: 40px;
-                height: 40px;
-                font-size: 0.875rem;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-list {
-                flex-wrap: wrap;
-            }
-            
-            .variable-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Loading Animation */
+        /* Loading Animation - Optimized */
         .loading {
             display: inline-block;
             width: 20px;
@@ -1301,6 +1783,13 @@
 
         @keyframes spin {
             to { transform: rotate(360deg); }
+        }
+
+        /* Performance: Hide non-essential elements on mobile */
+        @media (max-width: 768px) {
+            .floating-orbs {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -1350,6 +1839,10 @@
                     <label class="input-label" for="textInput">Text String</label>
                     <div class="input-wrapper">
                         <input type="text" id="textInput" class="input-field" placeholder="Enter text to search in..." value="ABABDABACDABABCABAB">
+                        <button class="generate-btn" id="generateTextBtn">
+                            <span>🎲</span>
+                            <span>Random</span>
+                        </button>
                         <span class="input-icon">📝</span>
                     </div>
                 </div>
@@ -1357,6 +1850,10 @@
                     <label class="input-label" for="patternInput">Pattern String</label>
                     <div class="input-wrapper">
                         <input type="text" id="patternInput" class="input-field" placeholder="Enter pattern to find..." value="ABABCABAB">
+                        <button class="generate-btn" id="generatePatternBtn">
+                            <span>🎲</span>
+                            <span>Random</span>
+                        </button>
                         <span class="input-icon">🔍</span>
                     </div>
                 </div>
@@ -1609,6 +2106,17 @@
     </div>
 
     <script>
+        // Performance optimizations
+        // Reduce layout thrashing
+        let ticking = false;
+        function requestTick(callback) {
+            if (!ticking) {
+                requestAnimationFrame(callback);
+                ticking = true;
+                setTimeout(() => { ticking = false; }, 100);
+            }
+        }
+
         // Theme Management
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
@@ -1634,7 +2142,7 @@
             themeIcon.textContent = '☀️';
         }
 
-        // Navigation Management
+        // Navigation Management - Optimized
         const navLinks = document.querySelectorAll('.nav-link');
         
         navLinks.forEach(link => {
@@ -1652,25 +2160,31 @@
             });
         });
 
-        // Update active nav link on scroll
+        // Throttled scroll handler for performance
+        let scrollTimeout;
         window.addEventListener('scroll', () => {
-            let current = '';
-            const sections = document.querySelectorAll('section');
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= sectionTop - 100) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').slice(1) === current) {
-                    link.classList.add('active');
-                }
-            });
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            scrollTimeout = setTimeout(() => {
+                let current = '';
+                const sections = document.querySelectorAll('section');
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (pageYOffset >= sectionTop - 100) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').slice(1) === current) {
+                        link.classList.add('active');
+                    }
+                });
+            }, 100);
         });
 
         // Tab Management
@@ -1729,6 +2243,166 @@
             currentAlgorithm = 'boyer-moore';
             bmCard.classList.add('active');
             kmpCard.classList.remove('active');
+            resetVisualization();
+        });
+
+        // Enhanced Random String Generator with Matching Patterns
+        const generateTextBtn = document.getElementById('generateTextBtn');
+        const generatePatternBtn = document.getElementById('generatePatternBtn');
+
+        // Predefined meaningful test cases
+        const testCases = [
+            {
+                text: "ABABDABACDABABCABAB",
+                pattern: "ABABCABAB",
+                description: "Classic KMP example with overlapping patterns"
+            },
+            {
+                text: "ABCABCDABABCDABCDABCD",
+                pattern: "ABCDABCD",
+                description: "Repeating pattern with prefix-suffix properties"
+            },
+            {
+                text: "AABAACAABAAABAAABAACAA",
+                pattern: "AABAACAABAA",
+                description: "Complex pattern with multiple matches"
+            },
+            {
+                text: "ABCDABCDAABCDABCDABCDA",
+                pattern: "ABCDABCDA",
+                description: "Pattern with internal repetition"
+            },
+            {
+                text: "AAAAAAABAAAAAAABAAAAAAAB",
+                pattern: "AAAAAAAB",
+                description: "Long pattern with many As"
+            },
+            {
+                text: "ABCDABCEABCDABCFABCDABCG",
+                pattern: "ABCDABC",
+                description: "Similar patterns with different endings"
+            },
+            {
+                text: "BABABABABABABABABABABAB",
+                pattern: "BABABAB",
+                description: "Simple alternating pattern"
+            },
+            {
+                text: "ABCDABCEABCDABCFABCDABCE",
+                pattern: "ABCDABCE",
+                description: "Pattern appears multiple times"
+            },
+            {
+                text: "AAAABAAAABAAAABAAAABAAA",
+                pattern: "AAAAB",
+                description: "Pattern with many As and Bs"
+            },
+            {
+                text: "ABCDABEFABCDABGHABCDABIJ",
+                pattern: "ABCDAB",
+                description: "Pattern with variations"
+            }
+        ];
+
+        // Additional pattern templates for generation
+        const patternTemplates = [
+            "ABAB", "ABC", "ABCD", "AAB", "ABA", "ABCAB", "ABABC", 
+            "ABCABC", "AABAAB", "ABABAB", "ABCABCAB", "ABABCABAB",
+            "AABAACAABAA", "ABCDABCD", "ABCABCDAB", "ABCDABCDA",
+            "AAAAAAAB", "BABABAB", "AAAAB", "ABCDABCE", "ABCDAB"
+        ];
+
+        function generateRandomString(length, alphabet = 'ABCD') {
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+            }
+            return result;
+        }
+
+        function generateMatchingText(pattern) {
+            const textLength = Math.floor(Math.random() * 15) + 20; // 20-35 characters
+            const numMatches = Math.floor(Math.random() * 2) + 1; // 1-2 matches
+            
+            let text = '';
+            
+            // Add some random prefix
+            const prefixLength = Math.floor(Math.random() * 5) + 2;
+            text += generateRandomString(prefixLength);
+            
+            // Add the pattern
+            text += pattern;
+            
+            // Add some random middle part
+            if (numMatches === 2 || textLength - text.length > pattern.length + 5) {
+                const middleLength = Math.min(Math.floor(Math.random() * 8) + 3, textLength - text.length - pattern.length - 2);
+                text += generateRandomString(middleLength);
+                
+                // Add second pattern if there's space
+                if (text.length + pattern.length <= textLength) {
+                    text += pattern;
+                }
+            }
+            
+            // Fill remaining space with random characters
+            while (text.length < textLength) {
+                text += generateRandomString(1);
+            }
+            
+            return text;
+        }
+
+        function generateRandomPattern() {
+            // 70% chance to use a predefined template, 30% to generate random
+            if (Math.random() < 0.7) {
+                return patternTemplates[Math.floor(Math.random() * patternTemplates.length)];
+            } else {
+                const length = Math.floor(Math.random() * 4) + 3; // 3-6 characters
+                return generateRandomString(length, 'ABCD');
+            }
+        }
+
+        function generateRandomText() {
+            // 60% chance to use a test case, 40% to generate
+            if (Math.random() < 0.6) {
+                const testCase = testCases[Math.floor(Math.random() * testCases.length)];
+                return testCase.text;
+            } else {
+                const length = Math.floor(Math.random() * 10) + 20; // 20-30 characters
+                return generateRandomString(length, 'ABCD');
+            }
+        }
+
+        generateTextBtn.addEventListener('click', () => {
+            const currentPattern = patternInput.value.trim();
+            let newText;
+            
+            if (currentPattern && Math.random() < 0.8) {
+                // 80% chance to generate text that contains the current pattern
+                newText = generateMatchingText(currentPattern);
+            } else {
+                // Generate completely random text
+                newText = generateRandomText();
+            }
+            
+            textInput.value = newText;
+            resetVisualization();
+            showStatus('🎲 Generated random text string', 'info');
+        });
+
+        generatePatternBtn.addEventListener('click', () => {
+            const newPattern = generateRandomPattern();
+            patternInput.value = newPattern;
+            
+            // Optionally generate matching text
+            if (Math.random() < 0.5) {
+                const matchingText = generateMatchingText(newPattern);
+                textInput.value = matchingText;
+                showStatus('🎲 Generated matching pattern and text', 'info');
+            } else {
+                showStatus('🎲 Generated random pattern string', 'info');
+            }
+            
             resetVisualization();
         });
 
@@ -1979,24 +2653,26 @@
 
         // Update pseudocode highlighting
         function updatePseudocodeHighlight(lineIndex) {
-            document.querySelectorAll('.pseudocode-line').forEach((line, index) => {
-                if (index < lineIndex) {
-                    line.classList.add('executed');
-                    line.classList.remove('active');
-                } else if (index === lineIndex) {
-                    line.classList.add('active');
-                    line.classList.remove('executed');
-                } else {
-                    line.classList.remove('active', 'executed');
+            requestTick(() => {
+                document.querySelectorAll('.pseudocode-line').forEach((line, index) => {
+                    if (index < lineIndex) {
+                        line.classList.add('executed');
+                        line.classList.remove('active');
+                    } else if (index === lineIndex) {
+                        line.classList.add('active');
+                        line.classList.remove('executed');
+                    } else {
+                        line.classList.remove('active', 'executed');
+                    }
+                });
+                
+                // Update step explanation
+                const pseudocode = currentAlgorithm === 'kmp' ? kmpPseudocode : bmPseudocode;
+                if (lineIndex >= 0 && lineIndex < pseudocode.length) {
+                    stepExplanation.style.display = 'block';
+                    stepExplanationContent.textContent = pseudocode[lineIndex].explanation;
                 }
             });
-            
-            // Update step explanation
-            const pseudocode = currentAlgorithm === 'kmp' ? kmpPseudocode : bmPseudocode;
-            if (lineIndex >= 0 && lineIndex < pseudocode.length) {
-                stepExplanation.style.display = 'block';
-                stepExplanationContent.textContent = pseudocode[lineIndex].explanation;
-            }
         }
 
         // Update story content
@@ -2018,29 +2694,31 @@
 
         // Update variable tracker with highlighting
         function updateVariables(i, j, matches, comparisons, highlightVar = null) {
-            varI.textContent = i;
-            varJ.textContent = j;
-            varMatches.textContent = `[${matches.join(', ')}]`;
-            varComparisons.textContent = comparisons;
-            
-            // Calculate efficiency metrics
-            const efficiency = naiveComparisons > 0 ? Math.round((1 - comparisons/naiveComparisons) * 100) : 0;
-            const timeSaved = naiveComparisons - comparisons;
-            
-            varEfficiency.textContent = `${efficiency}%`;
-            varTimeSaved.textContent = timeSaved;
-            
-            // Remove all highlights
-            varIContainer.classList.remove('highlight');
-            varJContainer.classList.remove('highlight');
-            varMatchesContainer.classList.remove('highlight');
-            varComparisonsContainer.classList.remove('highlight');
-            
-            // Add highlight to the changed variable
-            if (highlightVar === 'i') varIContainer.classList.add('highlight');
-            if (highlightVar === 'j') varJContainer.classList.add('highlight');
-            if (highlightVar === 'matches') varMatchesContainer.classList.add('highlight');
-            if (highlightVar === 'comparisons') varComparisonsContainer.classList.add('highlight');
+            requestTick(() => {
+                varI.textContent = i;
+                varJ.textContent = j;
+                varMatches.textContent = `[${matches.join(', ')}]`;
+                varComparisons.textContent = comparisons;
+                
+                // Calculate efficiency metrics
+                const efficiency = naiveComparisons > 0 ? Math.round((1 - comparisons/naiveComparisons) * 100) : 0;
+                const timeSaved = naiveComparisons - comparisons;
+                
+                varEfficiency.textContent = `${efficiency}%`;
+                varTimeSaved.textContent = timeSaved;
+                
+                // Remove all highlights
+                varIContainer.classList.remove('highlight');
+                varJContainer.classList.remove('highlight');
+                varMatchesContainer.classList.remove('highlight');
+                varComparisonsContainer.classList.remove('highlight');
+                
+                // Add highlight to the changed variable
+                if (highlightVar === 'i') varIContainer.classList.add('highlight');
+                if (highlightVar === 'j') varJContainer.classList.add('highlight');
+                if (highlightVar === 'matches') varMatchesContainer.classList.add('highlight');
+                if (highlightVar === 'comparisons') varComparisonsContainer.classList.add('highlight');
+            });
         }
 
         // KMP Algorithm Implementation
@@ -2421,7 +3099,7 @@
             return steps;
         }
 
-        // Visualization Functions
+        // Visualization Functions - Optimized
         function initializeVisualization() {
             text = textInput.value;
             pattern = patternInput.value;
@@ -2447,7 +3125,8 @@
             // Initialize pseudocode
             initializePseudocode();
             
-            // Create text display
+            // Create text display - Optimized for mobile
+            const fragment = document.createDocumentFragment();
             for (let i = 0; i < text.length; i++) {
                 const charCell = document.createElement('div');
                 charCell.className = 'char-cell';
@@ -2459,10 +3138,12 @@
                 indexSpan.textContent = i;
                 charCell.appendChild(indexSpan);
                 
-                textRow.appendChild(charCell);
+                fragment.appendChild(charCell);
             }
+            textRow.appendChild(fragment);
             
-            // Create pattern display
+            // Create pattern display - Optimized for mobile
+            const patternFragment = document.createDocumentFragment();
             for (let i = 0; i < pattern.length; i++) {
                 const charCell = document.createElement('div');
                 charCell.className = 'char-cell';
@@ -2474,8 +3155,9 @@
                 indexSpan.textContent = i;
                 charCell.appendChild(indexSpan);
                 
-                patternRow.appendChild(charCell);
+                patternFragment.appendChild(charCell);
             }
+            patternRow.appendChild(patternFragment);
             
             // Reset variables
             updateVariables(0, 0, [], 0);
@@ -2487,81 +3169,97 @@
         }
 
         function visualizeStep(step) {
-            // Clear previous highlights
-            document.querySelectorAll('.char-cell').forEach(cell => {
-                cell.classList.remove('comparing', 'match', 'mismatch');
+            requestTick(() => {
+                // Clear previous highlights
+                document.querySelectorAll('.char-cell').forEach(cell => {
+                    cell.classList.remove('comparing', 'match', 'mismatch');
+                });
+                
+                // Highlight current text character
+                if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
+                    const textCell = document.getElementById(`text-${step.textIndex}`);
+                    if (textCell) textCell.classList.add('comparing');
+                }
+                
+                // Highlight current pattern character
+                if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
+                    const patternCell = document.getElementById(`pattern-${step.patternIndex}`);
+                    if (patternCell) patternCell.classList.add('comparing');
+                }
+                
+                // Update window position
+                const patternPosition = step.patternPosition !== undefined ? step.patternPosition : (step.shift !== undefined ? step.shift : 0);
+                const windowWidth = pattern.length * (window.innerWidth <= 768 ? 39 : 49); // Smaller on mobile
+                windowOverlay.style.width = `${windowWidth}px`;
+                windowOverlay.style.left = `${patternPosition * (window.innerWidth <= 768 ? 39 : 49)}px`;
+                
+                // Handle match/mismatch
+                if (step.isMatch) {
+                    if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
+                        const textCell = document.getElementById(`text-${step.textIndex}`);
+                        if (textCell) {
+                            textCell.classList.remove('comparing');
+                            textCell.classList.add('match');
+                        }
+                    }
+                    if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
+                        const patternCell = document.getElementById(`pattern-${step.patternIndex}`);
+                        if (patternCell) {
+                            patternCell.classList.remove('comparing');
+                            patternCell.classList.add('match');
+                        }
+                    }
+                }
+                
+                if (step.mismatch) {
+                    if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
+                        const textCell = document.getElementById(`text-${step.textIndex}`);
+                        if (textCell) {
+                            textCell.classList.remove('comparing');
+                            textCell.classList.add('mismatch');
+                        }
+                    }
+                    if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
+                        const patternCell = document.getElementById(`pattern-${step.patternIndex}`);
+                        if (patternCell) {
+                            patternCell.classList.remove('comparing');
+                            patternCell.classList.add('mismatch');
+                        }
+                    }
+                }
+                
+                // Update pseudocode highlighting
+                if (step.pseudoLine !== undefined) {
+                    updatePseudocodeHighlight(step.pseudoLine);
+                }
+                
+                // Update variables with highlighting
+                const i = step.i !== undefined ? step.i : (step.shift !== undefined ? step.shift : 0);
+                const j = step.j !== undefined ? step.j : 0;
+                updateVariables(i, j, step.matches || [], step.comparisons || 0, step.highlightVar);
+                
+                // Update story content if in story mode
+                if (algorithmStory.style.display !== 'none' && step.explanation) {
+                    const storyParagraph = document.createElement('p');
+                    storyParagraph.className = 'story-paragraph';
+                    storyParagraph.innerHTML = step.explanation;
+                    storyContent.appendChild(storyParagraph);
+                    storyContent.scrollTop = storyContent.scrollHeight;
+                }
+                
+                // Show status message
+                if (step.found) {
+                    showStatus(`✅ Pattern found at position ${step.patternPosition}`, 'success');
+                } else if (step.mismatch) {
+                    if (currentAlgorithm === 'kmp') {
+                        showStatus(`❌ Mismatch! Pattern index will be set to ${step.nextPatternIndex}`, 'error');
+                    } else {
+                        showStatus(`❌ Mismatch! Pattern will shift by ${step.badCharShift} positions`, 'error');
+                    }
+                } else if (step.isMatch) {
+                    showStatus(`✓ Characters match!`, 'info');
+                }
             });
-            
-            // Highlight current text character
-            if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
-                document.getElementById(`text-${step.textIndex}`).classList.add('comparing');
-            }
-            
-            // Highlight current pattern character
-            if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
-                document.getElementById(`pattern-${step.patternIndex}`).classList.add('comparing');
-            }
-            
-            // Update window position
-            const patternPosition = step.patternPosition !== undefined ? step.patternPosition : (step.shift !== undefined ? step.shift : 0);
-            const windowWidth = pattern.length * 49; // 45px width + 4px gap
-            windowOverlay.style.width = `${windowWidth}px`;
-            windowOverlay.style.left = `${patternPosition * 49}px`;
-            
-            // Handle match/mismatch
-            if (step.isMatch) {
-                if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
-                    document.getElementById(`text-${step.textIndex}`).classList.remove('comparing');
-                    document.getElementById(`text-${step.textIndex}`).classList.add('match');
-                }
-                if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
-                    document.getElementById(`pattern-${step.patternIndex}`).classList.remove('comparing');
-                    document.getElementById(`pattern-${step.patternIndex}`).classList.add('match');
-                }
-            }
-            
-            if (step.mismatch) {
-                if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
-                    document.getElementById(`text-${step.textIndex}`).classList.remove('comparing');
-                    document.getElementById(`text-${step.textIndex}`).classList.add('mismatch');
-                }
-                if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
-                    document.getElementById(`pattern-${step.patternIndex}`).classList.remove('comparing');
-                    document.getElementById(`pattern-${step.patternIndex}`).classList.add('mismatch');
-                }
-            }
-            
-            // Update pseudocode highlighting
-            if (step.pseudoLine !== undefined) {
-                updatePseudocodeHighlight(step.pseudoLine);
-            }
-            
-            // Update variables with highlighting
-            const i = step.i !== undefined ? step.i : (step.shift !== undefined ? step.shift : 0);
-            const j = step.j !== undefined ? step.j : 0;
-            updateVariables(i, j, step.matches || [], step.comparisons || 0, step.highlightVar);
-            
-            // Update story content if in story mode
-            if (algorithmStory.style.display !== 'none' && step.explanation) {
-                const storyParagraph = document.createElement('p');
-                storyParagraph.className = 'story-paragraph';
-                storyParagraph.innerHTML = step.explanation;
-                storyContent.appendChild(storyParagraph);
-                storyContent.scrollTop = storyContent.scrollHeight;
-            }
-            
-            // Show status message
-            if (step.found) {
-                showStatus(`✅ Pattern found at position ${step.patternPosition}`, 'success');
-            } else if (step.mismatch) {
-                if (currentAlgorithm === 'kmp') {
-                    showStatus(`❌ Mismatch! Pattern index will be set to ${step.nextPatternIndex}`, 'error');
-                } else {
-                    showStatus(`❌ Mismatch! Pattern will shift by ${step.badCharShift} positions`, 'error');
-                }
-            } else if (step.isMatch) {
-                showStatus(`✓ Characters match!`, 'info');
-            }
         }
 
         function showStatus(message, type) {
