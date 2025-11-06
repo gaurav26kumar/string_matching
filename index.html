@@ -38,9 +38,9 @@
             --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
             --shadow-glow-purple: 0 0 20px rgba(99, 102, 241, 0.3);
             --shadow-glow-pink: 0 0 20px rgba(139, 92, 246, 0.3);
-            --border-radius: 8px;
-            --border-radius-lg: 12px;
-            --border-radius-xl: 16px;
+            --border-radius: 6px;
+            --border-radius-lg: 8px;
+            --border-radius-xl: 10px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -70,160 +70,29 @@
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            transition: var(--transition);
-            /* Performance optimizations */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            text-rendering: optimizeSpeed;
-        }
-
-        /* Performance: Reduce animations on mobile */
-        @media (max-width: 768px) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* Advanced Background - Optimized */
-        .bg-container {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
+            line-height: 1.4;
             overflow: hidden;
-            /* Performance: Hide on mobile */
-            display: block;
+            transition: var(--transition);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        @media (max-width: 768px) {
-            .bg-container {
-                display: none;
-            }
-        }
-
-        .bg-gradient {
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            top: -50%;
-            left: -50%;
-            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (min-width: 769px) {
-            .bg-gradient {
-                animation: bgRotate 30s linear infinite;
-            }
-        }
-
-        @keyframes bgRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .bg-grid {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
-            background-size: 50px 50px;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (min-width: 769px) {
-            .bg-grid {
-                animation: bgMove 20s linear infinite;
-            }
-        }
-
-        @keyframes bgMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
-        .floating-orbs {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(40px);
-            opacity: 0.15;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (min-width: 769px) {
-            .orb {
-                animation: float 20s infinite ease-in-out;
-            }
-        }
-
-        .orb1 {
-            width: 300px;
-            height: 300px;
-            background: var(--gradient-primary);
-            top: 10%;
-            left: 10%;
-            animation-delay: 0s;
-        }
-
-        .orb2 {
-            width: 200px;
-            height: 200px;
-            background: var(--gradient-secondary);
-            top: 60%;
-            right: 10%;
-            animation-delay: 5s;
-        }
-
-        .orb3 {
-            width: 250px;
-            height: 250px;
-            background: var(--gradient-tertiary);
-            bottom: 10%;
-            left: 50%;
-            animation-delay: 10s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-        }
-
-        /* Header - Optimized */
+        /* Header - Compact */
         header {
             position: relative;
             z-index: 100;
-            padding: 1.5rem 0;
+            padding: 0.75rem 0;
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
+            flex-shrink: 0;
         }
 
         .header-content {
-            max-width: 1400px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -232,43 +101,21 @@
         .logo-section {
             display: flex;
             align-items: center;
-            gap: 1.5rem;
+            gap: 0.75rem;
         }
 
         .logo {
-            width: 50px;
-            height: 50px;
+            width: 36px;
+            height: 36px;
             background: var(--gradient-primary);
             border-radius: var(--border-radius-lg);
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 900;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: white;
             box-shadow: var(--shadow-md);
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (min-width: 769px) {
-            .logo::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-                animation: logoShine 3s infinite;
-            }
-        }
-
-        @keyframes logoShine {
-            0% { left: -100%; }
-            100% { left: 100%; }
         }
 
         .logo-text {
@@ -277,7 +124,7 @@
         }
 
         .logo-title {
-            font-size: 1.75rem;
+            font-size: 1.25rem;
             font-weight: 800;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -287,20 +134,20 @@
         }
 
         .logo-subtitle {
-            font-size: 0.875rem;
+            font-size: 0.7rem;
             color: var(--text-secondary);
             font-weight: 500;
         }
 
         .header-actions {
             display: flex;
-            gap: 1rem;
+            gap: 0.5rem;
             align-items: center;
         }
 
         .theme-toggle {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             border-radius: 50%;
             background: var(--bg-glass);
             backdrop-filter: blur(10px);
@@ -310,9 +157,7 @@
             justify-content: center;
             cursor: pointer;
             transition: var(--transition);
-            font-size: 1.25rem;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
+            font-size: 1rem;
         }
 
         .theme-toggle:hover {
@@ -320,94 +165,34 @@
             transform: scale(1.05);
         }
 
-        /* Navigation Bar - Optimized */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 90;
-            background: var(--bg-glass);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
+        /* Main Container - Grid Layout */
+        .main-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 280px 1fr 320px;
+            grid-template-rows: 1fr auto;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            max-height: calc(100vh - 60px);
+            overflow: hidden;
         }
 
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .nav-list {
+        /* Left Panel - Algorithm Selection & Controls */
+        .left-panel {
             display: flex;
-            list-style: none;
-            gap: 0.5rem;
+            flex-direction: column;
+            gap: 0.75rem;
+            overflow-y: auto;
         }
 
-        .nav-item {
-            position: relative;
-        }
-
-        .nav-link {
-            display: block;
-            padding: 1rem 1.5rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-            text-decoration: none;
-            transition: var(--transition);
-            border-radius: var(--border-radius);
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--accent-primary);
-            background: rgba(59, 130, 246, 0.1);
-        }
-
-        .nav-link.active::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 1.5rem;
-            right: 1.5rem;
-            height: 3px;
-            background: var(--gradient-primary);
-            border-radius: 3px 3px 0 0;
-        }
-
-        /* Main Container - Optimized */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        /* Section */
-        section {
-            margin-bottom: 2rem;
-            scroll-margin-top: 80px;
-        }
-
-        /* Input Section - Mobile Optimized */
         .input-section {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: var(--border-radius-xl);
-            padding: 2.5rem;
+            padding: 1rem;
             position: relative;
             overflow: hidden;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (max-width: 768px) {
-            .input-section {
-                padding: 1.5rem;
-            }
         }
 
         .input-section::before {
@@ -420,67 +205,36 @@
             background: var(--gradient-primary);
         }
 
-        .input-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .input-grid {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                margin-bottom: 1.5rem;
-            }
-        }
-
         .input-group {
-            position: relative;
+            margin-bottom: 0.75rem;
         }
 
         .input-label {
             display: block;
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             font-weight: 600;
             color: var(--text-secondary);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-        }
-
-        @media (max-width: 768px) {
-            .input-label {
-                font-size: 0.75rem;
-                margin-bottom: 0.5rem;
-            }
         }
 
         .input-wrapper {
             position: relative;
             display: flex;
-            gap: 0.5rem;
+            gap: 0.25rem;
         }
 
         .input-field {
             flex: 1;
-            padding: 1rem 1.25rem;
+            padding: 0.5rem 0.75rem;
             background: var(--bg-tertiary);
             border: 2px solid transparent;
             border-radius: var(--border-radius);
-            font-size: 1rem;
+            font-size: 0.875rem;
             color: var(--text-primary);
             transition: var(--transition);
             font-family: 'JetBrains Mono', monospace;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (max-width: 768px) {
-            .input-field {
-                padding: 0.75rem 1rem;
-                font-size: 0.875rem;
-            }
         }
 
         .input-field:focus {
@@ -489,73 +243,35 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
-        .input-icon {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-tertiary);
-            font-size: 1.25rem;
-            pointer-events: none;
-        }
-
-        @media (max-width: 768px) {
-            .input-icon {
-                right: 0.75rem;
-                font-size: 1rem;
-            }
-        }
-
         .generate-btn {
-            padding: 0.875rem 1.25rem;
+            padding: 0.5rem 0.75rem;
             background: var(--gradient-tertiary);
             color: white;
             border: none;
             border-radius: var(--border-radius);
             font-weight: 600;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             cursor: pointer;
             transition: var(--transition);
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.25rem;
             white-space: nowrap;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (max-width: 768px) {
-            .generate-btn {
-                padding: 0.75rem 1rem;
-                font-size: 0.75rem;
-            }
         }
 
         .generate-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: var(--shadow-md);
         }
 
-        .generate-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Algorithm Selector - Mobile Optimized */
         .algorithm-selector {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .algorithm-selector {
-                grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
 
         .algo-card {
-            padding: 1.5rem;
+            padding: 0.75rem;
             background: var(--bg-tertiary);
             border: 2px solid transparent;
             border-radius: var(--border-radius-lg);
@@ -563,14 +279,6 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (max-width: 768px) {
-            .algo-card {
-                padding: 1rem;
-            }
         }
 
         .algo-card::before {
@@ -587,7 +295,7 @@
 
         .algo-card.active {
             border-color: var(--accent-primary);
-            transform: translateY(-2px);
+            transform: translateY(-1px);
             box-shadow: var(--shadow-lg);
         }
 
@@ -598,15 +306,15 @@
         .algo-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            margin-bottom: 0.5rem;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
             position: relative;
             z-index: 1;
         }
 
         .algo-icon {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             background: var(--gradient-primary);
             border-radius: var(--border-radius);
             display: flex;
@@ -614,74 +322,163 @@
             justify-content: center;
             font-weight: bold;
             color: white;
-        }
-
-        @media (max-width: 768px) {
-            .algo-icon {
-                width: 35px;
-                height: 35px;
-            }
+            font-size: 0.875rem;
         }
 
         .algo-name {
             font-weight: 700;
-            font-size: 1.125rem;
-        }
-
-        @media (max-width: 768px) {
-            .algo-name {
-                font-size: 1rem;
-            }
+            font-size: 0.875rem;
         }
 
         .algo-description {
             color: var(--text-secondary);
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             position: relative;
             z-index: 1;
         }
 
-        @media (max-width: 768px) {
-            .algo-description {
-                font-size: 0.75rem;
-            }
+        .control-section {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius-xl);
+            padding: 1rem;
         }
 
-        /* Visualization Section - Mobile Optimized */
+        .control-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.25rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-danger {
+            background: var(--gradient-secondary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 2px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-glass-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+        }
+
+        .speed-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .speed-slider {
+            width: 100px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(148, 163, 184, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .speed-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .speed-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .speed-value {
+            font-size: 0.75rem;
+            color: var(--accent-primary);
+            font-weight: 600;
+            min-width: 40px;
+        }
+
+        /* Middle Panel - Visualization */
+        .middle-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            overflow: hidden;
+        }
+
         .visualization-section {
             background: var(--bg-glass);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: var(--border-radius-xl);
-            padding: 2.5rem;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (max-width: 768px) {
-            .visualization-section {
-                padding: 1.5rem;
-            }
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .section-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1rem;
-                margin-bottom: 1.5rem;
-            }
+            margin-bottom: 0.75rem;
         }
 
         .section-title {
-            font-size: 1.75rem;
+            font-size: 1.25rem;
             font-weight: 800;
             background: var(--gradient-primary);
             -webkit-background-clip: text;
@@ -689,89 +486,32 @@
             background-clip: text;
         }
 
-        @media (max-width: 768px) {
-            .section-title {
-                font-size: 1.5rem;
-            }
-        }
-
-        .visualization-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .visualization-container {
-                gap: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-        }
-
-        .visualization-panel {
-            background: var(--bg-tertiary);
-            border-radius: var(--border-radius-lg);
-            padding: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .visualization-panel {
-                padding: 1rem;
-            }
-        }
-
-        .panel-title {
-            font-size: 1.125rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-primary);
-        }
-
-        @media (max-width: 768px) {
-            .panel-title {
-                font-size: 1rem;
-                margin-bottom: 0.75rem;
-            }
-        }
-
         .visualization-canvas {
             background: var(--bg-secondary);
             border-radius: var(--border-radius);
-            padding: 1.5rem;
-            min-height: 200px;
+            padding: 0.75rem;
+            min-height: 120px;
             position: relative;
             overflow-x: auto;
             overflow-y: hidden;
-        }
-
-        @media (max-width: 768px) {
-            .visualization-canvas {
-                padding: 1rem;
-                min-height: 150px;
-            }
+            flex: 1;
         }
 
         .string-row {
             display: flex;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 0.25rem;
+            margin-bottom: 0.5rem;
             position: relative;
             z-index: 2;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
         }
 
-        @media (max-width: 768px) {
-            .string-row {
-                gap: 0.25rem;
-                margin-bottom: 0.75rem;
-            }
+        .pattern-row {
+            transition: transform 0.3s ease;
         }
 
         .char-cell {
-            width: 45px;
-            height: 45px;
+            width: 32px;
+            height: 32px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -780,35 +520,18 @@
             border: 2px solid rgba(148, 163, 184, 0.2);
             border-radius: var(--border-radius);
             font-weight: 700;
-            font-size: 1rem;
+            font-size: 0.875rem;
             font-family: 'JetBrains Mono', monospace;
             position: relative;
             transition: var(--transition);
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (max-width: 768px) {
-            .char-cell {
-                width: 35px;
-                height: 35px;
-                font-size: 0.875rem;
-            }
         }
 
         .char-index {
             position: absolute;
-            top: -8px;
-            font-size: 0.625rem;
+            top: -6px;
+            font-size: 0.5rem;
             color: var(--text-tertiary);
             font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            .char-index {
-                font-size: 0.5rem;
-                top: -6px;
-            }
         }
 
         .char-cell.comparing {
@@ -858,69 +581,142 @@
             transition: var(--transition);
             box-shadow: var(--shadow-glow);
             z-index: 1;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
         }
 
-        /* Enhanced Pseudocode Section - Mobile Optimized */
+        .status-bar {
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.75rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+            border-left: 4px solid var(--accent-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .status-icon {
+            font-size: 1rem;
+        }
+
+        .status-text {
+            flex: 1;
+            font-weight: 500;
+        }
+
+        .status-bar.success {
+            border-left-color: var(--accent-success);
+        }
+
+        .status-bar.error {
+            border-left-color: var(--accent-error);
+        }
+
+        .status-bar.info {
+            border-left-color: var(--accent-primary);
+        }
+
+        /* LPS Table Section */
+        .lps-table-section {
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius-xl);
+            padding: 1rem;
+            max-height: 200px;
+            overflow: auto;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        .algo-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 0.75rem;
+        }
+
+        .algo-table th {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .algo-table th:first-child {
+            border-top-left-radius: var(--border-radius);
+        }
+
+        .algo-table th:last-child {
+            border-top-right-radius: var(--border-radius);
+        }
+
+        .algo-table td {
+            padding: 0.5rem;
+            text-align: center;
+            background: var(--bg-tertiary);
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+        }
+
+        /* Right Panel - Algorithm Explorer */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            overflow: hidden;
+        }
+
         .pseudocode-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        @media (max-width: 1024px) {
-            .pseudocode-section {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius-xl);
+            padding: 1rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
         }
 
         .pseudocode-container {
             background: var(--bg-secondary);
             border-radius: var(--border-radius);
-            padding: 1.5rem;
+            padding: 0.75rem;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            line-height: 1.6;
-            height: 400px;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            flex: 1;
             display: flex;
             flex-direction: column;
-        }
-
-        @media (max-width: 768px) {
-            .pseudocode-container {
-                padding: 1rem;
-                font-size: 0.75rem;
-                height: 300px;
-            }
+            overflow: hidden;
         }
 
         .pseudocode-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
-            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.25rem;
             border-bottom: 1px solid rgba(148, 163, 184, 0.2);
         }
 
         .pseudocode-title {
             font-weight: 600;
             color: var(--text-primary);
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .pseudocode-title {
-                font-size: 0.875rem;
-            }
+            font-size: 0.875rem;
         }
 
         .pseudocode-toggle {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.25rem;
         }
 
         .toggle-btn {
@@ -928,17 +724,10 @@
             background: var(--bg-tertiary);
             border: none;
             border-radius: 4px;
-            font-size: 0.75rem;
+            font-size: 0.625rem;
             color: var(--text-secondary);
             cursor: pointer;
             transition: var(--transition);
-        }
-
-        @media (max-width: 768px) {
-            .toggle-btn {
-                font-size: 0.625rem;
-                padding: 0.2rem 0.4rem;
-            }
         }
 
         .toggle-btn.active {
@@ -949,27 +738,22 @@
         .pseudocode-live {
             flex: 1;
             overflow-y: auto;
-            padding-right: 0.5rem;
+            padding-right: 0.25rem;
             position: relative;
         }
 
-        /* Custom scrollbar - Optimized */
         .pseudocode-live::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
 
         .pseudocode-live::-webkit-scrollbar-track {
             background: var(--bg-tertiary);
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         .pseudocode-live::-webkit-scrollbar-thumb {
             background: var(--accent-primary);
-            border-radius: 3px;
-        }
-
-        .pseudocode-live::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-secondary);
+            border-radius: 2px;
         }
 
         .pseudocode-line {
@@ -978,13 +762,6 @@
             border-radius: 4px;
             transition: var(--transition);
             position: relative;
-        }
-
-        @media (max-width: 768px) {
-            .pseudocode-line {
-                padding: 0.2rem 0.4rem;
-                margin: 0.1rem 0;
-            }
         }
 
         .pseudocode-line.active {
@@ -1020,21 +797,65 @@
             color: var(--accent-success);
         }
 
-        /* Step Explanation - Mobile Optimized */
+        .algorithm-story {
+            display: none;
+            flex: 1;
+            overflow-y: auto;
+            padding: 0.5rem;
+            font-size: 0.75rem;
+            line-height: 1.4;
+            color: var(--text-secondary);
+            position: relative;
+        }
+
+        .algorithm-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-tertiary);
+        }
+
+        .story-content {
+            padding-left: 0.75rem;
+            height: 100%;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+        }
+
+        .story-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .story-content::-webkit-scrollbar-track {
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+        }
+
+        .story-content::-webkit-scrollbar-thumb {
+            background: var(--accent-tertiary);
+            border-radius: 2px;
+        }
+
+        .story-paragraph {
+            margin-bottom: 0.5rem;
+        }
+
+        .story-highlight {
+            color: var(--accent-tertiary);
+            font-weight: 600;
+        }
+
         .step-explanation {
-            margin-top: 1rem;
-            padding: 1rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
             background: var(--bg-primary);
             border-radius: var(--border-radius);
             border-left: 4px solid var(--accent-primary);
             animation: slideIn 0.3s ease-out;
-        }
-
-        @media (max-width: 768px) {
-            .step-explanation {
-                padding: 0.75rem;
-                margin-top: 0.75rem;
-            }
+            font-size: 0.75rem;
         }
 
         @keyframes slideIn {
@@ -1045,102 +866,69 @@
         .step-explanation-title {
             font-weight: 600;
             color: var(--accent-primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .step-explanation-title {
-                font-size: 0.875rem;
-                margin-bottom: 0.375rem;
-            }
+            gap: 0.25rem;
         }
 
         .step-explanation-content {
             color: var(--text-secondary);
-            font-size: 0.875rem;
-            line-height: 1.5;
+            font-size: 0.75rem;
+            line-height: 1.4;
         }
 
-        @media (max-width: 768px) {
-            .step-explanation-content {
-                font-size: 0.75rem;
-            }
-        }
-
-        /* Execution History Panel - New Section */
         .execution-history {
-            margin-top: 1rem;
-            padding: 1rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
             background: var(--bg-primary);
             border-radius: var(--border-radius);
-            font-size: 0.875rem;
-        }
-
-        @media (max-width: 768px) {
-            .execution-history {
-                padding: 0.75rem;
-                font-size: 0.75rem;
-            }
+            font-size: 0.75rem;
+            max-height: 150px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
         .execution-header {
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .execution-header {
-                font-size: 0.875rem;
-                margin-bottom: 0.5rem;
-            }
+            gap: 0.25rem;
         }
 
         .execution-list {
-            max-height: 300px;
+            flex: 1;
             overflow-y: auto;
-            padding-right: 0.5rem;
+            padding-right: 0.25rem;
         }
 
-        /* Custom scrollbar for execution history */
         .execution-list::-webkit-scrollbar {
-            width: 6px;
+            width: 4px;
         }
 
         .execution-list::-webkit-scrollbar-track {
             background: var(--bg-tertiary);
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         .execution-list::-webkit-scrollbar-thumb {
             background: var(--accent-tertiary);
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
         .execution-step {
             display: flex;
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-            padding: 0.75rem;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            padding: 0.5rem;
             background: var(--bg-secondary);
             border-radius: 6px;
             border-left: 3px solid transparent;
             transition: var(--transition);
             animation: stepAppear 0.3s ease-out;
-        }
-
-        @media (max-width: 768px) {
-            .execution-step {
-                gap: 0.5rem;
-                margin-bottom: 0.5rem;
-                padding: 0.5rem;
-            }
         }
 
         @keyframes stepAppear {
@@ -1176,24 +964,16 @@
 
         .step-number {
             flex-shrink: 0;
-            width: 24px;
-            height: 24px;
+            width: 20px;
+            height: 20px;
             background: var(--bg-tertiary);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 600;
-            font-size: 0.75rem;
+            font-size: 0.625rem;
             color: var(--text-secondary);
-        }
-
-        @media (max-width: 768px) {
-            .step-number {
-                width: 20px;
-                height: 20px;
-                font-size: 0.625rem;
-            }
         }
 
         .execution-step.active .step-number {
@@ -1223,696 +1003,92 @@
         .step-action {
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 0.25rem;
-        }
-
-        @media (max-width: 768px) {
-            .step-action {
-                font-size: 0.75rem;
-            }
+            margin-bottom: 0.125rem;
+            font-size: 0.75rem;
         }
 
         .step-description {
             color: var(--text-secondary);
-            font-size: 0.75rem;
-            line-height: 1.4;
-        }
-
-        @media (max-width: 768px) {
-            .step-description {
-                font-size: 0.6875rem;
-            }
+            font-size: 0.6875rem;
+            line-height: 1.3;
         }
 
         .step-variables {
             display: flex;
-            gap: 0.5rem;
-            margin-top: 0.25rem;
+            gap: 0.25rem;
+            margin-top: 0.125rem;
             flex-wrap: wrap;
         }
 
         .step-variable {
-            padding: 0.125rem 0.375rem;
+            padding: 0.125rem 0.25rem;
             background: var(--bg-tertiary);
             border-radius: 3px;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.625rem;
+            font-size: 0.5625rem;
             color: var(--text-tertiary);
         }
 
-        @media (max-width: 768px) {
-            .step-variable {
-                font-size: 0.5625rem;
-                padding: 0.1rem 0.3rem;
-            }
-        }
-
-        /* Algorithm Story - Mobile Optimized */
-        .algorithm-story {
-            margin-top: 1rem;
-            padding: 1rem;
-            background: var(--bg-primary);
-            border-radius: var(--border-radius);
-            font-size: 0.875rem;
-            line-height: 1.5;
-            color: var(--text-secondary);
-            position: relative;
-            overflow: hidden;
-        }
-
-        @media (max-width: 768px) {
-            .algorithm-story {
-                padding: 0.75rem;
-                font-size: 0.75rem;
-            }
-        }
-
-        .algorithm-story::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--gradient-tertiary);
-        }
-
-        .story-content {
-            padding-left: 1rem;
-            height: 300px;
-            overflow-y: auto;
-            padding-right: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .story-content {
-                padding-left: 0.75rem;
-                height: 200px;
-            }
-        }
-
-        /* Custom scrollbar for story - Optimized */
-        .story-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .story-content::-webkit-scrollbar-track {
-            background: var(--bg-tertiary);
-            border-radius: 3px;
-        }
-
-        .story-content::-webkit-scrollbar-thumb {
-            background: var(--accent-tertiary);
-            border-radius: 3px;
-        }
-
-        .story-content::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-secondary);
-        }
-
-        .story-paragraph {
-            margin-bottom: 0.5rem;
-        }
-
-        .story-highlight {
-            color: var(--accent-tertiary);
-            font-weight: 600;
-        }
-
-        /* Control Panel - Mobile Optimized */
-        .control-panel {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        @media (max-width: 768px) {
-            .control-panel {
-                gap: 0.75rem;
-            }
-        }
-
-        .btn {
-            padding: 0.875rem 1.75rem;
-            border: none;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            position: relative;
-            overflow: hidden;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-        }
-
-        @media (max-width: 768px) {
-            .btn {
-                padding: 0.75rem 1.25rem;
-                font-size: 0.75rem;
-                flex: 1;
-                justify-content: center;
-            }
-        }
-
-        .btn::before {
-            content: '';
-            position: absolute;
+        /* Background - Simplified */
+        .bg-container {
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
+            z-index: -1;
+            overflow: hidden;
         }
 
-        .btn:hover::before {
-            transform: translateX(100%);
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 2px solid rgba(148, 163, 184, 0.2);
-        }
-
-        .btn-secondary:hover {
-            background: var(--bg-glass-hover);
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: var(--gradient-secondary);
-            color: white;
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none !important;
-        }
-
-        .speed-control {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-left: auto;
-            padding: 0.5rem 1rem;
-            background: var(--bg-tertiary);
-            border-radius: var(--border-radius);
-        }
-
-        @media (max-width: 768px) {
-            .speed-control {
-                margin-left: 0;
-                width: 100%;
-                justify-content: space-between;
-                padding: 0.5rem 0.75rem;
-            }
-        }
-
-        .speed-label {
-            font-size: 0.875rem;
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            .speed-label {
-                font-size: 0.75rem;
-            }
-        }
-
-        .speed-slider {
-            width: 120px;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(148, 163, 184, 0.2);
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        @media (max-width: 768px) {
-            .speed-slider {
-                width: 80px;
-            }
-        }
-
-        .speed-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: var(--accent-primary);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        @media (max-width: 768px) {
-            .speed-slider::-webkit-slider-thumb {
-                width: 16px;
-                height: 16px;
-            }
-        }
-
-        .speed-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .speed-value {
-            font-size: 0.875rem;
-            color: var(--accent-primary);
-            font-weight: 600;
-            min-width: 50px;
-        }
-
-        @media (max-width: 768px) {
-            .speed-value {
-                font-size: 0.75rem;
-                min-width: 40px;
-            }
-        }
-
-        /* Status Bar - Mobile Optimized */
-        .status-bar {
-            margin-top: 1.5rem;
-            padding: 1rem 1.5rem;
-            background: var(--bg-tertiary);
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--accent-primary);
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            animation: slideIn 0.3s ease-out;
-        }
-
-        @media (max-width: 768px) {
-            .status-bar {
-                padding: 0.75rem 1rem;
-                margin-top: 1rem;
-                gap: 0.75rem;
-            }
-        }
-
-        .status-icon {
-            font-size: 1.25rem;
-        }
-
-        @media (max-width: 768px) {
-            .status-icon {
-                font-size: 1rem;
-            }
-        }
-
-        .status-text {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            .status-text {
-                font-size: 0.875rem;
-            }
-        }
-
-        .status-bar.success {
-            border-left-color: var(--accent-success);
-        }
-
-        .status-bar.error {
-            border-left-color: var(--accent-error);
-        }
-
-        .status-bar.info {
-            border-left-color: var(--accent-primary);
-        }
-
-        /* Table Section - Mobile Optimized */
-        .table-section {
-            background: var(--bg-glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            border-radius: var(--border-radius-xl);
-            padding: 2.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .table-section {
-                padding: 1.5rem;
-            }
-        }
-
-        .table-wrapper {
-            overflow-x: auto;
-            margin-top: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .table-wrapper {
-                margin-top: 1rem;
-            }
-        }
-
-        .algo-table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-        }
-
-        .algo-table th {
-            background: var(--gradient-primary);
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            font-weight: 600;
-            font-size: 0.875rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        @media (max-width: 768px) {
-            .algo-table th {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.75rem;
-            }
-        }
-
-        .algo-table th:first-child {
-            border-top-left-radius: var(--border-radius);
-        }
-
-        .algo-table th:last-child {
-            border-top-right-radius: var(--border-radius);
-        }
-
-        .algo-table td {
-            padding: 1rem;
-            text-align: center;
-            background: var(--bg-tertiary);
-            border-top: 1px solid rgba(148, 163, 184, 0.1);
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .algo-table td {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.75rem;
-            }
-        }
-
-        /* Info Section - Mobile Optimized */
-        .info-section {
-            background: var(--bg-glass);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            border-radius: var(--border-radius-xl);
-            padding: 2.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .info-section {
-                padding: 1.5rem;
-            }
-        }
-
-        .tab-navigation {
-            display: flex;
-            gap: 0.5rem;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(148, 163, 184, 0.2);
-        }
-
-        @media (max-width: 768px) {
-            .tab-navigation {
-                margin-bottom: 1.5rem;
-                gap: 0.25rem;
-            }
-        }
-
-        .tab-btn {
-            padding: 1rem 1.5rem;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            font-weight: 600;
-            cursor: pointer;
-            position: relative;
-            transition: var(--transition);
-        }
-
-        @media (max-width: 768px) {
-            .tab-btn {
-                padding: 0.75rem 1rem;
-                font-size: 0.875rem;
-            }
-        }
-
-        .tab-btn::after {
-            content: '';
+        .bg-gradient {
             position: absolute;
-            bottom: -1px;
-            left: 0;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+        }
+
+        .bg-grid {
+            position: absolute;
             width: 100%;
-            height: 3px;
-            background: var(--gradient-primary);
-            transform: scaleX(0);
-            transition: var(--transition);
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
         }
 
-        .tab-btn.active {
-            color: var(--text-primary);
+        /* Responsive adjustments */
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 250px 1fr 280px;
+            }
         }
 
-        .tab-btn.active::after {
-            transform: scaleX(1);
-        }
-
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.3s ease-out;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .info-grid {
+        @media (max-width: 1024px) {
+            .main-container {
                 grid-template-columns: 1fr;
-                gap: 1rem;
+                grid-template-rows: auto 1fr auto auto;
             }
-        }
-
-        .info-card {
-            background: var(--bg-tertiary);
-            border-radius: var(--border-radius-lg);
-            padding: 1.5rem;
-            border: 1px solid rgba(148, 163, 184, 0.1);
-            transition: var(--transition);
-        }
-
-        @media (max-width: 768px) {
-            .info-card {
-                padding: 1rem;
-            }
-        }
-
-        .info-card:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .info-card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .info-card-header {
+            
+            .left-panel, .right-panel {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
                 gap: 0.75rem;
-                margin-bottom: 0.75rem;
             }
         }
 
-        .info-card-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient-primary);
-            border-radius: var(--border-radius);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 1.25rem;
-        }
-
         @media (max-width: 768px) {
-            .info-card-icon {
-                width: 35px;
-                height: 35px;
-                font-size: 1rem;
+            .main-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto auto;
             }
-        }
-
-        .info-card-title {
-            font-weight: 700;
-            font-size: 1.125rem;
-        }
-
-        @media (max-width: 768px) {
-            .info-card-title {
-                font-size: 1rem;
-            }
-        }
-
-        .info-card-content {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        @media (max-width: 768px) {
-            .info-card-content {
-                font-size: 0.875rem;
-            }
-        }
-
-        .complexity-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .complexity-list {
-                margin-top: 0.75rem;
-            }
-        }
-
-        .complexity-item {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .complexity-item {
-                gap: 0.5rem;
-                margin-bottom: 0.375rem;
-            }
-        }
-
-        .complexity-badge {
-            padding: 0.25rem 0.75rem;
-            background: var(--gradient-primary);
-            color: white;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        @media (max-width: 768px) {
-            .complexity-badge {
-                padding: 0.2rem 0.5rem;
-                font-size: 0.625rem;
-            }
-        }
-
-        .rule-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .rule-list {
-                margin-top: 0.75rem;
-            }
-        }
-
-        .rule-item {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            padding-left: 1rem;
-            position: relative;
-        }
-
-        @media (max-width: 768px) {
-            .rule-item {
-                gap: 0.75rem;
-                margin-bottom: 0.75rem;
-                padding-left: 0.75rem;
-            }
-        }
-
-        .rule-item::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.5rem;
-            width: 6px;
-            height: 6px;
-            background: var(--accent-primary);
-            border-radius: 50%;
-        }
-
-        /* Loading Animation - Optimized */
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: white;
-            animation: spin 1s ease-in-out infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Performance: Hide non-essential elements on mobile */
-        @media (max-width: 768px) {
-            .floating-orbs {
-                display: none;
+            
+            .left-panel, .right-panel {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1921,11 +1097,6 @@
     <div class="bg-container">
         <div class="bg-gradient"></div>
         <div class="bg-grid"></div>
-        <div class="floating-orbs">
-            <div class="orb orb1"></div>
-            <div class="orb orb2"></div>
-            <div class="orb orb3"></div>
-        </div>
     </div>
 
     <header>
@@ -1945,276 +1116,141 @@
         </div>
     </header>
 
-    <nav>
-        <div class="nav-container">
-            <ul class="nav-list">
-                <li class="nav-item"><a href="#input" class="nav-link active">Input</a></li>
-                <li class="nav-item"><a href="#visualization" class="nav-link">Visualization</a></li>
-                <li class="nav-item"><a href="#analysis" class="nav-link">Analysis</a></li>
-                <li class="nav-item"><a href="#documentation" class="nav-link">Documentation</a></li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container">
-        <section id="input" class="input-section">
-            <div class="input-grid">
+    <div class="main-container">
+        <!-- Left Panel: Algorithm Selection & Controls -->
+        <div class="left-panel">
+            <div class="input-section">
                 <div class="input-group">
                     <label class="input-label" for="textInput">Text String</label>
                     <div class="input-wrapper">
-                        <input type="text" id="textInput" class="input-field" placeholder="Enter text to search in..." value="ABABDABACDABABCABAB">
+                        <input type="text" id="textInput" class="input-field" placeholder="Enter text..." value="ABABDABACDABABCABAB">
                         <button class="generate-btn" id="generateTextBtn">
                             <span>🎲</span>
-                            <span>Random</span>
                         </button>
-                        <span class="input-icon">📝</span>
                     </div>
                 </div>
                 <div class="input-group">
                     <label class="input-label" for="patternInput">Pattern String</label>
                     <div class="input-wrapper">
-                        <input type="text" id="patternInput" class="input-field" placeholder="Enter pattern to find..." value="ABABCABAB">
+                        <input type="text" id="patternInput" class="input-field" placeholder="Enter pattern..." value="ABABCABAB">
                         <button class="generate-btn" id="generatePatternBtn">
                             <span>🎲</span>
-                            <span>Random</span>
                         </button>
-                        <span class="input-icon">🔍</span>
                     </div>
                 </div>
-            </div>
-            <div class="algorithm-selector">
-                <div class="algo-card active" id="kmpCard">
-                    <div class="algo-header">
-                        <div class="algo-icon">KMP</div>
-                        <div class="algo-name">Knuth-Morris-Pratt</div>
+                <div class="algorithm-selector">
+                    <div class="algo-card active" id="kmpCard">
+                        <div class="algo-header">
+                            <div class="algo-icon">KMP</div>
+                            <div class="algo-name">Knuth-Morris-Pratt</div>
+                        </div>
+                        <div class="algo-description">Efficient pattern matching using LPS array</div>
                     </div>
-                    <div class="algo-description">Efficient pattern matching using LPS array preprocessing</div>
-                </div>
-                <div class="algo-card" id="bmCard">
-                    <div class="algo-header">
-                        <div class="algo-icon">BM</div>
-                        <div class="algo-name">Boyer-Moore</div>
+                    <div class="algo-card" id="bmCard">
+                        <div class="algo-header">
+                            <div class="algo-icon">BM</div>
+                            <div class="algo-name">Boyer-Moore</div>
+                        </div>
+                        <div class="algo-description">Fast matching using bad character heuristic</div>
                     </div>
-                    <div class="algo-description">Fast matching using bad character heuristic</div>
                 </div>
-            </div>
-        </section>
-
-        <section id="visualization" class="visualization-section">
-            <div class="section-header">
-                <h2 class="section-title">Live Visualization</h2>
             </div>
             
-            <div class="visualization-container">
-                <!-- Main Visualizer Panel -->
-                <div class="visualization-panel">
-                    <h3 class="panel-title">String Matching</h3>
-                    <div class="visualization-canvas">
-                        <div class="string-row" id="textRow"></div>
-                        <div class="string-row" id="patternRow"></div>
-                        <div class="window-overlay" id="windowOverlay"></div>
+            <div class="control-section">
+                <div class="control-panel">
+                    <button class="btn btn-primary" id="startBtn">
+                        <span>▶</span>
+                        <span>Start</span>
+                    </button>
+                    <button class="btn btn-danger" id="haltBtn" disabled>
+                        <span>⏸</span>
+                        <span>Halt</span>
+                    </button>
+                    <button class="btn btn-secondary" id="resetBtn">
+                        <span>↺</span>
+                        <span>Reset</span>
+                    </button>
+                    <div class="speed-control">
+                        <span class="speed-label">Speed</span>
+                        <input type="range" id="speedSlider" class="speed-slider" min="100" max="2000" value="1000">
+                        <span class="speed-value" id="speedValue">1000ms</span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Enhanced Pseudocode Section - Fixed Layout -->
+        <!-- Middle Panel: Visualization -->
+        <div class="middle-panel">
+            <div class="visualization-section">
+                <div class="section-header">
+                    <h2 class="section-title">Live Visualization</h2>
+                </div>
+                <div class="visualization-canvas">
+                    <div class="string-row" id="textRow"></div>
+                    <div class="string-row pattern-row" id="patternRow"></div>
+                    <div class="window-overlay" id="windowOverlay"></div>
+                </div>
+                <div id="statusBar"></div>
+            </div>
+            
+            <div class="lps-table-section">
+                <div class="section-header">
+                    <h3 class="section-title">Algorithm Table</h3>
+                </div>
+                <div class="table-wrapper" id="tableWrapper"></div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Algorithm Explorer -->
+        <div class="right-panel">
             <div class="pseudocode-section">
-                <!-- Pseudocode Panel -->
-                <div class="visualization-panel">
-                    <h3 class="panel-title">Algorithm Explorer</h3>
-                    <div class="pseudocode-container">
-                        <div class="pseudocode-header">
-                            <div class="pseudocode-title">Pseudocode</div>
-                            <div class="pseudocode-toggle">
-                                <button class="toggle-btn active" id="codeToggle">Code</button>
-                                <button class="toggle-btn" id="storyToggle">Story</button>
-                            </div>
-                        </div>
-                        <div class="pseudocode-live" id="pseudocodeLive"></div>
-                        <div class="algorithm-story" id="algorithmStory" style="display: none;">
-                            <div class="story-content" id="storyContent">
-                                <p class="story-paragraph">Welcome to the <span class="story-highlight">String Algorithm Visualizer</span>! Let's explore how pattern matching works step by step.</p>
-                                <p class="story-paragraph">Click "Start" to begin the visualization and watch as the algorithm searches for your pattern in the text.</p>
-                            </div>
+                <div class="pseudocode-container">
+                    <div class="pseudocode-header">
+                        <div class="pseudocode-title">Algorithm Explorer</div>
+                        <div class="pseudocode-toggle">
+                            <button class="toggle-btn active" id="codeToggle">Code</button>
+                            <button class="toggle-btn" id="storyToggle">Story</button>
                         </div>
                     </div>
-                    
-                    <div class="step-explanation" id="stepExplanation" style="display: none;">
-                        <div class="step-explanation-title">
-                            <span>💡</span>
-                            <span>What's Happening</span>
-                        </div>
-                        <div class="step-explanation-content" id="stepExplanationContent">
-                            The algorithm is preparing to search for the pattern in the text.
+                    <div class="pseudocode-live" id="pseudocodeLive"></div>
+                    <div class="algorithm-story" id="algorithmStory">
+                        <div class="story-content" id="storyContent">
+                            <p class="story-paragraph">Welcome to the <span class="story-highlight">String Algorithm Visualizer</span>! Let's explore how pattern matching works step by step.</p>
+                            <p class="story-paragraph">Click "Start" to begin the visualization and watch as the algorithm searches for your pattern in the text.</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Execution History Panel - New Section -->
-                <div class="visualization-panel">
-                    <h3 class="panel-title">Execution History</h3>
-                    <div class="execution-history">
-                        <div class="execution-header">
-                            <span>📜</span>
-                            <span>Step-by-Step Execution</span>
-                        </div>
-                        <div class="execution-list" id="executionList">
-                            <div class="execution-step">
-                                <div class="step-number">0</div>
-                                <div class="step-details">
-                                    <div class="step-action">Ready to Start</div>
-                                    <div class="step-description">Click "Start" to begin the algorithm visualization</div>
-                                </div>
-                            </div>
+                <div class="step-explanation" id="stepExplanation" style="display: none;">
+                    <div class="step-explanation-title">
+                        <span>💡</span>
+                        <span>What's Happening</span>
+                    </div>
+                    <div class="step-explanation-content" id="stepExplanationContent">
+                        The algorithm is preparing to search for the pattern in the text.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="execution-history">
+                <div class="execution-header">
+                    <span>📜</span>
+                    <span>Execution History</span>
+                </div>
+                <div class="execution-list" id="executionList">
+                    <div class="execution-step">
+                        <div class="step-number">0</div>
+                        <div class="step-details">
+                            <div class="step-action">Ready to Start</div>
+                            <div class="step-description">Click "Start" to begin the algorithm visualization</div>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="control-panel">
-                <button class="btn btn-primary" id="startBtn">
-                    <span>▶</span>
-                    <span>Start</span>
-                </button>
-                <button class="btn btn-danger" id="haltBtn" disabled>
-                    <span>⏸</span>
-                    <span>Halt</span>
-                </button>
-                <button class="btn btn-secondary" id="resetBtn">
-                    <span>↺</span>
-                    <span>Reset</span>
-                </button>
-                <div class="speed-control">
-                    <span class="speed-label">Speed</span>
-                    <input type="range" id="speedSlider" class="speed-slider" min="100" max="2000" value="1000">
-                    <span class="speed-value" id="speedValue">1000ms</span>
-                </div>
-            </div>
-            <div id="statusBar"></div>
-        </section>
-
-        <section id="analysis" class="table-section">
-            <div class="section-header">
-                <h2 class="section-title">Algorithm Analysis Table</h2>
-            </div>
-            <div class="table-wrapper" id="tableWrapper"></div>
-        </section>
-
-        <section id="documentation" class="info-section">
-            <div class="section-header">
-                <h2 class="section-title">Algorithm Documentation</h2>
-            </div>
-            <div class="tab-navigation">
-                <button class="tab-btn active" data-tab="complexity">Complexity Analysis</button>
-                <button class="tab-btn" data-tab="rules">Algorithm Rules</button>
-            </div>
-            <div class="tab-content active" id="complexity">
-                <div class="info-grid">
-                    <div class="info-card">
-                        <div class="info-card-header">
-                            <div class="info-card-icon">⚡</div>
-                            <div class="info-card-title">KMP Algorithm</div>
-                        </div>
-                        <div class="info-card-content">
-                            <ul class="complexity-list">
-                                <li class="complexity-item">
-                                    <span class="complexity-badge">Preprocessing</span>
-                                    <span>O(m) time complexity</span>
-                                </li>
-                                <li class="complexity-item">
-                                    <span class="complexity-badge">Searching</span>
-                                    <span>O(n) time complexity</span>
-                                </li>
-                                <li class="complexity-item">
-                                    <span class="complexity-badge">Total</span>
-                                    <span>O(n + m) overall</span>
-                                </li>
-                                <li class="complexity-item">
-                                    <span class="complexity-badge">Space</span>
-                                    <span>O(m) auxiliary space</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-card-header">
-                            <div class="info-card-icon">🚀</div>
-                            <div class="info-card-title">Boyer-Moore Algorithm</div>
-                        </div>
-                        <div class="info-card-content">
-                            <ul class="complexity-list">
-                                <li class="complexity-item">
-                                    <span class="complexity-badge">Preprocessing</span>
-                                    <span>O(m + σ) time</span>
-                                </li>
-                                <li class="complexity-item">
-                                    <span class="complexity-badge">Best Case</span>
-                                    <span>O(n/m) comparisons</span>
-                                </li>
-                                <li class="complexity-item">
-                                    <span class="complexity-badge">Worst Case</span>
-                                    <span>O(nm) comparisons</span>
-                                </li>
-                                <li class="complexity-item">
-                                    <span class="complexity-badge">Average</span>
-                                    <span>O(n) for random patterns</span>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-content" id="rules">
-                <div class="info-grid">
-                    <div class="info-card">
-                        <div class="info-card-header">
-                            <div class="info-card-icon">📋</div>
-                            <div class="info-card-title">KMP Algorithm Rules</div>
-                        </div>
-                        <div class="info-card-content">
-                            <ul class="rule-list">
-                                <li class="rule-item">Preprocess pattern to create LPS (Longest Prefix Suffix) table</li>
-                                <li class="rule-item">LPS[i] stores length of longest proper prefix which is also suffix for pattern[0..i]</li>
-                                <li class="rule-item">On mismatch, use LPS table to skip unnecessary comparisons</li>
-                                <li class="rule-item">If pattern[j] matches text[i], increment both indices</li>
-                                <li class="rule-item">If mismatch and j > 0, set j = LPS[j-1]</li>
-                                <li class="rule-item">If mismatch and j = 0, increment text index only</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="info-card">
-                        <div class="info-card-header">
-                            <div class="info-card-icon">📋</div>
-                            <div class="info-card-title">Boyer-Moore Algorithm Rules</div>
-                        </div>
-                        <div class="info-card-content">
-                            <ul class="rule-list">
-                                <li class="rule-item">Preprocess pattern to create bad character table</li>
-                                <li class="rule-item">Bad character table stores last occurrence of each character</li>
-                                <li class="rule-item">Start matching from the end of the pattern (right to left)</li>
-                                <li class="rule-item">On mismatch, shift pattern based on bad character rule</li>
-                                <li class="rule-item">Shift = max(1, j - lastOccurrence[text[i]])</li>
-                                <li class="rule-item">If all characters match, pattern found at position i - m + 1</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        </div>
     </div>
 
     <script>
-        // Performance optimizations
-        // Reduce layout thrashing
-        let ticking = false;
-        function requestTick(callback) {
-            if (!ticking) {
-                requestAnimationFrame(callback);
-                ticking = true;
-                setTimeout(() => { ticking = false; }, 100);
-            }
-        }
-
         // Theme Management
         const themeToggle = document.getElementById('themeToggle');
         const themeIcon = document.getElementById('themeIcon');
@@ -2239,71 +1275,6 @@
             htmlElement.setAttribute('data-theme', 'dark');
             themeIcon.textContent = '☀️';
         }
-
-        // Navigation Management - Optimized
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                navLinks.forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-                
-                const targetId = link.getAttribute('href');
-                const targetSection = document.querySelector(targetId);
-                if (targetSection) {
-                    targetSection.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
-        });
-
-        // Throttled scroll handler for performance
-        let scrollTimeout;
-        window.addEventListener('scroll', () => {
-            if (scrollTimeout) {
-                clearTimeout(scrollTimeout);
-            }
-            scrollTimeout = setTimeout(() => {
-                let current = '';
-                const sections = document.querySelectorAll('section');
-                
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    if (pageYOffset >= sectionTop - 100) {
-                        current = section.getAttribute('id');
-                    }
-                });
-                
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('href').slice(1) === current) {
-                        link.classList.add('active');
-                    }
-                });
-            }, 100);
-        });
-
-        // Tab Management
-        const tabButtons = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        tabButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const tabName = button.getAttribute('data-tab');
-                
-                const parentSection = button.closest('section');
-                const sectionTabs = parentSection.querySelectorAll('.tab-btn');
-                const sectionContents = parentSection.querySelectorAll('.tab-content');
-                
-                sectionTabs.forEach(btn => btn.classList.remove('active'));
-                sectionContents.forEach(content => content.classList.remove('active'));
-                
-                button.classList.add('active');
-                parentSection.querySelector(`#${tabName}`).classList.add('active');
-            });
-        });
 
         // Pseudocode/Story Toggle
         const codeToggle = document.getElementById('codeToggle');
@@ -2344,11 +1315,10 @@
             resetVisualization();
         });
 
-        // Enhanced Random String Generator with Matching Patterns
+        // Random String Generator
         const generateTextBtn = document.getElementById('generateTextBtn');
         const generatePatternBtn = document.getElementById('generatePatternBtn');
 
-        // Predefined meaningful test cases
         const testCases = [
             {
                 text: "ABABDABACDABABCABAB",
@@ -2397,7 +1367,6 @@
             }
         ];
 
-        // Additional pattern templates for generation
         const patternTemplates = [
             "ABAB", "ABC", "ABCD", "AAB", "ABA", "ABCAB", "ABABC", 
             "ABCABC", "AABAAB", "ABABAB", "ABCABCAB", "ABABCABAB",
@@ -2414,30 +1383,25 @@
         }
 
         function generateMatchingText(pattern) {
-            const textLength = Math.floor(Math.random() * 15) + 20; // 20-35 characters
-            const numMatches = Math.floor(Math.random() * 2) + 1; // 1-2 matches
+            const textLength = Math.floor(Math.random() * 15) + 20;
+            const numMatches = Math.floor(Math.random() * 2) + 1;
             
             let text = '';
             
-            // Add some random prefix
             const prefixLength = Math.floor(Math.random() * 5) + 2;
             text += generateRandomString(prefixLength);
             
-            // Add the pattern
             text += pattern;
             
-            // Add some random middle part
             if (numMatches === 2 || textLength - text.length > pattern.length + 5) {
                 const middleLength = Math.min(Math.floor(Math.random() * 8) + 3, textLength - text.length - pattern.length - 2);
                 text += generateRandomString(middleLength);
                 
-                // Add second pattern if there's space
                 if (text.length + pattern.length <= textLength) {
                     text += pattern;
                 }
             }
             
-            // Fill remaining space with random characters
             while (text.length < textLength) {
                 text += generateRandomString(1);
             }
@@ -2446,22 +1410,20 @@
         }
 
         function generateRandomPattern() {
-            // 70% chance to use a predefined template, 30% to generate random
             if (Math.random() < 0.7) {
                 return patternTemplates[Math.floor(Math.random() * patternTemplates.length)];
             } else {
-                const length = Math.floor(Math.random() * 4) + 3; // 3-6 characters
+                const length = Math.floor(Math.random() * 4) + 3;
                 return generateRandomString(length, 'ABCD');
             }
         }
 
         function generateRandomText() {
-            // 60% chance to use a test case, 40% to generate
             if (Math.random() < 0.6) {
                 const testCase = testCases[Math.floor(Math.random() * testCases.length)];
                 return testCase.text;
             } else {
-                const length = Math.floor(Math.random() * 10) + 20; // 20-30 characters
+                const length = Math.floor(Math.random() * 10) + 20;
                 return generateRandomString(length, 'ABCD');
             }
         }
@@ -2471,10 +1433,8 @@
             let newText;
             
             if (currentPattern && Math.random() < 0.8) {
-                // 80% chance to generate text that contains the current pattern
                 newText = generateMatchingText(currentPattern);
             } else {
-                // Generate completely random text
                 newText = generateRandomText();
             }
             
@@ -2487,7 +1447,6 @@
             const newPattern = generateRandomPattern();
             patternInput.value = newPattern;
             
-            // Optionally generate matching text
             if (Math.random() < 0.5) {
                 const matchingText = generateMatchingText(newPattern);
                 textInput.value = matchingText;
@@ -2537,72 +1496,72 @@
         let naiveComparisons = 0;
         let executionSteps = [];
 
-        // Enhanced Pseudocode templates with explanations
+        // Pseudocode templates
         const kmpPseudocode = [
             { 
                 type: 'function', 
                 text: '<span class="pseudocode-keyword">function</span> <span class="pseudocode-function">KMPSearch</span>(text, pattern):',
-                explanation: "We're starting the KMP algorithm to find the pattern in the text."
+                explanation: "Starting the KMP algorithm to find the pattern in the text."
             },
             { 
                 type: 'variable', 
                 text: '    n = length of text',
-                explanation: "First, we need to know how long our text is."
+                explanation: "Getting the length of the text."
             },
             { 
                 type: 'variable', 
                 text: '    m = length of pattern',
-                explanation: "And we also need to know how long our pattern is."
+                explanation: "Getting the length of the pattern."
             },
             { 
                 type: 'variable', 
                 text: '    lps = computeLPSArray(pattern)',
-                explanation: "The magic of KMP starts here! We're creating a special table called LPS (Longest Prefix Suffix) that will help us skip unnecessary comparisons."
+                explanation: "Creating the LPS (Longest Prefix Suffix) table."
             },
             { 
                 type: 'variable', 
                 text: '    i = 0  <span class="pseudocode-comment">// index for text</span>',
-                explanation: "We'll start searching from the beginning of the text (index 0)."
+                explanation: "Starting from the beginning of the text."
             },
             { 
                 type: 'variable', 
                 text: '    j = 0  <span class="pseudocode-comment">// index for pattern</span>',
-                explanation: "And we'll start comparing from the beginning of the pattern (index 0)."
+                explanation: "Starting from the beginning of the pattern."
             },
             { 
                 type: 'loop', 
                 text: '    <span class="pseudocode-keyword">while</span> i < n:',
-                explanation: "We'll keep searching until we've checked all characters in the text."
+                explanation: "Searching until we've checked all characters in the text."
             },
             { 
                 type: 'condition', 
                 text: '        <span class="pseudocode-keyword">if</span> pattern[j] == text[i]:',
-                explanation: "Now we're checking if the current characters match."
+                explanation: "Checking if the current characters match."
             },
             { 
                 type: 'action', 
                 text: '            i = i + 1',
-                explanation: "If they match, we move to the next character in the text."
+                explanation: "Moving to the next character in the text."
             },
             { 
                 type: 'action', 
                 text: '            j = j + 1',
-                explanation: "And we also move to the next character in the pattern."
+                explanation: "Moving to the next character in the pattern."
             },
             { 
                 type: 'condition', 
                 text: '            <span class="pseudocode-keyword">if</span> j == m:',
-                explanation: "If we've matched all characters in the pattern..."
+                explanation: "Checking if we've matched all characters in the pattern."
             },
             { 
                 type: 'action', 
                 text: '                print(<span class="pseudocode-string">"Pattern found at index "</span> + (i-j))',
-                explanation: "Then we've found a match! Let's celebrate and record where we found it."
+                explanation: "Recording where we found the match."
             },
             { 
                 type: 'action', 
                 text: '                j = lps[j-1]',
-                explanation: "Even after finding a match, we don't start over. We use our LPS table to continue searching efficiently."
+                explanation: "Using the LPS table to continue searching efficiently."
             },
             { 
                 type: 'condition', 
@@ -2612,22 +1571,22 @@
             { 
                 type: 'condition', 
                 text: '            <span class="pseudocode-keyword">if</span> j != 0:',
-                explanation: "And if we're not at the beginning of the pattern..."
+                explanation: "If we're not at the beginning of the pattern..."
             },
             { 
                 type: 'action', 
                 text: '                j = lps[j-1]',
-                explanation: "We don't go back to the start! We use our LPS table to jump to the best position in the pattern."
+                explanation: "Using the LPS table to jump to the best position."
             },
             { 
                 type: 'condition', 
                 text: '            <span class="pseudocode-keyword">else</span>:',
-                explanation: "If we're already at the beginning of the pattern..."
+                explanation: "If we're at the beginning of the pattern..."
             },
             { 
                 type: 'action', 
                 text: '                i = i + 1',
-                explanation: "Then we just move to the next character in the text and try again."
+                explanation: "Moving to the next character in the text."
             }
         ];
 
@@ -2635,57 +1594,57 @@
             { 
                 type: 'function', 
                 text: '<span class="pseudocode-keyword">function</span> <span class="pseudocode-function">boyerMooreSearch</span>(text, pattern):',
-                explanation: "We're starting the Boyer-Moore algorithm, which works in a clever way by comparing from right to left!"
+                explanation: "Starting the Boyer-Moore algorithm, which compares from right to left!"
             },
             { 
                 type: 'variable', 
                 text: '    n = length of text',
-                explanation: "First, we need to know how long our text is."
+                explanation: "Getting the length of the text."
             },
             { 
                 type: 'variable', 
                 text: '    m = length of pattern',
-                explanation: "And we also need to know how long our pattern is."
+                explanation: "Getting the length of the pattern."
             },
             { 
                 type: 'variable', 
                 text: '    badChar = computeBadCharTable(pattern)',
-                explanation: "The Boyer-Moore magic starts here! We're creating a table that tells us where each character appears in the pattern."
+                explanation: "Creating the bad character table."
             },
             { 
                 type: 'variable', 
                 text: '    shift = 0',
-                explanation: "We'll use this to keep track of where the pattern is positioned in the text."
+                explanation: "Initializing the shift position."
             },
             { 
                 type: 'loop', 
                 text: '    <span class="pseudocode-keyword">while</span> shift <= (n - m):',
-                explanation: "We'll keep searching until we've checked all possible positions for the pattern."
+                explanation: "Searching until we've checked all possible positions."
             },
             { 
                 type: 'variable', 
                 text: '        j = m - 1',
-                explanation: "Here's the clever part! We start comparing from the END of the pattern, not the beginning!"
+                explanation: "Starting from the END of the pattern!"
             },
             { 
                 type: 'loop', 
                 text: '        <span class="pseudocode-keyword">while</span> j >= 0 and pattern[j] == text[shift + j]:',
-                explanation: "We'll keep comparing characters from right to left as long as they match."
+                explanation: "Comparing characters from right to left."
             },
             { 
                 type: 'action', 
                 text: '            j = j - 1',
-                explanation: "If they match, we move one position to the left in the pattern."
+                explanation: "Moving one position to the left."
             },
             { 
                 type: 'condition', 
                 text: '        <span class="pseudocode-keyword">if</span> j < 0:',
-                explanation: "If we've gone past the beginning of the pattern (j < 0), it means all characters matched!"
+                explanation: "If all characters matched..."
             },
             { 
                 type: 'action', 
                 text: '            print(<span class="pseudocode-string">"Pattern found at index "</span> + shift)',
-                explanation: "Hooray! We found a match at the current shift position."
+                explanation: "Recording where we found the match."
             },
             { 
                 type: 'condition', 
@@ -2695,7 +1654,7 @@
             { 
                 type: 'action', 
                 text: '                shift = shift + m - badChar[ASCII(text[shift + m])]',
-                explanation: "We use our bad character table to make a big jump forward in the text!"
+                explanation: "Making a big jump forward in the text!"
             },
             { 
                 type: 'condition', 
@@ -2705,7 +1664,7 @@
             { 
                 type: 'action', 
                 text: '                shift = shift + 1',
-                explanation: "We just move one position forward."
+                explanation: "Moving one position forward."
             },
             { 
                 type: 'condition', 
@@ -2715,7 +1674,7 @@
             { 
                 type: 'action', 
                 text: '            shift = shift + max(1, j - badChar[ASCII(text[shift + j])])',
-                explanation: "This is where Boyer-Moore shines! We make a smart jump based on where the mismatching character appears in our pattern."
+                explanation: "Making a smart jump based on the bad character rule."
             }
         ];
 
@@ -2732,47 +1691,43 @@
                 pseudocodeLive.appendChild(lineDiv);
             });
             
-            // Initialize story content
             updateStoryContent();
         }
 
         // Update pseudocode highlighting
         function updatePseudocodeHighlight(lineIndex) {
-            requestTick(() => {
-                document.querySelectorAll('.pseudocode-line').forEach((line, index) => {
-                    if (index < lineIndex) {
-                        line.classList.add('executed');
-                        line.classList.remove('active');
-                    } else if (index === lineIndex) {
-                        line.classList.add('active');
-                        line.classList.remove('executed');
-                    } else {
-                        line.classList.remove('active', 'executed');
-                    }
-                });
-                
-                // Update step explanation
-                const pseudocode = currentAlgorithm === 'kmp' ? kmpPseudocode : bmPseudocode;
-                if (lineIndex >= 0 && lineIndex < pseudocode.length) {
-                    stepExplanation.style.display = 'block';
-                    stepExplanationContent.textContent = pseudocode[lineIndex].explanation;
+            document.querySelectorAll('.pseudocode-line').forEach((line, index) => {
+                if (index < lineIndex) {
+                    line.classList.add('executed');
+                    line.classList.remove('active');
+                } else if (index === lineIndex) {
+                    line.classList.add('active');
+                    line.classList.remove('executed');
+                } else {
+                    line.classList.remove('active', 'executed');
                 }
             });
+            
+            const pseudocode = currentAlgorithm === 'kmp' ? kmpPseudocode : bmPseudocode;
+            if (lineIndex >= 0 && lineIndex < pseudocode.length) {
+                stepExplanation.style.display = 'block';
+                stepExplanationContent.textContent = pseudocode[lineIndex].explanation;
+            }
         }
 
         // Update story content
         function updateStoryContent() {
             if (currentAlgorithm === 'kmp') {
                 storyContent.innerHTML = `
-                    <p class="story-paragraph">Welcome to the <span class="story-highlight">KMP Algorithm</span> adventure! Imagine you're trying to find a specific word in a book, but you don't want to start over from the beginning every time you hit a dead end.</p>
-                    <p class="story-paragraph">The KMP algorithm is like a smart reader who remembers where they've seen parts of the word before. It creates a special map called the <span class="story-highlight">LPS table</span> that helps it jump ahead instead of starting over.</p>
-                    <p class="story-paragraph">Watch as the algorithm compares characters, and when it finds a mismatch, it uses its LPS table to know exactly where to continue from, saving precious time!</p>
+                    <p class="story-paragraph">Welcome to the <span class="story-highlight">KMP Algorithm</span> adventure! This algorithm is like a smart reader who remembers where they've seen parts of the word before.</p>
+                    <p class="story-paragraph">It creates a special map called the <span class="story-highlight">LPS table</span> that helps it jump ahead instead of starting over.</p>
+                    <p class="story-paragraph">Watch as the algorithm compares characters, and when it finds a mismatch, it uses its LPS table to know exactly where to continue from!</p>
                 `;
             } else {
                 storyContent.innerHTML = `
-                    <p class="story-paragraph">Welcome to the <span class="story-highlight">Boyer-Moore Algorithm</span> adventure! This algorithm is like a detective who works backwards to solve a mystery faster.</p>
-                    <p class="story-paragraph">Instead of starting from the beginning, Boyer-Moore compares characters from the END of the pattern. It's like checking if the last letter of a word matches before looking at the first!</p>
-                    <p class="story-paragraph">When it finds a mismatch, it uses a clever trick called the <span class="story-highlight">bad character rule</span> to jump ahead in the text, often skipping many characters at once. This makes it super fast for many real-world searches!</p>
+                    <p class="story-paragraph">Welcome to the <span class="story-highlight">Boyer-Moore Algorithm</span> adventure! This algorithm works backwards to solve a mystery faster.</p>
+                    <p class="story-paragraph">Instead of starting from the beginning, Boyer-Moore compares characters from the END of the pattern.</p>
+                    <p class="story-paragraph">When it finds a mismatch, it uses a clever trick called the <span class="story-highlight">bad character rule</span> to jump ahead in the text!</p>
                 `;
             }
         }
@@ -2797,7 +1752,6 @@
             executionList.appendChild(stepDiv);
             executionList.scrollTop = executionList.scrollHeight;
             
-            // Highlight the current step
             document.querySelectorAll('.execution-step').forEach((step, index) => {
                 step.classList.remove('active');
                 if (index === stepNumber) {
@@ -2882,7 +1836,6 @@
             matches = [];
             comparisons = 0;
             
-            // Calculate naive comparisons for efficiency metrics
             naiveComparisons = text.length * pattern.length;
             
             const steps = [];
@@ -3065,11 +2018,10 @@
             
             let n = text.length;
             let m = pattern.length;
-            let shift = 0; // index for text
+            let shift = 0;
             matches = [];
             comparisons = 0;
             
-            // Calculate naive comparisons for efficiency metrics
             naiveComparisons = text.length * pattern.length;
             
             const steps = [];
@@ -3086,7 +2038,7 @@
             });
             
             while (shift <= n - m) {
-                let j = m - 1; // index for pattern (starting from the end)
+                let j = m - 1;
                 
                 steps.push({
                     textIndex: shift + j,
@@ -3131,7 +2083,6 @@
                         explanation: `All characters matched! Pattern found at position ${shift}.`
                     });
                     
-                    // Shift pattern based on bad character rule
                     const nextShift = (shift + m < n) ? shift + m - (badChar[text[shift + m]] !== undefined ? badChar[text[shift + m]] + 1 : 1) : shift + 1;
                     
                     steps.push({
@@ -3174,7 +2125,7 @@
             return steps;
         }
 
-        // Visualization Functions - Optimized
+        // Visualization Functions
         function initializeVisualization() {
             text = textInput.value;
             pattern = patternInput.value;
@@ -3201,7 +2152,7 @@
             // Initialize pseudocode
             initializePseudocode();
             
-            // Create text display - Optimized for mobile
+            // Create text display
             const fragment = document.createDocumentFragment();
             for (let i = 0; i < text.length; i++) {
                 const charCell = document.createElement('div');
@@ -3218,7 +2169,7 @@
             }
             textRow.appendChild(fragment);
             
-            // Create pattern display - Optimized for mobile
+            // Create pattern display
             const patternFragment = document.createDocumentFragment();
             for (let i = 0; i < pattern.length; i++) {
                 const charCell = document.createElement('div');
@@ -3253,121 +2204,122 @@
         }
 
         function visualizeStep(step, stepNumber) {
-            requestTick(() => {
-                // Clear previous highlights
-                document.querySelectorAll('.char-cell').forEach(cell => {
-                    cell.classList.remove('comparing', 'match', 'mismatch');
-                });
-                
-                // Highlight current text character
+            // Clear previous highlights
+            document.querySelectorAll('.char-cell').forEach(cell => {
+                cell.classList.remove('comparing', 'match', 'mismatch');
+            });
+            
+            // Highlight current text character
+            if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
+                const textCell = document.getElementById(`text-${step.textIndex}`);
+                if (textCell) textCell.classList.add('comparing');
+            }
+            
+            // Highlight current pattern character
+            if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
+                const patternCell = document.getElementById(`pattern-${step.patternIndex}`);
+                if (patternCell) patternCell.classList.add('comparing');
+            }
+            
+            // Update window position
+            const patternPosition = step.patternPosition !== undefined ? step.patternPosition : (step.shift !== undefined ? step.shift : 0);
+            const windowWidth = pattern.length * 36; // Adjusted for smaller cells
+            windowOverlay.style.width = `${windowWidth}px`;
+            windowOverlay.style.left = `${patternPosition * 36}px`;
+            
+            // Move pattern with window - NEW CHANGE
+            patternRow.style.transform = `translateX(${patternPosition * 36}px)`;
+            
+            // Handle match/mismatch
+            if (step.isMatch) {
                 if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
                     const textCell = document.getElementById(`text-${step.textIndex}`);
-                    if (textCell) textCell.classList.add('comparing');
+                    if (textCell) {
+                        textCell.classList.remove('comparing');
+                        textCell.classList.add('match');
+                    }
                 }
-                
-                // Highlight current pattern character
                 if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
                     const patternCell = document.getElementById(`pattern-${step.patternIndex}`);
-                    if (patternCell) patternCell.classList.add('comparing');
-                }
-                
-                // Update window position
-                const patternPosition = step.patternPosition !== undefined ? step.patternPosition : (step.shift !== undefined ? step.shift : 0);
-                const windowWidth = pattern.length * (window.innerWidth <= 768 ? 39 : 49); // Smaller on mobile
-                windowOverlay.style.width = `${windowWidth}px`;
-                windowOverlay.style.left = `${patternPosition * (window.innerWidth <= 768 ? 39 : 49)}px`;
-                
-                // Handle match/mismatch
-                if (step.isMatch) {
-                    if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
-                        const textCell = document.getElementById(`text-${step.textIndex}`);
-                        if (textCell) {
-                            textCell.classList.remove('comparing');
-                            textCell.classList.add('match');
-                        }
-                    }
-                    if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
-                        const patternCell = document.getElementById(`pattern-${step.patternIndex}`);
-                        if (patternCell) {
-                            patternCell.classList.remove('comparing');
-                            patternCell.classList.add('match');
-                        }
+                    if (patternCell) {
+                        patternCell.classList.remove('comparing');
+                        patternCell.classList.add('match');
                     }
                 }
-                
-                if (step.mismatch) {
-                    if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
-                        const textCell = document.getElementById(`text-${step.textIndex}`);
-                        if (textCell) {
-                            textCell.classList.remove('comparing');
-                            textCell.classList.add('mismatch');
-                        }
-                    }
-                    if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
-                        const patternCell = document.getElementById(`pattern-${step.patternIndex}`);
-                        if (patternCell) {
-                            patternCell.classList.remove('comparing');
-                            patternCell.classList.add('mismatch');
-                        }
+            }
+            
+            if (step.mismatch) {
+                if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
+                    const textCell = document.getElementById(`text-${step.textIndex}`);
+                    if (textCell) {
+                        textCell.classList.remove('comparing');
+                        textCell.classList.add('mismatch');
                     }
                 }
-                
-                // Update pseudocode highlighting
-                if (step.pseudoLine !== undefined) {
-                    updatePseudocodeHighlight(step.pseudoLine);
-                }
-                
-                // Add to execution history
-                let action = '';
-                let description = step.explanation || '';
-                let variables = [];
-                let type = 'normal';
-                
-                if (step.found) {
-                    action = 'Pattern Found!';
-                    type = 'found';
-                    variables = [`i=${step.i}`, `j=${step.j}`, `matches=[${step.matches.join(', ')}]`];
-                } else if (step.isMatch) {
-                    action = 'Characters Match';
-                    type = 'match';
-                    variables = [`i=${step.i}`, `j=${step.j}`];
-                } else if (step.mismatch) {
-                    action = 'Characters Mismatch';
-                    type = 'mismatch';
-                    if (currentAlgorithm === 'kmp') {
-                        variables = [`i=${step.i}`, `j=${step.j}`, `next_j=${step.nextPatternIndex}`];
-                    } else {
-                        variables = [`shift=${step.shift}`, `j=${step.j}`, `shift_by=${step.badCharShift}`];
+                if (step.patternIndex !== undefined && step.patternIndex >= 0 && step.patternIndex < pattern.length) {
+                    const patternCell = document.getElementById(`pattern-${step.patternIndex}`);
+                    if (patternCell) {
+                        patternCell.classList.remove('comparing');
+                        patternCell.classList.add('mismatch');
                     }
+                }
+            }
+            
+            // Update pseudocode highlighting
+            if (step.pseudoLine !== undefined) {
+                updatePseudocodeHighlight(step.pseudoLine);
+            }
+            
+            // Add to execution history
+            let action = '';
+            let description = step.explanation || '';
+            let variables = [];
+            let type = 'normal';
+            
+            if (step.found) {
+                action = 'Pattern Found!';
+                type = 'found';
+                variables = [`i=${step.i}`, `j=${step.j}`, `matches=[${step.matches.join(', ')}]`];
+            } else if (step.isMatch) {
+                action = 'Characters Match';
+                type = 'match';
+                variables = [`i=${step.i}`, `j=${step.j}`];
+            } else if (step.mismatch) {
+                action = 'Characters Mismatch';
+                type = 'mismatch';
+                if (currentAlgorithm === 'kmp') {
+                    variables = [`i=${step.i}`, `j=${step.j}`, `next_j=${step.nextPatternIndex}`];
                 } else {
-                    action = 'Initializing';
-                    variables = [`i=${step.i}`, `j=${step.j}`];
+                    variables = [`shift=${step.shift}`, `j=${step.j}`, `shift_by=${step.badCharShift}`];
                 }
-                
-                addExecutionStep(stepNumber, action, description, variables, type);
-                
-                // Update story content if in story mode
-                if (algorithmStory.style.display !== 'none' && step.explanation) {
-                    const storyParagraph = document.createElement('p');
-                    storyParagraph.className = 'story-paragraph';
-                    storyParagraph.innerHTML = step.explanation;
-                    storyContent.appendChild(storyParagraph);
-                    storyContent.scrollTop = storyContent.scrollHeight;
+            } else {
+                action = 'Initializing';
+                variables = [`i=${step.i}`, `j=${step.j}`];
+            }
+            
+            addExecutionStep(stepNumber, action, description, variables, type);
+            
+            // Update story content if in story mode
+            if (algorithmStory.style.display !== 'none' && step.explanation) {
+                const storyParagraph = document.createElement('p');
+                storyParagraph.className = 'story-paragraph';
+                storyParagraph.innerHTML = step.explanation;
+                storyContent.appendChild(storyParagraph);
+                storyContent.scrollTop = storyContent.scrollHeight;
+            }
+            
+            // Show status message
+            if (step.found) {
+                showStatus(`✅ Pattern found at position ${step.patternPosition}`, 'success');
+            } else if (step.mismatch) {
+                if (currentAlgorithm === 'kmp') {
+                    showStatus(`❌ Mismatch! Pattern index will be set to ${step.nextPatternIndex}`, 'error');
+                } else {
+                    showStatus(`❌ Mismatch! Pattern will shift by ${step.badCharShift} positions`, 'error');
                 }
-                
-                // Show status message
-                if (step.found) {
-                    showStatus(`✅ Pattern found at position ${step.patternPosition}`, 'success');
-                } else if (step.mismatch) {
-                    if (currentAlgorithm === 'kmp') {
-                        showStatus(`❌ Mismatch! Pattern index will be set to ${step.nextPatternIndex}`, 'error');
-                    } else {
-                        showStatus(`❌ Mismatch! Pattern will shift by ${step.badCharShift} positions`, 'error');
-                    }
-                } else if (step.isMatch) {
-                    showStatus(`✓ Characters match!`, 'info');
-                }
-            });
+            } else if (step.isMatch) {
+                showStatus(`✓ Characters match!`, 'info');
+            }
         }
 
         function showStatus(message, type) {
@@ -3506,6 +2458,8 @@
             pseudocodeLive.innerHTML = '';
             stepExplanation.style.display = 'none';
             
+            // Reset pattern position
+            patternRow.style.transform = 'translateX(0px)';
             windowOverlay.style.width = '0px';
             windowOverlay.style.left = '0px';
             
