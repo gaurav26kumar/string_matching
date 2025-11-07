@@ -664,6 +664,25 @@
             border-top: 1px solid rgba(148, 163, 184, 0.1);
             font-family: 'JetBrains Mono', monospace;
             font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .algo-table td.highlight {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-primary);
+            font-weight: 700;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .algo-table td.calculating {
+            animation: calculatingPulse 1s infinite;
+            background: rgba(99, 102, 241, 0.2);
+        }
+
+        @keyframes calculatingPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
 
         /* Right Panel - Algorithm Explorer */
@@ -1061,6 +1080,32 @@
             background-size: 50px 50px;
         }
 
+        /* Keyboard shortcuts hint */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: var(--border-radius-lg);
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .keyboard-hint kbd {
+            background: var(--bg-tertiary);
+            padding: 0.125rem 0.25rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
         /* Responsive adjustments */
         @media (max-width: 1200px) {
             .main-container {
@@ -1215,7 +1260,7 @@
                     <div class="pseudocode-live" id="pseudocodeLive"></div>
                     <div class="algorithm-story" id="algorithmStory">
                         <div class="story-content" id="storyContent">
-                            <p class="story-paragraph">Welcome to the <span class="story-highlight">String Algorithm Visualizer</span>! Let's explore how pattern matching works step by step.</p>
+                            <p class="story-paragraph">Welcome to <span class="story-highlight">String Algorithm Visualizer</span>! Let's explore how pattern matching works step by step.</p>
                             <p class="story-paragraph">Click "Start" to begin the visualization and watch as the algorithm searches for your pattern in the text.</p>
                         </div>
                     </div>
@@ -1248,6 +1293,11 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="keyboard-hint">
+        <div><kbd>Enter</kbd> Start</div>
+        <div><kbd>Space</kbd> Pause/Resume</div>
     </div>
 
     <script>
@@ -1495,6 +1545,8 @@
         let animationTimeout;
         let naiveComparisons = 0;
         let executionSteps = [];
+        let lpsArray = [];
+        let badCharTable = {};
 
         // Pseudocode templates
         const kmpPseudocode = [
@@ -1784,7 +1836,7 @@
             return lps;
         }
 
-        function displayLPSTable(lps) {
+        function displayLPSTable(lps, highlightIndex = -1) {
             let tableHTML = `
                 <table class="algo-table">
                     <thead>
@@ -1815,7 +1867,8 @@
             `;
             
             for (let i = 0; i < lps.length; i++) {
-                tableHTML += `<td>${lps[i]}</td>`;
+                const highlightClass = i === highlightIndex ? 'highlight' : '';
+                tableHTML += `<td class="${highlightClass}">${lps[i]}</td>`;
             }
             
             tableHTML += `
@@ -1829,6 +1882,7 @@
 
         function KMPSearch() {
             const lps = computeLPSArray();
+            lpsArray = lps;
             displayLPSTable(lps);
             
             let i = 0; // index for text
@@ -1913,7 +1967,8 @@
                             matches: [...matches],
                             comparisons: comparisons,
                             pseudoLine: 12,
-                            explanation: `Using LPS table to set pattern index to ${j} instead of starting over.`
+                            explanation: `Using the LPS table to set the pattern index to ${j} instead of starting over.`,
+                            lpsIndex: j - 1
                         });
                     }
                 } else {
@@ -1929,7 +1984,8 @@
                             matches: [...matches],
                             comparisons: comparisons,
                             pseudoLine: 13,
-                            explanation: `Mismatch! But we're not at the beginning of the pattern, so we can use the LPS table.`
+                            explanation: `Mismatch! But we're not at the beginning of the pattern, so we can use the LPS table.`,
+                            lpsIndex: j - 1
                         });
                         j = lps[j - 1];
                         
@@ -1942,7 +1998,8 @@
                             matches: [...matches],
                             comparisons: comparisons,
                             pseudoLine: 14,
-                            explanation: `Using LPS table to set pattern index to ${j} instead of starting over.`
+                            explanation: `Using the LPS table to set the pattern index to ${j} instead of starting over.`,
+                            lpsIndex: j - 1
                         });
                     } else {
                         steps.push({
@@ -1977,7 +2034,7 @@
             return badChar;
         }
 
-        function displayBadCharacterTable(badChar) {
+        function displayBadCharacterTable(badChar, highlightChar = '') {
             const chars = Object.keys(badChar).sort();
             
             let tableHTML = `
@@ -2000,7 +2057,8 @@
             `;
             
             for (const char of chars) {
-                tableHTML += `<td>${badChar[char]}</td>`;
+                const highlightClass = char === highlightChar ? 'highlight' : '';
+                tableHTML += `<td class="${highlightClass}">${badChar[char]}</td>`;
             }
             
             tableHTML += `
@@ -2014,6 +2072,7 @@
 
         function boyerMooreSearch() {
             const badChar = computeBadCharacterTable();
+            badCharTable = badChar;
             displayBadCharacterTable(badChar);
             
             let n = text.length;
@@ -2084,6 +2143,7 @@
                     });
                     
                     const nextShift = (shift + m < n) ? shift + m - (badChar[text[shift + m]] !== undefined ? badChar[text[shift + m]] + 1 : 1) : shift + 1;
+                    const nextChar = (shift + m < n) ? text[shift + m] : '';
                     
                     steps.push({
                         textIndex: shift,
@@ -2094,7 +2154,8 @@
                         matches: [...matches],
                         comparisons: comparisons,
                         pseudoLine: 11,
-                        explanation: `Using bad character rule to shift pattern from position ${shift} to ${nextShift}.`
+                        explanation: `Using the bad character rule to shift pattern from position ${shift} to ${nextShift}.`,
+                        badChar: nextChar
                     });
                     
                     shift = nextShift;
@@ -2103,6 +2164,7 @@
                     
                     const badCharShift = badChar[text[shift + j]] !== undefined ? j - badChar[text[shift + j]] : j + 1;
                     const nextShift = shift + Math.max(1, badCharShift);
+                    const badCharValue = text[shift + j];
                     
                     steps.push({
                         textIndex: shift + j,
@@ -2115,7 +2177,8 @@
                         matches: [...matches],
                         comparisons: comparisons,
                         pseudoLine: 14,
-                        explanation: `Mismatch at text[${shift + j}]='${text[shift + j]}' and pattern[${j}]='${pattern[j]}'. Using bad character rule to shift by ${badCharShift} positions.`
+                        explanation: `Mismatch at text[${shift + j}]='${text[shift + j]}' and pattern[${j}]='${pattern[j]}'. Using the bad character rule to shift by ${badCharShift} positions.`,
+                        badChar: badCharValue
                     });
                     
                     shift = nextShift;
@@ -2223,11 +2286,11 @@
             
             // Update window position
             const patternPosition = step.patternPosition !== undefined ? step.patternPosition : (step.shift !== undefined ? step.shift : 0);
-            const windowWidth = pattern.length * 36; // Adjusted for smaller cells
+            const windowWidth = pattern.length * 36; // Adjusted for larger cells
             windowOverlay.style.width = `${windowWidth}px`;
             windowOverlay.style.left = `${patternPosition * 36}px`;
             
-            // Move pattern with window - NEW CHANGE
+            // Move pattern with window
             patternRow.style.transform = `translateX(${patternPosition * 36}px)`;
             
             // Handle match/mismatch
@@ -2268,6 +2331,13 @@
             // Update pseudocode highlighting
             if (step.pseudoLine !== undefined) {
                 updatePseudocodeHighlight(step.pseudoLine);
+            }
+            
+            // Update algorithm table dynamically
+            if (currentAlgorithm === 'kmp' && step.lpsIndex !== undefined) {
+                displayLPSTable(lpsArray, step.lpsIndex);
+            } else if (currentAlgorithm === 'boyer-moore' && step.badChar !== undefined) {
+                displayBadCharacterTable(badCharTable, step.badChar);
             }
             
             // Add to execution history
@@ -2486,6 +2556,24 @@
         // Update animation speed
         speedSlider.addEventListener('input', () => {
             animationSpeed = parseInt(speedSlider.value);
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (event) => {
+            // Prevent default behavior for space and enter keys
+            if (event.code === 'Space' || event.code === 'Enter') {
+                event.preventDefault();
+            }
+            
+            // Enter key to start visualization
+            if (event.code === 'Enter' && !isRunning) {
+                startVisualization();
+            }
+            
+            // Space key to pause/resume
+            if (event.code === 'Space' && isRunning) {
+                haltVisualization();
+            }
         });
 
         // Initialize with default values
