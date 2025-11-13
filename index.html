@@ -192,7 +192,8 @@
             border-radius: var(--border-radius-xl);
             padding: 1rem;
             position: relative;
-            overflow: hidden;
+            overflow-y: visible;
+            overflow-x: hidden;
         }
 
         .input-section::before {
@@ -268,6 +269,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
+            margin-top: 1rem;
         }
 
         .algo-card {
@@ -279,6 +281,7 @@
             transition: var(--transition);
             position: relative;
             overflow: hidden;
+            z-index: 1;
         }
 
         .algo-card::before {
@@ -291,6 +294,7 @@
             background: var(--gradient-primary);
             opacity: 0;
             transition: var(--transition);
+            z-index: -1;
         }
 
         .algo-card.active {
@@ -309,7 +313,7 @@
             gap: 0.5rem;
             margin-bottom: 0.25rem;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .algo-icon {
@@ -334,7 +338,7 @@
             color: var(--text-secondary);
             font-size: 0.75rem;
             position: relative;
-            z-index: 1;
+            z-index: 2;
         }
 
         .control-section {
@@ -363,6 +367,10 @@
             align-items: center;
             justify-content: center;
             gap: 0.25rem;
+        }
+
+        .input-field{
+            max-width: 200px;
         }
 
         .btn-primary {
@@ -448,6 +456,49 @@
             color: var(--accent-primary);
             font-weight: 600;
             min-width: 40px;
+        }
+
+        /* Step navigation controls */
+        .step-navigation {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: var(--bg-tertiary);
+            border-radius: var(--border-radius);
+        }
+
+        .step-info {
+            flex: 1;
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .step-btn {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-glass);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 1rem;
+        }
+
+        .step-btn:hover {
+            background: var(--bg-glass-hover);
+            transform: scale(1.05);
+        }
+
+        .step-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
         }
 
         /* Middle Panel - Visualization */
@@ -581,6 +632,30 @@
             transition: var(--transition);
             box-shadow: var(--shadow-glow);
             z-index: 1;
+        }
+
+        .heuristic-indicator {
+            position: absolute;
+            top: -30px;
+            left: 0;
+            right: 0;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4px 8px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-align: center;
+            z-index: 3;
+            box-shadow: var(--shadow-md);
+            opacity: 0;
+            transform: translateY(-5px);
+            transition: var(--transition);
+        }
+
+        .heuristic-indicator.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .status-bar {
@@ -1183,6 +1258,8 @@
                         </button>
                     </div>
                 </div>
+                
+                <!-- Algorithm Selection -->
                 <div class="algorithm-selector">
                     <div class="algo-card active" id="kmpCard">
                         <div class="algo-header">
@@ -1221,6 +1298,18 @@
                         <span class="speed-value" id="speedValue">1000ms</span>
                     </div>
                 </div>
+                
+                <div class="step-navigation">
+                    <button class="step-btn" id="prevStepBtn" disabled>
+                        <span>◀</span>
+                    </button>
+                    <div class="step-info">
+                        <span id="currentStepInfo">Step 0/0</span>
+                    </div>
+                    <button class="step-btn" id="nextStepBtn" disabled>
+                        <span>▶</span>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -1233,7 +1322,9 @@
                 <div class="visualization-canvas">
                     <div class="string-row" id="textRow"></div>
                     <div class="string-row pattern-row" id="patternRow"></div>
-                    <div class="window-overlay" id="windowOverlay"></div>
+                    <div class="window-overlay" id="windowOverlay">
+                        <div class="heuristic-indicator" id="heuristicIndicator"></div>
+                    </div>
                 </div>
                 <div id="statusBar"></div>
             </div>
@@ -1298,6 +1389,8 @@
     <div class="keyboard-hint">
         <div><kbd>Enter</kbd> Start</div>
         <div><kbd>Space</kbd> Pause/Resume</div>
+        <div><kbd>←</kbd> Previous Step</div>
+        <div><kbd>→</kbd> Next Step</div>
     </div>
 
     <script>
@@ -1516,6 +1609,10 @@
         const resetBtn = document.getElementById('resetBtn');
         const speedSlider = document.getElementById('speedSlider');
         const speedValue = document.getElementById('speedValue');
+        const prevStepBtn = document.getElementById('prevStepBtn');
+        const nextStepBtn = document.getElementById('nextStepBtn');
+        const currentStepInfo = document.getElementById('currentStepInfo');
+        const heuristicIndicator = document.getElementById('heuristicIndicator');
 
         // Display Elements
         const textRow = document.getElementById('textRow');
@@ -1538,8 +1635,10 @@
         let pattern = '';
         let isRunning = false;
         let isPaused = false;
+        let isStepMode = false;
         let animationSpeed = 1000;
         let currentStep = 0;
+        let totalSteps = 0;
         let matches = [];
         let comparisons = 0;
         let animationTimeout;
@@ -1547,6 +1646,8 @@
         let executionSteps = [];
         let lpsArray = [];
         let badCharTable = {};
+        let goodSuffixTable = {};
+        let algorithmSteps = [];
 
         // Pseudocode templates
         const kmpPseudocode = [
@@ -1665,6 +1766,11 @@
             },
             { 
                 type: 'variable', 
+                text: '    goodSuffix = computeGoodSuffixTable(pattern)',
+                explanation: "Creating the good suffix table."
+            },
+            { 
+                type: 'variable', 
                 text: '    shift = 0',
                 explanation: "Initializing the shift position."
             },
@@ -1705,8 +1811,8 @@
             },
             { 
                 type: 'action', 
-                text: '                shift = shift + m - badChar[ASCII(text[shift + m])]',
-                explanation: "Making a big jump forward in the text!"
+                text: '                shift = shift + max(badCharShift, goodSuffixShift)',
+                explanation: "Making a smart jump using both heuristics!"
             },
             { 
                 type: 'condition', 
@@ -1725,8 +1831,8 @@
             },
             { 
                 type: 'action', 
-                text: '            shift = shift + max(1, j - badChar[ASCII(text[shift + j])])',
-                explanation: "Making a smart jump based on the bad character rule."
+                text: '            shift = shift + max(badCharShift, goodSuffixShift)',
+                explanation: "Making a smart jump based on both heuristics."
             }
         ];
 
@@ -1779,7 +1885,7 @@
                 storyContent.innerHTML = `
                     <p class="story-paragraph">Welcome to the <span class="story-highlight">Boyer-Moore Algorithm</span> adventure! This algorithm works backwards to solve a mystery faster.</p>
                     <p class="story-paragraph">Instead of starting from the beginning, Boyer-Moore compares characters from the END of the pattern.</p>
-                    <p class="story-paragraph">When it finds a mismatch, it uses a clever trick called the <span class="story-highlight">bad character rule</span> to jump ahead in the text!</p>
+                    <p class="story-paragraph">When it finds a mismatch, it uses clever heuristics called <span class="story-highlight">bad character rule</span> and <span class="story-highlight">good suffix rule</span> to jump ahead in the text!</p>
                 `;
             }
         }
@@ -2034,6 +2140,57 @@
             return badChar;
         }
 
+        function computeGoodSuffixTable() {
+            const m = pattern.length;
+            const suffix = new Array(m).fill(0);
+            const shift = new Array(m).fill(0);
+            
+            // Compute suffix array
+            suffix[m - 1] = m;
+            let g = m - 1;
+            let f = 0;
+            
+            for (let i = m - 2; i >= 0; i--) {
+                if (i > g && suffix[i + m - 1 - f] < i - g) {
+                    suffix[i] = suffix[i + m - 1 - f];
+                } else {
+                    if (i < g) {
+                        g = i;
+                    }
+                    f = i;
+                    
+                    while (g >= 0 && pattern[g] === pattern[g + m - 1 - f]) {
+                        g--;
+                    }
+                    
+                    suffix[i] = f - g;
+                }
+            }
+            
+            // Compute shift array
+            for (let i = 0; i < m; i++) {
+                shift[i] = m;
+            }
+            
+            let j = 0;
+            
+            for (let i = m - 1; i >= 0; i--) {
+                if (suffix[i] === i + 1) {
+                    for (; j < m - 1 - i; j++) {
+                        if (shift[j] === m) {
+                            shift[j] = m - 1 - i;
+                        }
+                    }
+                }
+            }
+            
+            for (let i = 0; i <= m - 2; i++) {
+                shift[m - 1 - suffix[i]] = m - 1 - i;
+            }
+            
+            return shift;
+        }
+
         function displayBadCharacterTable(badChar, highlightChar = '') {
             const chars = Object.keys(badChar).sort();
             
@@ -2070,9 +2227,55 @@
             tableWrapper.innerHTML = tableHTML;
         }
 
+        function displayGoodSuffixTable(shift, highlightIndex = -1) {
+            let tableHTML = `
+                <table class="algo-table">
+                    <thead>
+                        <tr>
+                            <th>Index</th>
+            `;
+            
+            for (let i = 0; i < pattern.length; i++) {
+                tableHTML += `<th>${i}</th>`;
+            }
+            
+            tableHTML += `
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Pattern</strong></td>
+            `;
+            
+            for (let i = 0; i < pattern.length; i++) {
+                tableHTML += `<td>${pattern[i]}</td>`;
+            }
+            
+            tableHTML += `
+                        </tr>
+                        <tr>
+                            <td><strong>Good Suffix</strong></td>
+            `;
+            
+            for (let i = 0; i < shift.length; i++) {
+                const highlightClass = i === highlightIndex ? 'highlight' : '';
+                tableHTML += `<td class="${highlightClass}">${shift[i]}</td>`;
+            }
+            
+            tableHTML += `
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+            
+            tableWrapper.innerHTML = tableHTML;
+        }
+
         function boyerMooreSearch() {
             const badChar = computeBadCharacterTable();
+            const goodSuffix = computeGoodSuffixTable();
             badCharTable = badChar;
+            goodSuffixTable = goodSuffix;
             displayBadCharacterTable(badChar);
             
             let n = text.length;
@@ -2142,8 +2345,11 @@
                         explanation: `All characters matched! Pattern found at position ${shift}.`
                     });
                     
-                    const nextShift = (shift + m < n) ? shift + m - (badChar[text[shift + m]] !== undefined ? badChar[text[shift + m]] + 1 : 1) : shift + 1;
-                    const nextChar = (shift + m < n) ? text[shift + m] : '';
+                    // Calculate shifts
+                    const badCharShift = (shift + m < n) ? m - (badChar[text[shift + m]] !== undefined ? badChar[text[shift + m]] + 1 : 1) : 1;
+                    const goodSuffixShift = goodSuffix[0];
+                    const maxShift = Math.max(badCharShift, goodSuffixShift);
+                    const nextShift = shift + maxShift;
                     
                     steps.push({
                         textIndex: shift,
@@ -2154,16 +2360,19 @@
                         matches: [...matches],
                         comparisons: comparisons,
                         pseudoLine: 11,
-                        explanation: `Using the bad character rule to shift pattern from position ${shift} to ${nextShift}.`,
-                        badChar: nextChar
+                        explanation: `Using both heuristics: Bad Char shift=${badCharShift}, Good Suffix shift=${goodSuffixShift}, Total shift=${maxShift}`,
+                        heuristic: `Bad Char: ${badCharShift}, Good Suffix: ${goodSuffixShift}`
                     });
                     
                     shift = nextShift;
                 } else {
                     comparisons++;
                     
-                    const badCharShift = badChar[text[shift + j]] !== undefined ? j - badChar[text[shift + j]] : j + 1;
-                    const nextShift = shift + Math.max(1, badCharShift);
+                    // Calculate shifts
+                    const badCharShift = j - (badChar[text[shift + j]] !== undefined ? badChar[text[shift + j]] : -1);
+                    const goodSuffixShift = goodSuffix[j];
+                    const maxShift = Math.max(1, badCharShift, goodSuffixShift);
+                    const nextShift = shift + maxShift;
                     const badCharValue = text[shift + j];
                     
                     steps.push({
@@ -2172,13 +2381,15 @@
                         patternPosition: shift,
                         mismatch: true,
                         badCharShift: badCharShift,
+                        goodSuffixShift: goodSuffixShift,
                         shift: shift,
                         nextShift: nextShift,
                         matches: [...matches],
                         comparisons: comparisons,
                         pseudoLine: 14,
-                        explanation: `Mismatch at text[${shift + j}]='${text[shift + j]}' and pattern[${j}]='${pattern[j]}'. Using the bad character rule to shift by ${badCharShift} positions.`,
-                        badChar: badCharValue
+                        explanation: `Mismatch at text[${shift + j}]='${text[shift + j]}' and pattern[${j}]='${pattern[j]}'. Using both heuristics to shift by ${maxShift} positions.`,
+                        badChar: badCharValue,
+                        heuristic: `Bad Char: ${badCharShift}, Good Suffix: ${goodSuffixShift}`
                     });
                     
                     shift = nextShift;
@@ -2211,6 +2422,7 @@
             comparisons = 0;
             naiveComparisons = 0;
             executionSteps = [];
+            algorithmSteps = [];
             
             // Initialize pseudocode
             initializePseudocode();
@@ -2272,6 +2484,9 @@
                 cell.classList.remove('comparing', 'match', 'mismatch');
             });
             
+            // Hide heuristic indicator initially
+            heuristicIndicator.classList.remove('show');
+            
             // Highlight current text character
             if (step.textIndex !== undefined && step.textIndex >= 0 && step.textIndex < text.length) {
                 const textCell = document.getElementById(`text-${step.textIndex}`);
@@ -2328,6 +2543,12 @@
                 }
             }
             
+            // Show heuristic indicator for Boyer-Moore
+            if (currentAlgorithm === 'boyer-moore' && step.heuristic) {
+                heuristicIndicator.textContent = step.heuristic;
+                heuristicIndicator.classList.add('show');
+            }
+            
             // Update pseudocode highlighting
             if (step.pseudoLine !== undefined) {
                 updatePseudocodeHighlight(step.pseudoLine);
@@ -2360,7 +2581,7 @@
                 if (currentAlgorithm === 'kmp') {
                     variables = [`i=${step.i}`, `j=${step.j}`, `next_j=${step.nextPatternIndex}`];
                 } else {
-                    variables = [`shift=${step.shift}`, `j=${step.j}`, `shift_by=${step.badCharShift}`];
+                    variables = [`shift=${step.shift}`, `j=${step.j}`, `bad_char=${step.badCharShift}`, `good_suffix=${step.goodSuffixShift}`];
                 }
             } else {
                 action = 'Initializing';
@@ -2385,7 +2606,7 @@
                 if (currentAlgorithm === 'kmp') {
                     showStatus(`❌ Mismatch! Pattern index will be set to ${step.nextPatternIndex}`, 'error');
                 } else {
-                    showStatus(`❌ Mismatch! Pattern will shift by ${step.badCharShift} positions`, 'error');
+                    showStatus(`❌ Mismatch! Pattern will shift by ${step.heuristic}`, 'error');
                 }
             } else if (step.isMatch) {
                 showStatus(`✓ Characters match!`, 'info');
@@ -2413,8 +2634,11 @@
             
             isRunning = true;
             isPaused = false;
+            isStepMode = false;
             startBtn.disabled = true;
             haltBtn.disabled = false;
+            prevStepBtn.disabled = true;
+            nextStepBtn.disabled = true;
             
             // Reset story content if in story mode
             if (algorithmStory.style.display !== 'none') {
@@ -2428,21 +2652,26 @@
                 steps = boyerMooreSearch();
             }
             
+            algorithmSteps = steps;
             currentStep = 0;
+            totalSteps = steps.length;
+            updateStepInfo();
             
             function runNextStep() {
-                if (!isRunning || isPaused || currentStep >= steps.length) {
-                    if (currentStep >= steps.length) {
+                if (!isRunning || isPaused || currentStep >= totalSteps) {
+                    if (currentStep >= totalSteps) {
                         isRunning = false;
                         startBtn.disabled = false;
                         haltBtn.disabled = true;
+                        prevStepBtn.disabled = false;
+                        nextStepBtn.disabled = false;
                         
                         if (matches.length > 0) {
                             showStatus(`🎉 Pattern found at positions: ${matches.join(', ')}`, 'success');
-                            addExecutionStep(steps.length, 'Complete', `Algorithm finished! Found ${matches.length} match(es) at positions: ${matches.join(', ')}`, [`total_comparisons=${comparisons}`], 'found');
+                            addExecutionStep(totalSteps, 'Complete', `Algorithm finished! Found ${matches.length} match(es) at positions: ${matches.join(', ')}`, [`total_comparisons=${comparisons}`], 'found');
                         } else {
                             showStatus('😔 Pattern not found in the text', 'error');
-                            addExecutionStep(steps.length, 'Complete', `Algorithm finished! No matches found. Total comparisons: ${comparisons}`, [`total_comparisons=${comparisons}`], 'mismatch');
+                            addExecutionStep(totalSteps, 'Complete', `Algorithm finished! No matches found. Total comparisons: ${comparisons}`, [`total_comparisons=${comparisons}`], 'mismatch');
                         }
                     }
                     return;
@@ -2450,6 +2679,7 @@
                 
                 visualizeStep(steps[currentStep], currentStep + 1);
                 currentStep++;
+                updateStepInfo();
                 
                 animationTimeout = setTimeout(runNextStep, animationSpeed);
             }
@@ -2466,37 +2696,39 @@
                 clearTimeout(animationTimeout);
                 haltBtn.innerHTML = '<span>▶</span><span>Resume</span>';
                 showStatus('⏸ Visualization paused', 'info');
+                isStepMode = true;
+                prevStepBtn.disabled = false;
+                nextStepBtn.disabled = currentStep >= totalSteps;
             } else {
                 haltBtn.innerHTML = '<span>⏸</span><span>Halt</span>';
+                isStepMode = false;
+                prevStepBtn.disabled = true;
+                nextStepBtn.disabled = true;
                 
                 // Continue from where we left off
-                let steps;
-                if (currentAlgorithm === 'kmp') {
-                    steps = KMPSearch();
-                } else {
-                    steps = boyerMooreSearch();
-                }
-                
                 function runNextStep() {
-                    if (!isRunning || isPaused || currentStep >= steps.length) {
-                        if (currentStep >= steps.length) {
+                    if (!isRunning || isPaused || currentStep >= totalSteps) {
+                        if (currentStep >= totalSteps) {
                             isRunning = false;
                             startBtn.disabled = false;
                             haltBtn.disabled = true;
+                            prevStepBtn.disabled = false;
+                            nextStepBtn.disabled = false;
                             
                             if (matches.length > 0) {
                                 showStatus(`🎉 Pattern found at positions: ${matches.join(', ')}`, 'success');
-                                addExecutionStep(steps.length, 'Complete', `Algorithm finished! Found ${matches.length} match(es) at positions: ${matches.join(', ')}`, [`total_comparisons=${comparisons}`], 'found');
+                                addExecutionStep(totalSteps, 'Complete', `Algorithm finished! Found ${matches.length} match(es) at positions: ${matches.join(', ')}`, [`total_comparisons=${comparisons}`], 'found');
                             } else {
                                 showStatus('😔 Pattern not found in the text', 'error');
-                                addExecutionStep(steps.length, 'Complete', `Algorithm finished! No matches found. Total comparisons: ${comparisons}`, [`total_comparisons=${comparisons}`], 'mismatch');
+                                addExecutionStep(totalSteps, 'Complete', `Algorithm finished! No matches found. Total comparisons: ${comparisons}`, [`total_comparisons=${comparisons}`], 'mismatch');
                             }
                         }
                         return;
                     }
                     
-                    visualizeStep(steps[currentStep], currentStep + 1);
+                    visualizeStep(algorithmSteps[currentStep], currentStep + 1);
                     currentStep++;
+                    updateStepInfo();
                     
                     animationTimeout = setTimeout(runNextStep, animationSpeed);
                 }
@@ -2509,17 +2741,23 @@
         function resetVisualization() {
             isRunning = false;
             isPaused = false;
+            isStepMode = false;
             currentStep = 0;
+            totalSteps = 0;
             matches = [];
             comparisons = 0;
             naiveComparisons = 0;
             executionSteps = [];
+            algorithmSteps = [];
             
             clearTimeout(animationTimeout);
             
             startBtn.disabled = false;
             haltBtn.disabled = true;
             haltBtn.innerHTML = '<span>⏸</span><span>Halt</span>';
+            prevStepBtn.disabled = true;
+            nextStepBtn.disabled = true;
+            updateStepInfo();
             
             textRow.innerHTML = '';
             patternRow.innerHTML = '';
@@ -2527,6 +2765,7 @@
             statusBar.innerHTML = '';
             pseudocodeLive.innerHTML = '';
             stepExplanation.style.display = 'none';
+            heuristicIndicator.classList.remove('show');
             
             // Reset pattern position
             patternRow.style.transform = 'translateX(0px)';
@@ -2548,10 +2787,36 @@
             updateStoryContent();
         }
 
+        function updateStepInfo() {
+            currentStepInfo.textContent = `Step ${currentStep}/${totalSteps}`;
+        }
+
+        function goToPreviousStep() {
+            if (currentStep > 0 && algorithmSteps.length > 0) {
+                currentStep--;
+                visualizeStep(algorithmSteps[currentStep], currentStep + 1);
+                updateStepInfo();
+                nextStepBtn.disabled = false;
+                prevStepBtn.disabled = currentStep === 0;
+            }
+        }
+
+        function goToNextStep() {
+            if (currentStep < totalSteps && algorithmSteps.length > 0) {
+                visualizeStep(algorithmSteps[currentStep], currentStep + 1);
+                currentStep++;
+                updateStepInfo();
+                prevStepBtn.disabled = false;
+                nextStepBtn.disabled = currentStep >= totalSteps;
+            }
+        }
+
         // Event Listeners
         startBtn.addEventListener('click', startVisualization);
         haltBtn.addEventListener('click', haltVisualization);
         resetBtn.addEventListener('click', resetVisualization);
+        prevStepBtn.addEventListener('click', goToPreviousStep);
+        nextStepBtn.addEventListener('click', goToNextStep);
 
         // Update animation speed
         speedSlider.addEventListener('input', () => {
@@ -2560,8 +2825,8 @@
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (event) => {
-            // Prevent default behavior for space and enter keys
-            if (event.code === 'Space' || event.code === 'Enter') {
+            // Prevent default behavior for space and arrow keys
+            if (event.code === 'Space' || event.code === 'ArrowLeft' || event.code === 'ArrowRight' || event.code === 'Enter') {
                 event.preventDefault();
             }
             
@@ -2573,6 +2838,16 @@
             // Space key to pause/resume
             if (event.code === 'Space' && isRunning) {
                 haltVisualization();
+            }
+            
+            // Left arrow key for previous step
+            if (event.code === 'ArrowLeft' && (isPaused || !isRunning) && algorithmSteps.length > 0) {
+                goToPreviousStep();
+            }
+            
+            // Right arrow key for next step
+            if (event.code === 'ArrowRight' && (isPaused || !isRunning) && algorithmSteps.length > 0) {
+                goToNextStep();
             }
         });
 
